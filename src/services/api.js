@@ -1,15 +1,8 @@
 import axios from "axios";
 
 class BaseApiService {
-  baseUrl = process.env.VUE_APP_BASE_URL;
+  baseUrl = 'http://localhost:3000/api/v1';
   resource;
-  token = localStorage.getItem("jwt");
-
-  headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + this.token,
-  };
 
   constructor(resource) {
     if (!resource) throw new Error("Resource is not provided");
@@ -31,9 +24,12 @@ export class ReadOnlyApiService extends BaseApiService {
     super(resource);
   }
   async fetch() {
-    console.log(this.token);
     try {
-      const response = await fetch(this.getUrl(), { headers: this.headers });
+      const response = await fetch(this.getUrl(), { headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      } });
       return await response.json();
     } catch (err) {
       this.handleErrors(err);
@@ -43,7 +39,11 @@ export class ReadOnlyApiService extends BaseApiService {
     try {
       if (!id) throw Error("Id is not provided");
       const response = await fetch(this.getUrl(id), {
-        headers: this.headers,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
       });
       return await response.json();
     } catch (err) {
@@ -59,7 +59,11 @@ export class ModelApiService extends ReadOnlyApiService {
   async post(data = {}) {
     try {
       const response = await axios.post(this.getUrl(), data, {
-        headers: this.headers,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
       });
 
       return response.data;
@@ -73,7 +77,11 @@ export class ModelApiService extends ReadOnlyApiService {
       const response = await fetch(this.getUrl(id), {
         method: "PUT",
         body: JSON.stringify(data),
-        headers: this.headers,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
       });
       const { id: responseId } = response.json();
       return responseId;

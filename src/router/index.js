@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue";
+import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 
@@ -19,6 +20,15 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: guardMyroute,
+    meta: {
+      layout: "appLayoutHome",
+    },
+  },
+  {
+    path: "/contact",
+    name: "Contact",
+    component: Contact,
     beforeEnter: guardMyroute,
     meta: {
       layout: "appLayoutHome",

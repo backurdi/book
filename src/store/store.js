@@ -2,30 +2,34 @@ import { createStore } from "vuex";
 import storePlugins from "../plugins/storePlugin";
 import router from "../router";
 
-const store = createStore({
-  plugins: [storePlugins],
-  state: {
-    name: "Vue",
+const getDefaultState = () => {
+  return {
     focusedBook: {},
     recentBooksArr: [],
     booksArr: [],
     user: {},
-  },
+    token:''
+  }
+}
+
+const store = createStore({
+  plugins: [storePlugins],
+  state: getDefaultState(),
   mutations: {
     login(state, userData) {
       localStorage.setItem("jwt", userData.token);
+      state.token = userData.token;
       state.user = userData.data;
-      console.log(state.user);
       router.push({ path: "/" });
     },
     logout(state) {
       localStorage.removeItem("jwt");
-      state.user = {};
+      Object.assign(state, getDefaultState())
       router.push({ path: "login" });
     },
     addBook(state, book) {
       state.booksArr.push(book);
-      sortBooks(state, state.booksArr);
+      state.recentBooksArr.unshift(book);
     },
     setBooks(state, booksApiRes) {
       sortBooks(state, booksApiRes);
@@ -43,10 +47,9 @@ const store = createStore({
       );
     },
     changeFocusedBook(state, bookId) {
-      const booksArr = [...state.booksArr];
-      state.focusedBook = booksArr.find((book) => book._id === bookId);
-      booksArr.splice(booksArr.indexOf(state.focusedBook), 1);
-      state.recentBooksArr = booksArr;
+      state.recentBooksArr.unshift(state.focusedBook);
+      state.focusedBook = state.recentBooksArr.find((book) => book._id === bookId);
+      state.recentBooksArr.splice(state.recentBooksArr.indexOf(state.focusedBook), 1);
     },
   },
   actions: {
@@ -99,6 +102,13 @@ const store = createStore({
         return this.commit("deleteComment", commentId);
       });
     },
+    sendEmail({ state }, emailData){
+      return new Promise((resolve) => {
+        this.$api.contact.post(emailData).then(()=>{
+          resolve('');
+        });
+      })
+    }
   },
 });
 

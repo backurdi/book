@@ -5,6 +5,13 @@ module.exports = {
     extend: {
       height: { "150": "150px" },
       width: { "150": "150px" },
+      colors:{
+        readee: {
+        light: '#D6EBEB',
+        DEFAULT: '#48D0B0',
+        dark: '#258972',
+      }
+    }
     },
   },
   variants: {

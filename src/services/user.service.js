@@ -19,7 +19,11 @@ export class UserService extends ModelApiService {
 
   async logout() {
     try {
-      await axios.get(`${this.getUrl()}logout`, {headers: this.headers});
+      await axios.get(`${this.getUrl()}logout`, {headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }});
       return;
     } catch (err) {
       console.log(err);

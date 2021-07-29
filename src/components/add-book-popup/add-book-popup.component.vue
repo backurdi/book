@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <div class="w-5/6 mx-auto mb-4 flex">
-  <button class="border flex border-white hover:bg-green-400 text-white font-bold py-2 px-2 rounded items-center" @click="addBookPopup">
+  <button class="border flex border-black hover:bg-readee hover:text-white duration-150 text-black font-bold py-2 px-2 rounded items-center" @click="addBookPopup">
     <PlusIcon class="h-6 w-6 mr-2"></PlusIcon>
   <span class="object-contain">Add book</span>
 </button>

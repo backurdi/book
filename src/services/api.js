@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class BaseApiService {
-  baseUrl = 'http://localhost:3000/api/v1';
+  baseUrl = process.env.VUE_APP_BASE_URL;
   resource;
 
   constructor(resource) {

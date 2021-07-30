@@ -19,7 +19,11 @@
                         <button class="border border-blue-500 hover:bg-blue-700 hover:text-white text-blue-500 font-bold py-2 px-2 rounded" :class="this.$store.state.focusedBook.isCurrent ? 'bg-blue-700 text-white' : ''">Current read</button>
                     </div>
                     <p class="mb-2">progress {{this.$store.state.focusedBook.pagesRead + '/' + this.$store.state.focusedBook.pagesTotal}}</p>
-                    <progress-bar :progress="Math.round(this.$store.state.focusedBook.pagesRead/this.$store.state.focusedBook.pagesTotal*100)"></progress-bar>
+                    <div class="flex">
+                        <progress-bar :progress="Math.round(this.$store.state.focusedBook.pagesRead/this.$store.state.focusedBook.pagesTotal*100)"></progress-bar>
+                        <!-- <input id="to" v-model="pagesRead" type="number" :max="maxPages" class="appearance-none bg-transparent border-b border-teal-500 w-4/6 text-gray-700 mr-5 px-2 leading-tight focus:outline-none focus:border-green-700" placeholder="pages read" aria-label="Full name">
+                        <button class="border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold mr-2 py-2 px-4 rounded flex-initial">update reach</button> -->
+                    </div>
                     <comments-item :comments="this.$store.state.focusedBook.comments" @deleteComment="deleteComment($event)"></comments-item>
                 </div>
             </div>
@@ -40,9 +44,17 @@ import commentsItem from './comments-item/comments-item.component.vue';
 export default {
     name: 'dashboard',
     components: { tableComponent, progressBar, commentsItem },
+    data:()=>({
+        pagesRead: 0,
+        maxPages: 0
+    }),
     created(){
         this.$store.dispatch('fetchBooks');
     },
+    mounted(){
+        // this.pagesRead = this.$store.state.currentBook.pagesRead;
+        // this.maxPages = this.$store.state.currentBook.pagesTotal
+    }
 
 }
 </script>

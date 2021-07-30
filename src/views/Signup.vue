@@ -1,6 +1,6 @@
 <template>
   <div class="flex-col flex ml-auto mr-auto items-center w-full lg:w-2/3 md:w-3/5">
-    <h1 class="font-bold text-2xl my-10 text-white"> Signup </h1>
+    <h1 class="font-bold text-2xl my-10 text-black"> Signup </h1>
  <form action="" class="mt-2 flex flex-col lg:w-1/2 w-8/12">
           <div class="flex flex-wrap items-stretch w-full mb-4 relative h-15 bg-white items-center rounded mb-6 pr-10">
             <div class="flex -mr-px justify-center w-15 p-4">
@@ -83,7 +83,7 @@
           <button @click="signup" class="bg-blue-400 py-4 text-center px-17 md:px-12 md:py-4 text-white rounded leading-tight text-xl md:text-base font-sans mt-4 mb-4">
             signup
           </button>
-          <router-link to="/login" class="text-base text-white hover:text-green-500 text-center font-roboto leading-normal hover:underline mb-6">Or login now</router-link>
+          <router-link to="/login" class="text-base text-black hover:text-green-500 text-center font-roboto leading-normal hover:underline mb-6">Or login now</router-link>
         </form>
 </div>
 </template>

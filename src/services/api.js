@@ -6,7 +6,7 @@ class BaseApiService {
 
   constructor(resource) {
     if (!resource) throw new Error("Resource is not provided");
-    this.resource = resource;
+    this.resource = resource
   }
 
   getUrl(id = "") {

@@ -31,7 +31,7 @@
 					</router-link>
 				</li>
 				<li class="h-10 w-10">
-                    <div class="h-full w-full rounded-full mx-auto bg-cover relative hover-trigger" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60')">
+                    <div class="h-full w-full rounded-full mx-auto bg-cover relative hover-trigger" :style="{'background-image': `url(${require('@/assets/images/default-avatar.png')})`}">
 						<div class="h-12"></div>
 						<div class="absolute bg-white border border-grey-100 hover-target w-150 right-0 rounded ">
 							<ul>

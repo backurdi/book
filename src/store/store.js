@@ -29,13 +29,25 @@ const store = createStore({
     },
     addBook(state, book) {
       state.booksArr.push(book);
-      state.recentBooksArr.unshift(book);
+      if(state.focusedBook.title){
+        state.recentBooksArr.unshift(book);
+      }else{
+        state.focusedBook = book;
+      }
     },
     setBooks(state, booksApiRes) {
       sortBooks(state, booksApiRes);
     },
     setBook(state, updatedBookData) {
       state.focusedBook = updatedBookData;
+    },
+    deleteBook(state){
+      if(state.recentBooksArr.length){
+        state.focusedBook = state.recentBooksArr.shift();
+      }else{
+        state.focusedBook = {}
+        state.booksArr = [];
+      }
     },
     deleteComment(state, commentId) {
       const commentToDelete = state.focusedBook.comments.find(
@@ -49,6 +61,7 @@ const store = createStore({
     changeFocusedBook(state, bookId) {
       state.recentBooksArr.unshift(state.focusedBook);
       state.focusedBook = state.recentBooksArr.find((book) => book._id === bookId);
+      console.log(state.focusedBook);
       state.recentBooksArr.splice(state.recentBooksArr.indexOf(state.focusedBook), 1);
     },
   },
@@ -75,16 +88,30 @@ const store = createStore({
       return this.$api.users.signup(signupInfo)
       .then(user => this.commit('login', user))
     },
-    async fetchBooks() {
-      const books = await this.$api.books.fetch({});
-      return this.commit("setBooks", books.data);
+    fetchBooks() {
+      return new Promise((resolve) => {
+        this.$api.books.fetch({}).then(books=>{
+          resolve();
+          return this.commit("setBooks", books.data);
+        });
+      })
+    },
+    /* eslint-disable */
+    updateBook({state}, data){
+      return this.$api.books.put(state.focusedBook._id, data.body).then((updatedBook)=>{
+        return this.commit('setBook', updatedBook.data.data);
+      });
     },
     /* eslint-disable */
     addBook({ state }, body) {
       return this.$api.books.post(body).then((addedBook) => {
-        console.log(addedBook);
         return this.commit("addBook", addedBook.data);
       });
+    },
+    deleteBook({state}){
+      return this.$api.books.delete(state.focusedBook._id).then(()=>{
+        return this.commit('deleteBook');
+      })
     },
     addComment({ state }, data) {
       return this.$api.comments
@@ -115,7 +142,7 @@ const store = createStore({
 const sortBooks = (state, books) => {
   const booksArr = [...books];
   state.booksArr = [...books];
-  state.focusedBook = books.find((book) => book.isCurrent);
+  state.focusedBook = books.find((book) => book.isCurrent) ? books.find((book) => book.isCurrent) : books[0];
   booksArr.splice(booksArr.indexOf(state.focusedBook) + 1, 1);
   state.recentBooksArr = booksArr;
 };

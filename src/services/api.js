@@ -74,17 +74,13 @@ export class ModelApiService extends ReadOnlyApiService {
   async put(id, data = {}) {
     if (!id) throw Error("Id is not provided");
     try {
-      const response = await fetch(this.getUrl(id), {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      });
-      const { id: responseId } = response.json();
-      return responseId;
+      const response = await axios.put(this.getUrl(id), data, {headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }});
+      
+      return  response;
     } catch (err) {
       this.handleErrors(err);
     }
@@ -92,9 +88,11 @@ export class ModelApiService extends ReadOnlyApiService {
   async delete(id) {
     if (!id) throw Error("Id is not provided");
     try {
-      await fetch(this.getUrl(id), {
-        method: "DELETE",
-      });
+      await axios.delete(this.getUrl(id), {headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }});
       return true;
     } catch (err) {
       this.handleErrors(err);

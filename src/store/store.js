@@ -1,16 +1,16 @@
+/* eslint no-underscore-dangle: 0 */
 import { createStore } from "vuex";
 import storePlugins from "../plugins/storePlugin";
 import router from "../router";
+import { sortBooks } from "./storeHelper";
 
-const getDefaultState = () => {
-  return {
-    focusedBook: {},
-    recentBooksArr: [],
-    booksArr: [],
-    user: {},
-    token:''
-  }
-}
+const getDefaultState = () => ({
+  focusedBook: {},
+  recentBooksArr: [],
+  booksArr: [],
+  user: {},
+  token: "",
+});
 
 const store = createStore({
   plugins: [storePlugins],
@@ -24,14 +24,14 @@ const store = createStore({
     },
     logout(state) {
       localStorage.removeItem("jwt");
-      Object.assign(state, getDefaultState())
+      Object.assign(state, getDefaultState());
       router.push({ path: "login" });
     },
     addBook(state, book) {
       state.booksArr.push(book);
-      if(state.focusedBook.title){
+      if (state.focusedBook.title) {
         state.recentBooksArr.unshift(book);
-      }else{
+      } else {
         state.focusedBook = book;
       }
     },
@@ -41,28 +41,32 @@ const store = createStore({
     setBook(state, updatedBookData) {
       state.focusedBook = updatedBookData;
     },
-    deleteBook(state){
-      if(state.recentBooksArr.length){
+    deleteBook(state) {
+      if (state.recentBooksArr.length) {
         state.focusedBook = state.recentBooksArr.shift();
-      }else{
-        state.focusedBook = {}
+      } else {
+        state.focusedBook = {};
         state.booksArr = [];
       }
     },
     deleteComment(state, commentId) {
       const commentToDelete = state.focusedBook.comments.find(
-        (comment) => comment._id === commentId
+        (comment) => comment._id === commentId,
       );
       state.focusedBook.comments.splice(
         state.focusedBook.comments.indexOf(commentToDelete),
-        1
+        1,
       );
     },
     changeFocusedBook(state, bookId) {
       state.recentBooksArr.unshift(state.focusedBook);
-      state.focusedBook = state.recentBooksArr.find((book) => book._id === bookId);
-      console.log(state.focusedBook);
-      state.recentBooksArr.splice(state.recentBooksArr.indexOf(state.focusedBook), 1);
+      state.focusedBook = state.recentBooksArr.find(
+        (book) => book._id === bookId,
+      );
+      state.recentBooksArr.splice(
+        state.recentBooksArr.indexOf(state.focusedBook),
+        1,
+      );
     },
   },
   actions: {
@@ -74,33 +78,34 @@ const store = createStore({
         .catch((err) => {
           console.log(err);
           return this.commit("logout", err);
-        })
-    },
-    logout() {
-      return this.$api.users
-        .logout()
-        .then((user) => {
-          return this.commit("logout");
         });
     },
+    logout() {
+      return this.$api.users.logout().then((user) => {
+        return this.commit("logout");
+      });
+    },
     /* eslint-disable */
-    signup(state, signupInfo){
-      return this.$api.users.signup(signupInfo)
-      .then(user => this.commit('login', user))
+    signup(state, signupInfo) {
+      return this.$api.users
+        .signup(signupInfo)
+        .then((user) => this.commit("login", user));
     },
     fetchBooks() {
       return new Promise((resolve) => {
-        this.$api.books.fetch({}).then(books=>{
+        this.$api.books.fetch({}).then((books) => {
           resolve();
           return this.commit("setBooks", books.data);
         });
-      })
+      });
     },
     /* eslint-disable */
-    updateBook({state}, data){
-      return this.$api.books.put(state.focusedBook._id, data.body).then((updatedBook)=>{
-        return this.commit('setBook', updatedBook.data.data);
-      });
+    updateBook({ state }, data) {
+      return this.$api.books
+        .put(state.focusedBook._id, data.body)
+        .then((updatedBook) => {
+          return this.commit("setBook", updatedBook.data.data);
+        });
     },
     /* eslint-disable */
     addBook({ state }, body) {
@@ -108,10 +113,18 @@ const store = createStore({
         return this.commit("addBook", addedBook.data);
       });
     },
-    deleteBook({state}){
-      return this.$api.books.delete(state.focusedBook._id).then(()=>{
-        return this.commit('deleteBook');
-      })
+    deleteBook({ state }) {
+      return this.$api.books.delete(state.focusedBook._id).then(() => {
+        return this.commit("deleteBook");
+      });
+    },
+    /* eslint-disable */
+    searchBooks({ state }, data) {
+      return new Promise((resolve) => {
+        this.$api.Books.post(data).then(() => {
+          resolve("");
+        });
+      });
     },
     addComment({ state }, data) {
       return this.$api.comments
@@ -129,22 +142,14 @@ const store = createStore({
         return this.commit("deleteComment", commentId);
       });
     },
-    sendEmail({ state }, emailData){
+    sendEmail({ state }, emailData) {
       return new Promise((resolve) => {
-        this.$api.contact.post(emailData).then(()=>{
-          resolve('');
+        this.$api.contact.post(emailData).then(() => {
+          resolve("");
         });
-      })
-    }
+      });
+    },
   },
 });
-
-const sortBooks = (state, books) => {
-  const booksArr = [...books];
-  state.booksArr = [...books];
-  state.focusedBook = books.find((book) => book.isCurrent) ? books.find((book) => book.isCurrent) : books[0];
-  booksArr.splice(booksArr.indexOf(state.focusedBook) + 1, 1);
-  state.recentBooksArr = booksArr;
-};
 
 export default store;

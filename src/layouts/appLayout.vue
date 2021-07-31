@@ -5,24 +5,25 @@
 </template>
 
 <script>
-import AppLayoutDefault from './appLayoutDefault'
+import AppLayoutDefault from "./appLayoutDefault.vue";
+
 export default {
   name: "AppLayout",
   data: () => ({
-    layout: AppLayoutDefault
+    layout: AppLayoutDefault,
   }),
   watch: {
     $route: {
       immediate: true,
       async handler(route) {
         try {
-          const component = await import(`@/layouts/${route.meta.layout}.vue`)
-          this.layout = component?.default || AppLayoutDefault
+          const component = await import(`@/layouts/${route.meta.layout}.vue`);
+          this.layout = component?.default || AppLayoutDefault;
         } catch (e) {
-          this.layout = AppLayoutDefault
+          this.layout = AppLayoutDefault;
         }
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 </script>

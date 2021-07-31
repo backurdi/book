@@ -1,16 +1,16 @@
-import { BooksService } from "../services/books.service";
-import { CommentsService } from "../services/comments.service";
-import { UserService } from "../services/user.service";
-import { ContactService } from "../services/contact.service";
+import BooksService from "../services/booksService";
+import CommentsService from "../services/commentsService";
+import UserService from "../services/userService";
+import ContactService from "../services/contactService";
 
 const $api = {
   books: new BooksService(),
   comments: new CommentsService(),
   users: new UserService(),
-  contact: new ContactService
+  contact: new ContactService(),
 };
 
-export default function(store) {
+export default function (store) {
   try {
     store.$api = $api;
   } catch (e) {

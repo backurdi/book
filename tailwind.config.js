@@ -3,15 +3,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      height: { "150": "150px" },
-      width: { "150": "150px" },
-      colors:{
+      height: { 150: "150px" },
+      width: { 150: "150px" },
+      colors: {
         readee: {
-        light: '#D6EBEB',
-        DEFAULT: '#48D0B0',
-        dark: '#258972',
-      }
-    }
+          light: "#D6EBEB",
+          DEFAULT: "#48D0B0",
+          dark: "#258972",
+        },
+      },
     },
   },
   variants: {

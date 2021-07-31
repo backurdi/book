@@ -1,7 +1,8 @@
-import { ModelApiService } from "./api.js";
 import axios from "axios";
+import { ModelApiService } from "./modelApiService";
+import { handleErrors } from "./servicesHelper";
 
-export class UserService extends ModelApiService {
+export default class UserService extends ModelApiService {
   constructor() {
     super("users");
   }
@@ -13,21 +14,22 @@ export class UserService extends ModelApiService {
       return response.data;
     } catch (err) {
       console.log(err);
-      this.handleErrors(err);
+      return handleErrors(err);
     }
   }
 
   async logout() {
     try {
-      await axios.get(`${this.getUrl()}logout`, {headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      }});
+      await axios.get(`${this.getUrl()}logout`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
       return;
     } catch (err) {
-      console.log(err);
-      this.handleErrors(err);
+      handleErrors(err);
     }
   }
 
@@ -37,8 +39,8 @@ export class UserService extends ModelApiService {
 
       return response.data;
     } catch (err) {
-      console.log(err);
-      this.handleErrors(err);
+      handleErrors(err);
+      return err;
     }
   }
 }

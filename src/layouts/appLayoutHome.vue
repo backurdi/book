@@ -7,15 +7,14 @@
 </template>
 
 <script>
-import AppLayoutLinks from '@/layouts/appLayoutLinks'
+import AppLayoutLinks from "./appLayoutLinks.vue";
+
 export default {
   name: "AppLayoutHome",
   components: {
-    AppLayoutLinks
-  }
-}
+    AppLayoutLinks,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

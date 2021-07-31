@@ -3,7 +3,7 @@ import App from "./App.vue";
 import "./tailwind.css";
 import router from "./router";
 import store from "./store/store";
-import AppLayout from "./layouts/appLayout";
+import AppLayout from "./layouts/appLayout.vue";
 
 createApp(App)
   .use(store)

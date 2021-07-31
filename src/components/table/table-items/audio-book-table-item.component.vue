@@ -1,14 +1,11 @@
 <template>
-    <div>audio book table</div>
+  <div>audio book table</div>
 </template>
 
 <script>
 export default {
-    name:'audioBookTable',
-
-}
+  name: "audioBookTable",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

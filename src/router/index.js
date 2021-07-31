@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 
 function guardMyroute(to, from, next) {
-  var isAuthenticated = false;
+  let isAuthenticated = false;
   if (localStorage.getItem("jwt")) isAuthenticated = true;
   else isAuthenticated = false;
   if (isAuthenticated) {

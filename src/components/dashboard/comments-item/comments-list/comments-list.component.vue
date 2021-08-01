@@ -1,28 +1,16 @@
 /* eslint no-underscore-dangle: 0 */
 <template>
   <div>
-    <div class="flex mt-3 p-3 border rounded">
+    <div class="flex flex-col mt-3 p-3 border rounded lg:flex-row">
       <p class="flex-auto self-center">{{ comment.text }}</p>
-      <p class="flex-initial self-center mx-2">from: {{ comment.pagesFrom }}</p>
-      <p class="flex-initial self-center mr-7 mx-2">
-        to: {{ comment.pagesTo }}
-      </p>
-      <button
-        class="
-          flex-initial
-          px-4
-          py-2
-          text-red-500
-          hover:text-white
-          font-bold
-          hover:bg-red-500
-          border border-red-500
-          rounded
-        "
-        @click="deleteComment()"
-      >
-        Delete
-      </button>
+      <div class="flex justify-between mt-5 lg:mt-0">
+        <p class="flex-initial self-center mx-2">from: {{ comment.pagesFrom }}</p>
+        <p class="flex-initial self-center mr-7 mx-2">to: {{ comment.pagesTo }}</p>
+        <button
+          class="flex-initial px-4 py-2 text-red-500 hover:text-white font-bold hover:bg-red-500 border border-red-500 rounded"
+          @click="deleteComment()"
+        >Delete</button>
+      </div>
     </div>
   </div>
 </template>

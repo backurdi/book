@@ -1,5 +1,14 @@
 <template>
   <div class="comment-input">
+    <div
+      class="mb-10 px-12 text-white bg-red-400 rounded duration-300"
+      :class="{ 'h-0': !displayError, 'h-full py-2': displayError }"
+    >
+      <p
+        class="font-bold"
+        :class="{ visible: displayError, invisible: !displayError }"
+      >{{errorMessage}}</p>
+    </div>
     <textarea
       v-model="text"
       class="px-3 py-2 w-full text-gray-700 border rounded-lg focus:outline-none"
@@ -24,6 +33,8 @@
           id="to"
           v-model="pagesTo"
           type="number"
+          min="0"
+          :max="`${maxPages}`"
           class="border-teal-500 mr-5 px-2 w-4/6 text-gray-700 leading-tight bg-transparent border-b focus:border-green-700 focus:outline-none appearance-none"
           placeholder="From"
           aria-label="Full name"
@@ -44,13 +55,35 @@ export default {
     text: "",
     pagesFrom: 0,
     pagesTo: 0,
+    errorMessage: '',
+    displayError: false
   }),
+  computed: {
+    maxPages() {
+      return this.$store.state.focusedBook.pagesTotal;
+    },
+  },
   methods: {
     addComment() {
+      if(this.pagesFrom < 0) this.pagesFrom = 0;
+      if(this.pagesTo > this.maxPages) this.pagesTo = this.maxPages;
       this.$store.dispatch("addComment", {
         text: this.text,
         pagesFrom: this.pagesFrom,
         pagesTo: this.pagesTo,
+      }).then(()=>{
+        this.text = "";
+        this.pagesFrom = 0;
+        this.pagesTo = 0;
+      })
+      .catch(err=>{
+        this.errorMessage = err.message;
+        this.displayError = true;
+
+        setTimeout(()=>{
+          this.errorMessage = '';
+          this.displayError = false;
+        }, 5000)
       });
     },
   },

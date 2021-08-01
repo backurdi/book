@@ -5,11 +5,7 @@
     class="flex p-3 border rounded"
     :class="[index === 0 ? '' : 'mt-3']"
   >
-    <img
-      class="border-grey-400 mr-4 w-8 border"
-      :src="recentBook.image"
-      alt=""
-    />
+    <img class="border-grey-400 mr-4 w-8 border" :src="recentBook.image" alt />
     <div class="w-4/6">
       <p>{{ recentBook.title }}</p>
       <k-progress
@@ -21,22 +17,9 @@
       ></k-progress>
     </div>
     <button
-      class="
-        flex-initial
-        self-center
-        px-3
-        py-2
-        h-4/6
-        text-white
-        font-bold
-        bg-blue-500
-        hover:bg-blue-700
-        rounded
-      "
+      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded"
       @click="changeFocusedBook(recentBook._id)"
-    >
-      View
-    </button>
+    >View</button>
   </div>
 </template>
 
@@ -47,6 +30,7 @@ export default {
   name: "RecentBookTable",
   components: { KProgress },
   props: ["tableData"],
+  emits: ['changeFocusedBook'],
   data: () => ({
     recentBooks: [],
   }),

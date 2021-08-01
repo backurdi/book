@@ -1,23 +1,26 @@
-import { axios } from "axios";
+import axios from "axios";
 import { ReadOnlyApiService } from "./readOnlyApiService";
 import { handleErrors } from "./servicesHelper";
 
 export class ModelApiService extends ReadOnlyApiService {
   async post(data = {}) {
-    try {
-      const response = await axios.post(this.getUrl(), data, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-      });
-
-      return response.data;
-    } catch (err) {
-      handleErrors(err);
-      return err;
-    }
+    return new Promise((resolve, reject) => {
+      axios
+        .post(this.getUrl(), data, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          handleErrors(err);
+          reject(err.response.data);
+        });
+    });
   }
 
   async put(id, data = {}) {

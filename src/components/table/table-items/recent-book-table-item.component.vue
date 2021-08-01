@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex border p-3 rounded"
-    :class="[index === 0 ? '' : 'mt-3']"
     v-for="(recentBook, index) in tableData"
     :key="index"
+    class="flex p-3 border rounded"
+    :class="[index === 0 ? '' : 'mt-3']"
   >
     <img
-      class="w-8 mr-4 border border-grey-400"
+      class="border-grey-400 mr-4 w-8 border"
       :src="recentBook.image"
       alt=""
     />
@@ -22,16 +22,16 @@
     </div>
     <button
       class="
-        bg-blue-500
-        hover:bg-blue-700
-        text-white
-        font-bold
-        px-3
-        py-2
-        rounded
         flex-initial
         self-center
+        px-3
+        py-2
         h-4/6
+        text-white
+        font-bold
+        bg-blue-500
+        hover:bg-blue-700
+        rounded
       "
       @click="changeFocusedBook(recentBook._id)"
     >
@@ -44,7 +44,7 @@
 import KProgress from "k-progress-v3";
 
 export default {
-  name: "recentBookTable",
+  name: "RecentBookTable",
   components: { KProgress },
   props: ["tableData"],
   data: () => ({

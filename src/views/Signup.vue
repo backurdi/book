@@ -1,59 +1,55 @@
 <template>
   <div
-    class="flex-col flex ml-auto mr-auto items-center w-full lg:w-2/3 md:w-3/5"
+    class="flex flex-col items-center ml-auto mr-auto w-full md:w-3/5 lg:w-2/3"
   >
-    <h1 class="font-bold text-2xl my-10 text-black">Signup</h1>
-    <form action="" class="mt-2 flex flex-col lg:w-1/2 w-8/12">
+    <h1 class="my-10 text-black text-2xl font-bold">Signup</h1>
+    <form action="" class="flex flex-col mt-2 w-8/12 lg:w-1/2">
       <div
         class="
-          flex flex-wrap
-          items-stretch
-          w-full
-          mb-4
-          relative
           h-15
-          bg-white
-          items-center
-          rounded
-          mb-6
+          relative
+          flex flex-wrap
+          items-center items-stretch
+          mb-4 mb-6
           pr-10
+          w-full
+          bg-white
+          rounded
         "
       >
-        <div class="flex -mr-px justify-center w-15 p-4">
+        <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
               flex
               items-center
+              px-3
+              text-gray-600 text-2xl
               leading-normal
               bg-white
-              px-3
               border-0
               rounded rounded-r-none
-              text-2xl text-gray-600
             "
           >
-            <UserCircleIcon class="h-6 w-6 mr-2"></UserCircleIcon>
+            <UserCircleIcon class="mr-2 w-6 h-6"></UserCircleIcon>
           </span>
         </div>
         <input
-          type="text"
           v-model="name"
+          type="text"
           class="
-            flex-shrink flex-grow
-            bg-white
-            flex-auto
-            leading-normal
-            w-px
-            flex-1
-            border-0
-            h-10
             border-grey-light
-            rounded rounded-l-none
-            px-3
-            self-center
-            relative
             font-roboto
+            relative
+            flex-1 flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
             text-xl
+            leading-normal
+            bg-white
+            border-0
+            rounded rounded-l-none
             outline-none
           "
           placeholder="Name"
@@ -61,54 +57,50 @@
       </div>
       <div
         class="
-          flex flex-wrap
-          items-stretch
-          w-full
-          mb-4
-          relative
           h-15
-          bg-white
-          items-center
-          rounded
-          mb-6
+          relative
+          flex flex-wrap
+          items-center items-stretch
+          mb-4 mb-6
           pr-10
+          w-full
+          bg-white
+          rounded
         "
       >
-        <div class="flex -mr-px justify-center w-15 p-4">
+        <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
               flex
               items-center
+              px-3
+              text-gray-600 text-2xl
               leading-normal
               bg-white
-              px-3
               border-0
               rounded rounded-r-none
-              text-2xl text-gray-600
             "
           >
-            <MailIcon class="h-6 w-6 mr-2"></MailIcon>
+            <MailIcon class="mr-2 w-6 h-6"></MailIcon>
           </span>
         </div>
         <input
-          type="text"
           v-model="email"
+          type="text"
           class="
-            flex-shrink flex-grow
-            bg-white
-            flex-auto
-            leading-normal
-            w-px
-            flex-1
-            border-0
-            h-10
             border-grey-light
-            rounded rounded-l-none
-            px-3
-            self-center
-            relative
             font-roboto
+            relative
+            flex-1 flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
             text-xl
+            leading-normal
+            bg-white
+            border-0
+            rounded rounded-l-none
             outline-none
           "
           placeholder="Email"
@@ -116,50 +108,47 @@
       </div>
       <div
         class="
-          flex flex-wrap
-          items-stretch
-          w-full
-          relative
           h-15
-          bg-white
-          items-center
-          rounded
+          relative
+          flex flex-wrap
+          items-center items-stretch
           mb-4
+          w-full
+          bg-white
+          rounded
         "
       >
-        <div class="flex -mr-px justify-center w-15 p-4">
+        <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
+              whitespace-no-wrap
               flex
               items-center
+              px-3
+              text-gray-600 text-xl
               leading-normal
               bg-white
               rounded rounded-r-none
-              text-xl
-              px-3
-              whitespace-no-wrap
-              text-gray-600
             "
           >
-            <LockClosedIcon class="h-6 w-6 mr-2"></LockClosedIcon>
+            <LockClosedIcon class="mr-2 w-6 h-6"></LockClosedIcon>
           </span>
         </div>
         <input
-          :type="hidePass ? 'password' : 'text'"
           v-model="password"
+          :type="hidePass ? 'password' : 'text'"
           class="
-            flex-shrink flex-grow flex-auto
-            bg-white
-            leading-normal
-            w-px
-            flex-1
-            border-0
-            h-10
-            px-3
-            relative
-            self-center
             font-roboto
+            relative
+            flex-1 flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
             text-xl
+            leading-normal
+            bg-white
+            border-0
             outline-none
           "
           placeholder="Password"
@@ -167,69 +156,66 @@
         <div class="flex -mr-px">
           <span
             class="
+              whitespace-no-wrap
               flex
               items-center
+              px-3
+              text-gray-600
               leading-normal
               bg-white
-              rounded rounded-l-none
               border-0
-              px-3
-              whitespace-no-wrap
-              text-gray-600
+              rounded rounded-l-none
             "
             @click="hidePass = !hidePass"
           >
-            <EyeOffIcon v-if="!hidePass" class="h-6 w-6 mr-2"></EyeOffIcon>
-            <EyeIcon v-else class="h-6 w-6 mr-2"></EyeIcon>
+            <EyeOffIcon v-if="!hidePass" class="mr-2 w-6 h-6"></EyeOffIcon>
+            <EyeIcon v-else class="mr-2 w-6 h-6"></EyeIcon>
           </span>
         </div>
       </div>
       <div
         class="
-          flex flex-wrap
-          items-stretch
-          w-full
-          relative
           h-15
-          bg-white
-          items-center
-          rounded
+          relative
+          flex flex-wrap
+          items-center items-stretch
           mb-4
+          w-full
+          bg-white
+          rounded
         "
       >
-        <div class="flex -mr-px justify-center w-15 p-4">
+        <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
+              whitespace-no-wrap
               flex
               items-center
+              px-3
+              text-gray-600 text-xl
               leading-normal
               bg-white
               rounded rounded-r-none
-              text-xl
-              px-3
-              whitespace-no-wrap
-              text-gray-600
             "
           >
-            <LockClosedIcon class="h-6 w-6 mr-2"></LockClosedIcon>
+            <LockClosedIcon class="mr-2 w-6 h-6"></LockClosedIcon>
           </span>
         </div>
         <input
-          :type="hideConfirmPass ? 'password' : 'text'"
           v-model="passwordConfirm"
+          :type="hideConfirmPass ? 'password' : 'text'"
           class="
-            flex-shrink flex-grow flex-auto
-            bg-white
-            leading-normal
-            w-px
-            flex-1
-            border-0
-            h-10
-            px-3
-            relative
-            self-center
             font-roboto
+            relative
+            flex-1 flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
             text-xl
+            leading-normal
+            bg-white
+            border-0
             outline-none
           "
           placeholder="Confirm password"
@@ -237,56 +223,53 @@
         <div class="flex -mr-px">
           <span
             class="
+              whitespace-no-wrap
               flex
               items-center
+              px-3
+              text-gray-600
               leading-normal
               bg-white
-              rounded rounded-l-none
               border-0
-              px-3
-              whitespace-no-wrap
-              text-gray-600
+              rounded rounded-l-none
             "
             @click="hideConfirmPass = !hideConfirmPass"
           >
             <EyeOffIcon
               v-if="!hideConfirmPass"
-              class="h-6 w-6 mr-2"
+              class="mr-2 w-6 h-6"
             ></EyeOffIcon>
-            <EyeIcon v-else class="h-6 w-6 mr-2"></EyeIcon>
+            <EyeIcon v-else class="mr-2 w-6 h-6"></EyeIcon>
           </span>
         </div>
       </div>
       <button
-        @click="signup"
         class="
-          bg-blue-400
-          py-4
-          text-center
           px-17
-          md:px-12 md:py-4
-          text-white
-          rounded
-          leading-tight
-          text-xl
-          md:text-base
-          font-sans
-          mt-4
           mb-4
+          mt-4
+          py-4
+          text-center text-white
+          font-sans
+          text-xl
+          leading-tight
+          bg-blue-400
+          rounded
+          md:px-12 md:py-4 md:text-base
         "
+        @click="signup"
       >
         signup
       </button>
       <router-link
         to="/login"
         class="
-          text-base text-black
-          hover:text-green-500
-          text-center
           font-roboto
-          leading-normal
-          hover:underline
           mb-6
+          text-center text-black
+          hover:text-green-500 hover:underline
+          text-base
+          leading-normal
         "
         >Or login now</router-link
       >

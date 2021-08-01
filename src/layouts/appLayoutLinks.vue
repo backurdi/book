@@ -2,18 +2,14 @@
   <div id="nav" class="p-4">
     <!--  |
     <router-link to="/about">About</router-link> |
-    <router-link to="/contacts">Contacts</router-link> -->
-    <div class="flex-1 flex flex-col">
-      <nav class="px-4 flex justify-between bg-white h-16 rounded">
+    <router-link to="/contacts">Contacts</router-link>-->
+    <div class="flex flex-1 flex-col">
+      <nav class="flex justify-between px-4 h-16 bg-white rounded">
         <!-- top bar left -->
         <ul class="flex items-center">
           <!-- add button -->
-          <li class="h-12 w-9">
-            <img
-              class="h-full w-full mx-auto"
-              src="@/assets/logo.png"
-              alt="svelte logo"
-            />
+          <li class="w-9 h-12">
+            <img class="mx-auto w-full h-full" src="@/assets/logo.png" alt="svelte logo" />
           </li>
         </ul>
 
@@ -21,51 +17,53 @@
         <ul class="flex items-center">
           <li class="pr-6">
             <router-link to="/" class="hover:text-readee">
-              <HomeIcon class="h-6 w-6 duration-150"></HomeIcon>
+              <HomeIcon class="w-6 h-6 duration-150"></HomeIcon>
             </router-link>
           </li>
           <li class="pr-6">
             <router-link to="/contact" class="hover:text-readee">
-              <LightBulbIcon class="h-6 w-6 duration-150"></LightBulbIcon>
+              <LightBulbIcon class="w-6 h-6 duration-150"></LightBulbIcon>
             </router-link>
           </li>
-          <li class="h-10 w-10">
+          <li class="w-10 h-10 hidden lg:block">
             <div
-              class="
-                h-full
-                w-full
-                rounded-full
-                mx-auto
-                bg-cover
-                relative
-                hover-trigger
-              "
+              class="hover-trigger relative mx-auto w-full h-full bg-cover rounded-full"
               :style="{
                 'background-image': `url(${require('@/assets/images/default-avatar.png')})`,
               }"
             >
               <div class="h-12"></div>
               <div
-                class="
-                  absolute
-                  bg-white
-                  border border-grey-100
-                  hover-target
-                  w-150
-                  right-0
-                  rounded
-                "
+                class="border-grey-100 hover-target absolute right-0 w-150 bg-white border rounded"
               >
                 <ul>
                   <li
+                    class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
                     @click="logOut()"
-                    class="
-                      w-full
-                      cursor-pointer
-                      px-4
-                      py-2
-                      hover:bg-blue-400 hover:text-white
-                    "
+                  >
+                    <span class="font-bold">log out</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="w-10 h-10 lg:hidden">
+            <div
+              class="relative mx-auto w-full h-full bg-cover rounded-full"
+              :style="{
+                'background-image': `url(${require('@/assets/images/default-avatar.png')})`,
+              }"
+              @click="showDropdown = !showDropdown"
+            >
+              <div class="h-12"></div>
+              <div
+                class="border-grey-100 absolute right-0 w-150 bg-white border rounded"
+                v-if="showDropdown"
+              >
+                <ul>
+                  <li
+                    class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
+                    @click="logOut()"
                   >
                     <span class="font-bold">log out</span>
                   </li>
@@ -85,6 +83,9 @@ import { LightBulbIcon, HomeIcon } from "@heroicons/vue/solid";
 export default {
   name: "AppLayoutLinks",
   components: { LightBulbIcon, HomeIcon },
+  data:()=>({
+    showDropdown:false,
+  }),
   methods: {
     logOut() {
       this.$store.dispatch("logout");

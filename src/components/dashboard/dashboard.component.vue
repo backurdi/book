@@ -1,8 +1,8 @@
 <template>
-  <article class="bg-white w-5/6 mx-auto shadow-md rounded p-8">
+  <article class="relative mx-auto px-8 py-4 w-5/6 bg-white rounded shadow-md">
     <div
-      v-if="!this.$store.state.booksArr.length"
-      class="h-full w-full flex justify-center content-center"
+      v-if="!$store.state.booksArr.length"
+      class="flex content-center justify-center w-full h-full"
     >
       <div class="text-center text-3xl font-extrabold">
         <h1 class="text-green-400 uppercase">You have no books</h1>
@@ -10,127 +10,78 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="text-4xl mb-4">Recently read books</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="mb-4 text-2xl lg:text-4xl">Recently read books</h2>
+        <button class="self-start block lg:hidden" @click="showRecentBooks = !showRecentBooks">
+          <BookOpenIcon class="w-6 h-6" />
+        </button>
+      </div>
+      <div
+        class="absolute right-0 top-10 w-full bg-white rounded p-2 ml-4 border border-black z-50 sm:w-2/3 sm:right-8"
+        :class="{ 'hidden': !showRecentBooks, 'block': showRecentBooks }"
+      >
+        <table-component :table-type="'recent-books'" :table-data="$store.state.recentBooksArr" />
+      </div>
       <section class="recent-book flex w-full overflow-hidden">
-        <div class="most-recent-book flex w-2/3">
-          <div class="mr-5 relative">
+        <div class="most-recent-book flex flex-col w-full lg:flex-row">
+          <div class="flex justify-between lg:flex-col lg:mr-5">
             <div
-              class="bg-blue-600 py-1 rounded-t text-white text-xs text-center"
-              v-if="this.$store.state.focusedBook.isCurrent"
-            >
-              Current reading
-            </div>
+              v-if="$store.state.focusedBook.isCurrent"
+              class="py-1 text-center text-white text-xs bg-blue-600 rounded-t"
+            >Current reading</div>
             <img
               class="border-grey-400"
               :class="
-                this.$store.state.focusedBook.isCurrent
+                $store.state.focusedBook.isCurrent
                   ? 'border-4 border-blue-600'
                   : 'border'
               "
-              :src="this.$store.state.focusedBook.image"
+              :src="$store.state.focusedBook.image"
               alt="book cover"
             />
+            <FocusedBookAction class="flex lg:hidden"></FocusedBookAction>
           </div>
           <div class="w-full">
             <div class="flex justify-between mb-4">
-              <h3 class="text-2xl w-5/6">
-                {{ this.$store.state.focusedBook.title }}
-              </h3>
-              <div class="w-1/6 flex justify-end">
-                <button
-                  class="
-                    border border-blue-500
-                    hover:bg-blue-500 hover:text-white
-                    text-blue-500
-                    font-bold
-                    max-h-8
-                    mr-2
-                    rounded
-                  "
-                  @click="updateIsCurrent"
-                >
-                  <BanIcon
-                    class="h-6 w-6"
-                    v-if="this.$store.state.focusedBook.isCurrent"
-                  ></BanIcon>
-                  <BookOpenIcon class="h-6 w-6" v-else></BookOpenIcon>
-                </button>
-                <button
-                  class="
-                    border border-red-500
-                    hover:bg-red-500 hover:text-white
-                    text-red-500
-                    font-bold
-                    max-h-8
-                    rounded
-                  "
-                  @click="deleteBook"
-                >
-                  <XIcon class="w-6 h-6"></XIcon>
-                </button>
-              </div>
+              <h3 class="w-full text-2xl lg:w-5/6">{{ $store.state.focusedBook.title }}</h3>
+              <FocusedBookAction class="hidden lg:flex"></FocusedBookAction>
             </div>
             <p class="mb-2">
               progress
               {{
-                this.$store.state.focusedBook.pagesRead +
-                "/" +
-                this.$store.state.focusedBook.pagesTotal
+              $store.state.focusedBook.pagesRead +
+              "/" +
+              $store.state.focusedBook.pagesTotal
               }}
             </p>
-            <div class="flex mb-4">
-              <progress-bar
-                class="w-5/6"
-                :progress="pagesReadCalculate()"
-              ></progress-bar>
-              <input
-                id="to"
-                v-bind:value="pagesRead"
-                v-on:input="pagesReadLocal = $event.target.value"
-                type="number"
-                :max="`${maxPages}`"
-                min="0"
-                class="
-                  appearance-none
-                  bg-transparent
-                  border-b border-teal-500
-                  w-2/12
-                  text-gray-700
-                  mr-5
-                  px-2
-                  leading-tight
-                  focus:outline-none focus:border-green-700
-                "
-              />
-              <button
-                class="
-                  border border-blue-500
-                  hover:bg-blue-500
-                  text-blue-500
-                  hover:text-white
-                  font-bold
-                  mr-2
-                  rounded-full
-                  flex-initial
-                  px-1
-                "
-                @click="updatePagesRead"
-              >
-                <ArrowUpIcon class="w-6 h-6"></ArrowUpIcon>
-              </button>
+            <div class="flex flex-col mb-4 lg:flex-row">
+              <progress-bar class="w-full lg:w-10/12" :progress="pagesReadCalculate()" />
+              <div class="flex justify-between w-3/6 lg:w-1/6">
+                <input
+                  id="to"
+                  :value="pagesRead"
+                  type="number"
+                  :max="`${maxPages}`"
+                  min="0"
+                  class="border-teal-500 w-8/12 text-gray-700 leading-tight bg-transparent border-b focus:border-green-700 focus:outline-none appearance-none"
+                  @input="pagesReadLocal = $event.target.value"
+                />
+                <button
+                  class="flex-initial ml-2 px-1 text-blue-500 hover:text-white font-bold hover:bg-blue-500 border border-blue-500 rounded-full"
+                  @click="updatePagesRead"
+                >
+                  <ArrowUpIcon class="w-6 h-6" />
+                </button>
+              </div>
             </div>
             <comments-item
-              :comments="this.$store.state.focusedBook.comments"
+              :comments="$store.state.focusedBook.comments"
               @deleteComment="deleteComment($event)"
-            ></comments-item>
+            />
           </div>
         </div>
-        <div class="books-in-progress w-1/3 ml-2">
-          <table-component
-            :tableType="'recent-books'"
-            :tableData="this.$store.state.recentBooksArr"
-          >
-          </table-component>
+        <div class="right-8 top-10 ml-2 w-1/3 hidden lg:block">
+          <table-component :table-type="'recent-books'" :table-data="$store.state.recentBooksArr" />
         </div>
       </section>
     </div>
@@ -139,28 +90,27 @@
 
 <script>
 import {
-  BanIcon,
   BookOpenIcon,
-  XIcon,
   ArrowUpIcon,
-} from "@heroicons/vue/solid";
-import tableComponent from "../table/table.component.vue";
-import progressBar from "./progress-bar/progress-bar.component.vue";
-import commentsItem from "./comments-item/comments-item.component.vue";
+} from '@heroicons/vue/solid';
+import tableComponent from '../table/table.component.vue';
+import progressBar from './progress-bar/progress-bar.component.vue';
+import commentsItem from './comments-item/comments-item.component.vue';
+import FocusedBookAction from './dashboard-elements/focusedBookAction.component.vue';
 
 export default {
-  name: "dashboard",
+  name: 'Dashboard',
   components: {
     tableComponent,
     progressBar,
     commentsItem,
-    BanIcon,
     BookOpenIcon,
-    XIcon,
+    FocusedBookAction,
     ArrowUpIcon,
   },
   data: () => ({
     pagesReadLocal: 0,
+    showRecentBooks: false,
   }),
   computed: {
     maxPages() {
@@ -179,12 +129,12 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchBooks");
+    this.$store.dispatch('fetchBooks');
   },
   methods: {
     updatePagesRead() {
       if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
-        this.$store.dispatch("updateBook", {
+        this.$store.dispatch('updateBook', {
           body: {
             pagesRead:
               this.pagesReadLocal > this.maxPages
@@ -195,12 +145,12 @@ export default {
       }
     },
     updateIsCurrent() {
-      this.$store.dispatch("updateBook", {
+      this.$store.dispatch('updateBook', {
         body: { isCurrent: !this.$store.state.focusedBook.isCurrent },
       });
     },
     deleteBook() {
-      this.$store.dispatch("deleteBook");
+      this.$store.dispatch('deleteBook');
     },
     pagesReadCalculate() {
       const { pagesRead, pagesTotal } = this.$store.state.focusedBook;

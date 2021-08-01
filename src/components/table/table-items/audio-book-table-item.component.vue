@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "audioBookTable",
+  name: "AudioBookTable",
 };
 </script>
 

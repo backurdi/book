@@ -10,6 +10,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.3.0",
     "@heroicons/vue": "^1.0.2",
+    "@tailwindcss/postcss7-compat": "^2.2.7",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "k-progress-v3": "^1.0.0",
@@ -20,20 +21,16 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "postcss": "^7.0.36",
+    "prettier-plugin-tailwind": "^2.2.12",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "autoprefixer": "^9.8.6",
-    "babel-eslint": "^8.0.1",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.0.0",
-    "postcss": "^7.0.36",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.6"
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0"
   },
   "eslintConfig": {
     "root": true,
@@ -42,63 +39,14 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "plugin:prettier/recommended",
-      "airbnb-base",
       "eslint:recommended"
-    ],
-    "plugins": [
-      "prettier"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {
-      "import/prefer-default-export": "off",
-      "quotes": [
-        2,
-        "double",
-        {
-          "avoidEscape": true
-        }
-      ],
-      "no-console": "off",
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-          "ignorePropertyModificationsFor": [
-            "state",
-            "store"
-          ]
-        }
-      ],
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "js": "never",
-          "mjs": "never",
-          "jsx": "never",
-          "ts": "never",
-          "tsx": "never",
-          "vue": "never"
-        }
-      ]
-    }
+    "rules": {}
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx",
-          ".vue"
-        ]
-      }
-    }
-  },
+  "settings": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",

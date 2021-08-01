@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col items-center w-full">
     <h3
-      class="text-grey-700 md:text-xl lg:text-3xl w-3/6 text-center font-bold"
+      class="text-grey-700 w-3/6 text-center font-bold md:text-xl lg:text-3xl"
     >
       Come in contact with us, send us a question, idea or anythin you want ❤️
     </h3>
     <div
-      class="bg-readee text-white rounded mb-10 px-12 duration-150"
+      class="mb-10 px-12 text-white bg-readee rounded duration-150"
       :class="{ 'h-0': !emailSent, 'h-full py-2': emailSent }"
     >
       <p
@@ -18,159 +18,171 @@
     </div>
     <form class="w-1/2">
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div class="mb-6 px-3 w-full md:mb-0 md:w-1/2">
           <label
             class="
               block
-              uppercase
-              tracking-wide
+              mb-2
               text-gray-700 text-xs
               font-bold
-              mb-2
+              tracking-wide
+              uppercase
             "
             for="grid-first-name"
           >
             First Name
           </label>
           <input
+            id="grid-first-name"
             v-model="firstName"
             class="
-              appearance-none
-              block
-              w-full
-              bg-white
-              border border-white
-              text-gray-700
               borde
-              rounded
-              py-3
-              px-4
+              block
               mb-3
+              px-4
+              py-3
+              w-full
+              text-gray-700
               leading-tight
-              focus:outline-none focus:bg-white focus:border-gray-500
+              bg-white
+              focus:bg-white
+              border
+              focus:border-gray-500
+              border-white
+              rounded
+              focus:outline-none
+              appearance-none
             "
             :class="{ 'border-red-500': firstNameError }"
-            id="grid-first-name"
             type="text"
             placeholder="Jane"
           />
-          <p class="text-red-500 text-xs italic" v-if="firstNameError">
+          <p v-if="firstNameError" class="text-red-500 text-xs italic">
             Please fill out this field.
           </p>
         </div>
-        <div class="w-full md:w-1/2 px-3">
+        <div class="px-3 w-full md:w-1/2">
           <label
             class="
               block
-              uppercase
-              tracking-wide
+              mb-2
               text-gray-700 text-xs
               font-bold
-              mb-2
+              tracking-wide
+              uppercase
             "
             for="grid-last-name"
           >
             Last Name
           </label>
           <input
+            id="grid-last-name"
             v-model="lastName"
             class="
-              appearance-none
               block
-              w-full
-              bg-white
-              text-gray-700
-              border border-white
-              rounded
-              py-3
               px-4
+              py-3
+              w-full
+              text-gray-700
               leading-tight
-              focus:outline-none focus:bg-white focus:border-gray-500
+              bg-white
+              focus:bg-white
+              border
+              focus:border-gray-500
+              border-white
+              rounded
+              focus:outline-none
+              appearance-none
             "
-            id="grid-last-name"
             type="text"
             placeholder="Doe"
           />
         </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
+        <div class="px-3 w-full">
           <label
             class="
               block
-              uppercase
-              tracking-wide
+              mb-2
               text-gray-700 text-xs
               font-bold
-              mb-2
+              tracking-wide
+              uppercase
             "
             for="grid-password"
           >
             E-mail
           </label>
           <input
+            id="email"
             v-model="email"
             class="
-              appearance-none
               block
-              w-full
-              bg-white
-              text-gray-700
-              border border-white
-              rounded
-              py-3
-              px-4
               mb-3
+              px-4
+              py-3
+              w-full
+              text-gray-700
               leading-tight
-              focus:outline-none focus:bg-white focus:border-gray-500
+              bg-white
+              focus:bg-white
+              border
+              focus:border-gray-500
+              border-white
+              rounded
+              focus:outline-none
+              appearance-none
             "
             :class="{ 'border-red-500': emailError }"
-            id="email"
             type="email"
           />
-          <p class="text-red-500 text-xs italic" v-if="emailError">
+          <p v-if="emailError" class="text-red-500 text-xs italic">
             Please fill out this field.
           </p>
         </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
+        <div class="px-3 w-full">
           <label
             class="
               block
-              uppercase
-              tracking-wide
+              mb-2
               text-gray-700 text-xs
               font-bold
-              mb-2
+              tracking-wide
+              uppercase
             "
             for="grid-password"
           >
             Message
           </label>
           <textarea
+            id="message"
             v-model="message"
             class="
               no-resize
-              appearance-none
               block
-              w-full
-              bg-white
-              text-gray-700
-              border border-white
-              rounded
-              py-3
-              px-4
               mb-3
-              leading-tight
-              focus:outline-none focus:bg-white focus:border-gray-500
+              px-4
+              py-3
+              w-full
               h-48
+              text-gray-700
+              leading-tight
+              bg-white
+              focus:bg-white
+              border
+              focus:border-gray-500
+              border-white
+              rounded
+              focus:outline-none
+              appearance-none
               resize-none
             "
             :class="{ 'border-red-500': messageError }"
-            id="message"
           ></textarea>
-          <p class="text-red-500 text-xs italic" v-if="messageError">
+          <p v-if="messageError" class="text-red-500 text-xs italic">
             Please fill out this field.
           </p>
         </div>
@@ -178,21 +190,23 @@
       <div class="md:flex md:items-center">
         <div class="md:w-1/3">
           <button
-            @click="sendMessage"
             class="
-              shadow
               bg-teal-400
               hover:bg-teal-400
-              focus:shadow-outline focus:outline-none
-              bg-white
-              text-black
-              hover:bg-readee hover:text-white
-              font-bold
-              py-2
+              focus:shadow-outline
               px-4
+              py-2
+              text-black
+              hover:text-white
+              font-bold
+              hover:bg-readee
+              bg-white
               rounded
+              focus:outline-none
+              shadow
             "
             type="button"
+            @click="sendMessage"
           >
             Send
           </button>
@@ -205,7 +219,7 @@
 
 <script>
 export default {
-  name: "contact",
+  name: "Contact",
   data: () => ({
     firstNameError: false,
     emailError: false,

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "bookTable",
+  name: "BookTable",
 };
 </script>
 

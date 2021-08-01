@@ -1,23 +1,23 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="w-5/6 mx-auto mb-4 flex">
+  <div class="flex mb-4 mx-auto w-5/6">
     <button
       class="
-        border
         flex
-        border-black
-        hover:bg-readee hover:text-white
-        duration-150
-        text-black
-        font-bold
-        py-2
-        px-2
-        rounded
         items-center
+        px-2
+        py-2
+        text-black
+        hover:text-white
+        font-bold
+        hover:bg-readee
+        border border-black
+        rounded
+        duration-150
       "
       @click="addBookPopup"
     >
-      <PlusIcon class="h-6 w-6 mr-2"></PlusIcon>
+      <PlusIcon class="mr-2 w-6 h-6"></PlusIcon>
       <span class="object-contain">Add book</span>
     </button>
   </div>
@@ -26,18 +26,18 @@
       as="div"
       static
       class="fixed z-10 inset-0 overflow-y-auto"
-      @close="open = false"
       :open="open"
+      @close="open = false"
     >
       <div
         class="
           flex
           items-end
           justify-center
-          min-h-screen
+          pb-20
           pt-4
           px-4
-          pb-20
+          min-h-screen
           text-center
           sm:block sm:p-0
         "
@@ -75,47 +75,49 @@
             class="
               inline-block
               align-bottom
+              w-4/6
+              text-left
               bg-white
               rounded-lg
-              text-left
-              overflow-hidden
-              w-4/6
               shadow-xl
+              overflow-hidden
               transform
               transition-all
-              sm:my-8 sm:align-middle
+              sm:align-middle sm:my-8
             "
           >
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="pb-4 pt-5 px-4 bg-white sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <input
+                  id="username"
                   v-model="searchText"
                   class="
-                    shadow
-                    appearance-none
-                    border
-                    rounded
-                    w-full
-                    py-2
+                    focus:shadow-outline
                     px-3
+                    py-2
+                    w-full
                     text-gray-700
                     leading-tight
-                    focus:outline-none focus:shadow-outline
+                    border
+                    rounded
+                    focus:outline-none
+                    shadow
+                    appearance-none
                   "
-                  id="username"
                   type="text"
                   placeholder="Search"
                 />
                 <button
                   class="
-                    bg-blue-500
-                    hover:bg-blue-700
+                    focus:shadow-outline
+                    px-4
+                    py-2
                     text-white
                     font-bold
-                    py-2
-                    px-4
+                    bg-blue-500
+                    hover:bg-blue-700
                     rounded
-                    focus:outline-none focus:shadow-outline
+                    focus:outline-none
                   "
                   type="button"
                   @click="getBooks"

@@ -1,8 +1,6 @@
-/* eslint no-underscore-dangle: 0 */
 import { createStore } from "vuex";
 import storePlugins from "../plugins/storePlugin";
 import router from "../router";
-import { sortBooks } from "./storeHelper";
 
 const getDefaultState = () => ({
   focusedBook: {},
@@ -51,21 +49,21 @@ const store = createStore({
     },
     deleteComment(state, commentId) {
       const commentToDelete = state.focusedBook.comments.find(
-        (comment) => comment._id === commentId,
+        (comment) => comment._id === commentId
       );
       state.focusedBook.comments.splice(
         state.focusedBook.comments.indexOf(commentToDelete),
-        1,
+        1
       );
     },
     changeFocusedBook(state, bookId) {
       state.recentBooksArr.unshift(state.focusedBook);
       state.focusedBook = state.recentBooksArr.find(
-        (book) => book._id === bookId,
+        (book) => book._id === bookId
       );
       state.recentBooksArr.splice(
         state.recentBooksArr.indexOf(state.focusedBook),
-        1,
+        1
       );
     },
   },
@@ -153,3 +151,13 @@ const store = createStore({
 });
 
 export default store;
+
+const sortBooks = (state, books) => {
+  const booksArr = [...books];
+  state.booksArr = [...books];
+  state.focusedBook = books.find((book) => book.isCurrent)
+    ? books.find((book) => book.isCurrent)
+    : books[0];
+  booksArr.splice(booksArr.indexOf(state.focusedBook) + 1, 1);
+  state.recentBooksArr = booksArr;
+};

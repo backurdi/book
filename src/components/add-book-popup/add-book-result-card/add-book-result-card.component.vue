@@ -1,45 +1,49 @@
 <template>
   <div
-    class="
-      border-r border-b border-l border-gray-400
-      lg:border-l-0 lg:border-t lg:border-gray-400
-      bg-white
-      rounded-b
-      lg:rounded-b-none lg:rounded-r
-      p-4
-      flex
-      leading-normal
-      max-w-sm
-      w-full
-      lg:max-w-full lg:flex
-    "
     v-for="(data, index) in cardData"
     :key="index"
+    class="
+      flex
+      p-4
+      w-full
+      max-w-sm
+      leading-normal
+      bg-white
+      border-b border-l border-r border-gray-400
+      rounded-b
+      lg:flex
+      lg:max-w-full
+      lg:border-l-0
+      lg:border-t
+      lg:border-gray-400
+      lg:rounded-b-none
+      lg:rounded-r
+    "
   >
     <img
       v-if="data.volumeInfo.imageLinks"
-      class="rounded h-150 mr-7"
+      class="mr-7 h-150 rounded"
       :src="data.volumeInfo.imageLinks.thumbnail"
       alt="book cover"
     />
     <img
       v-else
-      class="rounded h-150 mr-7"
+      class="mr-7 h-150 rounded"
       src="../../../assets/images/default-img.png"
     />
     <div class="w-full">
       <div class="mb-8">
-        <div class="text-gray-900 font-bold text-xl mb-2">
+        <div class="mb-2 text-gray-900 text-xl font-bold">
           {{ data.volumeInfo.title }}
         </div>
         <p class="text-gray-700 text-base">{{ data.volumeInfo.description }}</p>
       </div>
-      <div class="w-full flex items-center justify-between">
+      <div class="flex items-center justify-between w-full">
         <div class="text-sm">
           <p
-            class="text-gray-900 leading-none"
             v-for="(author, index) in data.volumeInfo.authors"
             :key="index"
+            class="text-gray-900 leading-none"
           >
             {{ author }}
           </p>
@@ -48,12 +52,13 @@
 
         <button
           class="
-            border border-blue-500
-            hover:bg-blue-700 hover:text-white
-            text-blue-500
-            font-bold
-            py-2
             px-2
+            py-2
+            text-blue-500
+            hover:text-white
+            font-bold
+            hover:bg-blue-700
+            border border-blue-500
             rounded
           "
           @click="addBook(data.volumeInfo)"

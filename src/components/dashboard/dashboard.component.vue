@@ -25,20 +25,22 @@
       <section class="recent-book flex w-full overflow-hidden">
         <div class="most-recent-book flex flex-col w-full lg:flex-row">
           <div class="flex justify-between lg:flex-col lg:mr-5">
-            <div
-              v-if="$store.state.focusedBook.isCurrent"
-              class="py-1 text-center text-white text-xs bg-blue-600 rounded-t"
-            >Current reading</div>
-            <img
-              class="border-grey-400"
-              :class="
+            <div>
+              <p
+                v-if="$store.state.focusedBook.isCurrent"
+                class="py-1 text-center text-white text-xs bg-blue-600 rounded-t"
+              >Current reading</p>
+              <img
+                class="border-grey-400"
+                :class="
                 $store.state.focusedBook.isCurrent
                   ? 'border-4 border-blue-600'
                   : 'border'
               "
-              :src="$store.state.focusedBook.image"
-              alt="book cover"
-            />
+                :src="$store.state.focusedBook.image"
+                alt="book cover"
+              />
+            </div>
             <FocusedBookAction class="flex lg:hidden"></FocusedBookAction>
           </div>
           <div class="w-full">
@@ -133,7 +135,7 @@ export default {
   },
   methods: {
     updatePagesRead() {
-      // if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
+      if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
         this.$store.dispatch('updateBook', {
           body: {
             pagesRead:
@@ -142,7 +144,7 @@ export default {
                 : this.pagesReadLocal,
           },
         });
-      // }
+      }
     },
     pagesReadCalculate() {
       const { pagesRead, pagesTotal } = this.$store.state.focusedBook;

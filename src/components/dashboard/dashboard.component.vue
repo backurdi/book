@@ -11,9 +11,14 @@
     </div>
     <div v-else>
       <div class="flex items-center justify-between">
-        <h2 class="mb-4 text-2xl lg:text-4xl">Recently read books</h2>
-        <button class="self-start block lg:hidden" @click="showRecentBooks = !showRecentBooks">
-          <BookOpenIcon class="w-6 h-6" />
+        <h2 class="mb-4 text-2xl lg:text-4xl">Readings</h2>
+        <button
+          class="flex border-2 border-readee text-readee p-1 rounded self-start block lg:hidden hover:bg-readee hover:text-white"
+          @click="showRecentBooks = !showRecentBooks"
+        >
+          <p class="mr-2">Books</p>
+          <BookOpenIcon class="w-6 h-6" v-if="!showRecentBooks" />
+          <XIcon class="w-6 h-6" v-if="showRecentBooks" />
         </button>
       </div>
       <div
@@ -94,6 +99,7 @@
 import {
   BookOpenIcon,
   ArrowUpIcon,
+  XIcon
 } from '@heroicons/vue/solid';
 import tableComponent from '../table/table.component.vue';
 import progressBar from './progress-bar/progress-bar.component.vue';
@@ -109,6 +115,7 @@ export default {
     BookOpenIcon,
     FocusedBookAction,
     ArrowUpIcon,
+    XIcon,
   },
   data: () => ({
     pagesReadLocal: 0,

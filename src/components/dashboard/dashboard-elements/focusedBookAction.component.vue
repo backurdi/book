@@ -5,7 +5,7 @@
       @click="updateIsCurrent()"
     >
       <BanIcon v-if="$store.state.focusedBook.isCurrent" class="w-6 h-6" />
-      <BookOpenIcon v-else class="w-6 h-6" />
+      <BookmarkIcon v-else class="w-6 h-6" />
     </button>
     <button
       class="max-h-8 text-red-500 hover:text-white font-bold hover:bg-red-500 border border-red-500 rounded"
@@ -19,12 +19,12 @@
 <script>
 import {
   BanIcon,
-  BookOpenIcon,
+  BookmarkIcon,
   XIcon,
 } from '@heroicons/vue/solid';
 export default {
     name:'Focused book action',
-    components:{BanIcon,BookOpenIcon,XIcon},
+    components:{BanIcon,BookmarkIcon, XIcon},
     methods:{
         updateIsCurrent() {
       this.$store.dispatch('updateBook', {

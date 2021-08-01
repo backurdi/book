@@ -70,7 +70,7 @@
                 />
                 <button
                   class="flex-initial ml-2 px-1 text-blue-500 hover:text-white font-bold hover:bg-blue-500 border border-blue-500 rounded-full"
-                  @click="updatePagesRead"
+                  @click="updatePagesRead()"
                 >
                   <ArrowUpIcon class="w-6 h-6" />
                 </button>

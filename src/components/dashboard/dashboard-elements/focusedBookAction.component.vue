@@ -2,7 +2,7 @@
   <div class="flex justify-end w-1/6">
     <button
       class="mr-2 max-h-8 text-blue-500 hover:text-white font-bold hover:bg-blue-500 border border-blue-500 rounded"
-      @click="updateIsCurrent"
+      @click="updateIsCurrent()"
     >
       <BanIcon v-if="$store.state.focusedBook.isCurrent" class="w-6 h-6" />
       <BookOpenIcon v-else class="w-6 h-6" />

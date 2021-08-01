@@ -119,8 +119,8 @@ const store = createStore({
     /* eslint-disable */
     searchBooks({ state }, data) {
       return new Promise((resolve) => {
-        this.$api.Books.post(data).then(() => {
-          resolve("");
+        this.$api.books.searchBooks(data).then((data) => {
+          resolve(data);
         });
       });
     },

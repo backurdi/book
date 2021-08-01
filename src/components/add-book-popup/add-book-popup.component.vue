@@ -44,7 +44,7 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="inline-block align-bottom w-4/6 text-left bg-white rounded-lg shadow-xl overflow-hidden transform transition-all sm:align-middle sm:my-8"
+            class="inline-block align-bottom w-full text-left bg-white rounded-lg shadow-xl overflow-hidden transform transition-all sm:align-middle sm:my-8 lg:w-4/6"
           >
             <div class="pb-4 pt-5 px-4 bg-white sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">

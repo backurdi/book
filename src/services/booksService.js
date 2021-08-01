@@ -6,11 +6,11 @@ export default class BooksService extends ModelApiService {
     super("books");
   }
 
-  static async searchBooks(id) {
+  async searchBooks(id) {
     try {
       if (!id) throw Error("Id is not provided");
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${id}`,
+        `https://www.googleapis.com/books/v1/volumes?q=${id}`
       );
       return await response.json();
     } catch (err) {

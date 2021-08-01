@@ -2,19 +2,7 @@
 <template>
   <div class="flex mb-4 mx-auto w-5/6">
     <button
-      class="
-        flex
-        items-center
-        px-2
-        py-2
-        text-black
-        hover:text-white
-        font-bold
-        hover:bg-readee
-        border border-black
-        rounded
-        duration-150
-      "
+      class="flex items-center px-2 py-2 text-black hover:text-white font-bold hover:bg-readee border border-black rounded duration-150"
       @click="addBookPopup"
     >
       <PlusIcon class="mr-2 w-6 h-6"></PlusIcon>
@@ -30,17 +18,7 @@
       @close="open = false"
     >
       <div
-        class="
-          flex
-          items-end
-          justify-center
-          pb-20
-          pt-4
-          px-4
-          min-h-screen
-          text-center
-          sm:block sm:p-0
-        "
+        class="flex items-end justify-center pb-20 pt-4 px-4 min-h-screen text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -51,17 +29,11 @@
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay
-            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-          />
+          <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span
-          class="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-          >&#8203;</span
-        >
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -72,58 +44,22 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="
-              inline-block
-              align-bottom
-              w-4/6
-              text-left
-              bg-white
-              rounded-lg
-              shadow-xl
-              overflow-hidden
-              transform
-              transition-all
-              sm:align-middle sm:my-8
-            "
+            class="inline-block align-bottom w-4/6 text-left bg-white rounded-lg shadow-xl overflow-hidden transform transition-all sm:align-middle sm:my-8"
           >
             <div class="pb-4 pt-5 px-4 bg-white sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <input
                   id="username"
                   v-model="searchText"
-                  class="
-                    focus:shadow-outline
-                    px-3
-                    py-2
-                    w-full
-                    text-gray-700
-                    leading-tight
-                    border
-                    rounded
-                    focus:outline-none
-                    shadow
-                    appearance-none
-                  "
+                  class="focus:shadow-outline px-3 py-2 w-full text-gray-700 leading-tight border rounded focus:outline-none shadow appearance-none"
                   type="text"
                   placeholder="Search"
                 />
                 <button
-                  class="
-                    focus:shadow-outline
-                    px-4
-                    py-2
-                    text-white
-                    font-bold
-                    bg-blue-500
-                    hover:bg-blue-700
-                    rounded
-                    focus:outline-none
-                  "
+                  class="focus:shadow-outline px-4 py-2 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded focus:outline-none"
                   type="button"
-                  @click="getBooks"
-                >
-                  Search
-                </button>
+                  @click="searchBooks"
+                >Search</button>
               </div>
             </div>
             <AddBookResultCard

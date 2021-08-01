@@ -24,7 +24,17 @@ import {
 } from '@heroicons/vue/solid';
 export default {
     name:'Focused book action',
-    components:{BanIcon,BookOpenIcon,XIcon}
+    components:{BanIcon,BookOpenIcon,XIcon},
+    methods:{
+        updateIsCurrent() {
+      this.$store.dispatch('updateBook', {
+        body: { isCurrent: !this.$store.state.focusedBook.isCurrent },
+      });
+    },
+    deleteBook() {
+      this.$store.dispatch('deleteBook');
+    },
+    }
 
 }
 </script>

@@ -125,14 +125,20 @@ const store = createStore({
       });
     },
     addComment({ state }, data) {
-      return this.$api.comments
-        .post({
-          ...data,
-          bookId: state.focusedBook._id,
-        })
-        .then((updatedBook) => {
-          return this.commit("setBook", updatedBook.data);
-        });
+      return new Promise((resolve, reject) => {
+        this.$api.comments
+          .post({
+            ...data,
+            bookId: state.focusedBook._id,
+          })
+          .then((updatedBook) => {
+            resolve("");
+            return this.commit("setBook", updatedBook.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
     },
     /* eslint-disable */
     deleteComment({ state }, commentId) {

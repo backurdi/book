@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     updatePagesRead() {
-      if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
+      // if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
         this.$store.dispatch('updateBook', {
           body: {
             pagesRead:
@@ -142,15 +142,7 @@ export default {
                 : this.pagesReadLocal,
           },
         });
-      }
-    },
-    updateIsCurrent() {
-      this.$store.dispatch('updateBook', {
-        body: { isCurrent: !this.$store.state.focusedBook.isCurrent },
-      });
-    },
-    deleteBook() {
-      this.$store.dispatch('deleteBook');
+      // }
     },
     pagesReadCalculate() {
       const { pagesRead, pagesTotal } = this.$store.state.focusedBook;

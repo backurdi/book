@@ -70,7 +70,7 @@
                 />
                 <button
                   class="flex-initial ml-2 px-1 text-blue-500 hover:text-white font-bold hover:bg-blue-500 border border-blue-500 rounded-full"
-                  @click="updatePagesRead()"
+                  @click="updatePagesRead"
                 >
                   <ArrowUpIcon class="w-6 h-6" />
                 </button>
@@ -135,6 +135,7 @@ export default {
   },
   methods: {
     updatePagesRead() {
+      this.pagesReadLocal = 22
       if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
         this.$store.dispatch('updateBook', {
           body: {

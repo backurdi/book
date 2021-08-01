@@ -23,10 +23,10 @@ export class ModelApiService extends ReadOnlyApiService {
     });
   }
 
-  async put(id, data = {}) {
+  async patch(id, data = {}) {
     if (!id) throw Error("Id is not provided");
     try {
-      const response = await axios.put(this.getUrl(id), data, {
+      const response = await axios.patch(this.getUrl(id), data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

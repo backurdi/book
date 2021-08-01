@@ -100,7 +100,7 @@ const store = createStore({
     /* eslint-disable */
     updateBook({ state }, data) {
       return this.$api.books
-        .put(state.focusedBook._id, data.body)
+        .patch(state.focusedBook._id, data.body)
         .then((updatedBook) => {
           return this.commit("setBook", updatedBook.data.data);
         });

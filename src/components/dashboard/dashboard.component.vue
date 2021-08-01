@@ -135,7 +135,6 @@ export default {
   },
   methods: {
     updatePagesRead() {
-      this.pagesReadLocal = 22
       if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
         this.$store.dispatch('updateBook', {
           body: {

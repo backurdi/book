@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center w-full">
     <h3
-      class="text-grey-700 w-3/6 text-center font-bold md:text-xl lg:text-3xl"
+      class="text-grey-700 w-5/6 text-center font-bold md:text-xl lg:text-3xl lg:w-3/6"
     >Come in contact with us, send us a question, idea or anythin you want ❤️</h3>
     <div
       class="mb-10 px-12 text-white bg-readee rounded duration-150"
@@ -12,7 +12,7 @@
         :class="{ visible: emailSent, invisible: !emailSent }"
       >Thanks a lot for your message</p>
     </div>
-    <form class="w-1/2">
+    <form class="w-5/6 mb-20 lg:w-1/2">
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="mb-6 px-3 w-full md:mb-0 md:w-1/2">
           <label
@@ -25,7 +25,6 @@
             class="borde block mb-3 px-4 py-3 w-full text-gray-700 leading-tight bg-white focus:bg-white border focus:border-gray-500 border-white rounded focus:outline-none appearance-none"
             :class="{ 'border-red-500': firstNameError }"
             type="text"
-            placeholder="Jane"
           />
           <p v-if="firstNameError" class="text-red-500 text-xs italic">Please fill out this field.</p>
         </div>
@@ -39,7 +38,6 @@
             v-model="lastName"
             class="block px-4 py-3 w-full text-gray-700 leading-tight bg-white focus:bg-white border focus:border-gray-500 border-white rounded focus:outline-none appearance-none"
             type="text"
-            placeholder="Doe"
           />
         </div>
       </div>

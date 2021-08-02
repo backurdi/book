@@ -8,6 +8,7 @@ const getDefaultState = () => ({
   booksArr: [],
   user: {},
   token: "",
+  showRecentBooks: false,
 });
 
 const store = createStore({
@@ -65,6 +66,12 @@ const store = createStore({
         state.recentBooksArr.indexOf(state.focusedBook),
         1
       );
+
+      this.commit("toggleShowRecentBooks");
+    },
+
+    toggleShowRecentBooks(state) {
+      state.showRecentBooks = !state.showRecentBooks;
     },
   },
   actions: {

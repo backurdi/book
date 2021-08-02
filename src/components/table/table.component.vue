@@ -1,10 +1,6 @@
 <template>
   <div>
-    <recent-book-table-item
-      v-if="tableType === 'recent-books'"
-      :table-data="tableData"
-      @changeFocusedBook="changeFocusedBook($event)"
-    ></recent-book-table-item>
+    <recent-book-table-item v-if="tableType === 'recent-books'" :table-data="tableData"></recent-book-table-item>
     <audio-book-table-item v-if="tableType === 'audio-books'" :table-data="tableData"></audio-book-table-item>
     <book-table-item v-if="tableType === 'books'" :table-data="tableData"></book-table-item>
   </div>

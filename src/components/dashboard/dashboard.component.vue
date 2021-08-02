@@ -14,7 +14,7 @@
         <h2 class="mb-4 text-2xl lg:text-4xl">Readings</h2>
         <button
           class="flex border-2 border-readee text-readee p-1 rounded self-start block lg:hidden hover:bg-readee hover:text-white"
-          @click="showRecentBooks = !showRecentBooks"
+          @click="toggleShowRecentBooks"
         >
           <p class="mr-2">Books</p>
           <BookOpenIcon class="w-6 h-6" v-if="!showRecentBooks" />
@@ -119,7 +119,6 @@ export default {
   },
   data: () => ({
     pagesReadLocal: 0,
-    showRecentBooks: false,
   }),
   computed: {
     maxPages() {
@@ -128,6 +127,9 @@ export default {
     pagesRead() {
       return this.$store.state.focusedBook.pagesRead;
     },
+    showRecentBooks(){
+      return this.$store.state.showRecentBooks;
+    }
   },
   watch: {
     pagesRead: {
@@ -141,6 +143,9 @@ export default {
     this.$store.dispatch('fetchBooks');
   },
   methods: {
+    toggleShowRecentBooks(){
+      this.$store.commit('toggleShowRecentBooks');
+    },
     updatePagesRead() {
       if (this.pagesReadLocal !== this.pagesRead && this.pagesReadLocal > 0) {
         this.$store.dispatch('updateBook', {

@@ -17,8 +17,12 @@
       ></k-progress>
     </div>
     <button
-      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded"
+      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded hidden lg:block"
       @click="changeFocusedBook(recentBook._id)"
+    >View</button>
+    <button
+      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded lg:hidden"
+      @click="changeFocusedBookMobile(recentBook._id)"
     >View</button>
   </div>
 </template>
@@ -46,6 +50,10 @@ export default {
     },
     changeFocusedBook(bookId) {
       this.$store.commit("changeFocusedBook", bookId);
+    },
+    changeFocusedBookMobile(bookId) {
+      this.$store.commit("changeFocusedBook", bookId);
+      this.$store.commit("toggleShowRecentBooks");
     },
   },
 };

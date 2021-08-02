@@ -66,8 +66,6 @@ const store = createStore({
         state.recentBooksArr.indexOf(state.focusedBook),
         1
       );
-
-      this.commit("toggleShowRecentBooks");
     },
 
     toggleShowRecentBooks(state) {

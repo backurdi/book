@@ -5,9 +5,9 @@
     class="flex p-3 border rounded"
     :class="[index === 0 ? '' : 'mt-3']"
   >
-    <img class="border-grey-400 mr-4 w-8 border" :src="recentBook.image" alt />
+    <img class="border-grey-400 mr-4 w-8 border" :src="recentBook.image ?? require(`@/assets/images/no-book-cover.png`)" alt />
     <div class="w-4/6">
-      <p>{{ recentBook.title }}</p>
+      <p>{{ recentBook.title.length > 18 ?  `${recentBook.title.substring(0, 18)}...` : recentBook.title}}</p>
       <k-progress
         :percent="
           Math.round((recentBook.pagesRead / recentBook.pagesTotal) * 100)

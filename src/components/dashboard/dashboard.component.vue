@@ -13,7 +13,7 @@
       <div class="flex items-center justify-between">
         <h2 class="mb-4 text-2xl lg:text-4xl">Readings</h2>
         <button
-          class="flex border-2 border-readee text-readee p-1 rounded self-start block lg:hidden hover:bg-readee hover:text-white"
+          class="flex border-2 border-readee text-readee p-1 rounded self-start lg:hidden hover:bg-readee hover:text-white"
           @click="toggleShowRecentBooks"
         >
           <p class="mr-2">Books</p>
@@ -25,24 +25,24 @@
         class="absolute right-0 top-10 w-full bg-white rounded p-2 ml-4 border border-black z-50 sm:w-2/3 sm:right-8"
         :class="{ 'hidden': !showRecentBooks, 'block': showRecentBooks }"
       >
-        <table-component :table-type="'recent-books'" :table-data="$store.state.recentBooksArr" />
+        <table-component :table-type="'recent-books'" :table-data="recentBooksArr" />
       </div>
       <section class="recent-book flex w-full overflow-hidden">
         <div class="most-recent-book flex flex-col w-full lg:flex-row">
           <div class="flex justify-between lg:flex-col lg:mr-5">
             <div>
               <p
-                v-if="$store.state.focusedBook.isCurrent"
+                v-if="focusedBook.isCurrent"
                 class="py-1 text-center text-white text-xs bg-blue-600 rounded-t"
               >Current reading</p>
               <img
                 class="border-grey-400"
                 :class="
-                $store.state.focusedBook.isCurrent
+                focusedBook.isCurrent
                   ? 'border-4 border-blue-600'
                   : 'border'
               "
-                :src="$store.state.focusedBook.image"
+                :src="focusedBook.image ?? require(`@/assets/images/no-book-cover.png`)"
                 alt="book cover"
               />
             </div>
@@ -50,15 +50,15 @@
           </div>
           <div class="w-full">
             <div class="flex justify-between mb-4">
-              <h3 class="w-full text-2xl lg:w-5/6">{{ $store.state.focusedBook.title }}</h3>
+              <h3 class="w-full text-2xl lg:w-5/6">{{ focusedBook.title }}</h3>
               <FocusedBookAction class="hidden lg:flex"></FocusedBookAction>
             </div>
             <p class="mb-2">
               progress
               {{
-              $store.state.focusedBook.pagesRead +
+              focusedBook.pagesRead +
               "/" +
-              $store.state.focusedBook.pagesTotal
+              focusedBook.pagesTotal
               }}
             </p>
             <div class="flex flex-col mb-4 lg:flex-row">
@@ -82,7 +82,7 @@
               </div>
             </div>
             <comments-item
-              :comments="$store.state.focusedBook.comments"
+              :comments="focusedBook.comments"
               @deleteComment="deleteComment($event)"
             />
           </div>
@@ -129,6 +129,12 @@ export default {
     },
     showRecentBooks(){
       return this.$store.state.showRecentBooks;
+    },
+    focusedBook(){
+      return this.$store.state.focusedBook
+    },
+    recentBooksArr(){
+      return this.$store.state.recentBooksArr
     }
   },
   watch: {

@@ -102,13 +102,13 @@ export default {
   methods: {
     async searchBooks() {
       const res = await this.$store.dispatch("searchBooks", this.searchText);
-      this.booksData = res.items;
+      this.booksData = res;
     },
     async addBook(data) {
       const body = {
         title: data.title,
         pagesTotal: data.pageCount,
-        image: data.imageLinks.thumbnail,
+        image: data.imageLinks?.thumbnail,
         bookType: data.printType,
         isbn: data.industryIdentifiers[0].identifier,
       };

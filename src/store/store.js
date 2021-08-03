@@ -164,11 +164,11 @@ const store = createStore({
 export default store;
 
 const sortBooks = (state, books) => {
+  // Bug where wrong book is displayed in recent books debug splice
   const booksArr = [...books];
+  const focusedBook = books.find((book) => book.isCurrent)
   state.booksArr = [...books];
-  state.focusedBook = books.find((book) => book.isCurrent)
-    ? books.find((book) => book.isCurrent)
-    : books[0];
-  booksArr.splice(booksArr.indexOf(state.focusedBook) + 1, 1);
+  state.focusedBook = focusedBook ? focusedBook : books[0];
+  booksArr.splice(booksArr.indexOf(focusedBook), 1);
   state.recentBooksArr = booksArr;
 };

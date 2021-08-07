@@ -9,12 +9,9 @@
         :class="{ visible: displayError, invisible: !displayError }"
       >{{errorMessage}}</p>
     </div>
-    <textarea
-      v-model="text"
-      class="px-3 py-2 w-full text-gray-700 border rounded-lg focus:outline-none"
-      rows="6"
-      placeholder="Add comments to what you have read"
-    ></textarea>
+    <div class="mb-5">
+      <quill-editor theme="snow" v-model:content="text" contentType="html" style="min-height:200px;"/>
+    </div>
     <div class="flex w-full lg:w-8/12">
       <div class="flex flex-col w-3/12">
         <label for="from" class="w-2/6">From:</label>
@@ -49,6 +46,8 @@
 </template>
 
 <script>
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
   name: "comment text field",
   data: () => ({
@@ -56,8 +55,9 @@ export default {
     pagesFrom: 0,
     pagesTo: 0,
     errorMessage: '',
-    displayError: false
+    displayError: false,
   }),
+  components:{QuillEditor},
   computed: {
     maxPages() {
       return this.$store.state.focusedBook.pagesTotal;

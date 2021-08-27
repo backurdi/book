@@ -27,7 +27,6 @@ export default {
     domDecoder (str) {
       let parser = new DOMParser();
       let dom = parser.parseFromString('<!doctype html><body>' + str, 'text/html');
-      console.log(dom.body.textContent);
       return dom.body.textContent;
     },
   },

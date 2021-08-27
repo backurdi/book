@@ -14,6 +14,16 @@ export default {
   components: {
     AppLayoutLinks,
   },
+  mounted(){
+    if(localStorage.getItem("jwt")){
+      this.getMe();
+    }
+  },
+  methods:{
+    getMe(){
+      return this.$store.dispatch('getMe');
+    }
+  }
 };
 </script>
 

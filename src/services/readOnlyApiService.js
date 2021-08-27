@@ -1,5 +1,6 @@
 import { BaseApiService } from "./baseApiService";
 import { handleErrors } from "./servicesHelper";
+import axios from "axios";
 
 export class ReadOnlyApiService extends BaseApiService {
   async fetch() {
@@ -19,19 +20,22 @@ export class ReadOnlyApiService extends BaseApiService {
   }
 
   async get(id) {
-    try {
-      if (!id) throw Error("Id is not provided");
-      const response = await fetch(this.getUrl(id), {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
+      return new Promise((resolve, reject) => {
+        axios
+          .get(this.getUrl(id), {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          })
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch((err) => {
+            handleErrors(err);
+            reject(err.response.data);
+          });
       });
-      return await response.json();
-    } catch (err) {
-      handleErrors(err);
-      return err;
     }
-  }
 }

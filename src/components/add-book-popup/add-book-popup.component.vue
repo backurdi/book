@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="flex mb-4 mx-auto w-5/6">
+  <div class="flex mb-4">
     <button
       class="flex items-center px-2 py-2 text-black hover:text-white font-bold hover:bg-readee border border-black rounded duration-150"
       @click="addBookPopup"

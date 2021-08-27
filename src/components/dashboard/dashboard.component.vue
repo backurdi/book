@@ -1,5 +1,5 @@
 <template>
-  <article class="relative mx-auto px-8 py-4 w-5/6 bg-white rounded shadow-md">
+  <article class="relative mx-auto px-4 md:px-8  py-4 w-11/12 md:w-5/6 bg-white rounded shadow-md">
     <div
       v-if="!$store.state.booksArr.length"
       class="flex content-center justify-center w-full h-full"
@@ -32,17 +32,17 @@
           <div class="flex justify-between lg:flex-col lg:mr-5">
             <div>
               <p
-                v-if="focusedBook.isCurrent"
+                v-if="focusedBook?.isCurrent"
                 class="py-1 text-center text-white text-xs bg-blue-600 rounded-t"
               >Current reading</p>
               <img
                 class="border-grey-400"
                 :class="
-                focusedBook.isCurrent
+                focusedBook?.isCurrent
                   ? 'border-4 border-blue-600'
                   : 'border'
               "
-                :src="focusedBook.image ?? require(`@/assets/images/no-book-cover.png`)"
+                :src="focusedBook?.image ?? require(`@/assets/images/no-book-cover.png`)"
                 alt="book cover"
               />
             </div>
@@ -122,10 +122,10 @@ export default {
   }),
   computed: {
     maxPages() {
-      return this.$store.state.focusedBook.pagesTotal;
+      return this.$store.state.focusedBook?.pagesTotal;
     },
     pagesRead() {
-      return this.$store.state.focusedBook.pagesRead;
+      return this.$store.state.focusedBook?.pagesRead;
     },
     showRecentBooks(){
       return this.$store.state.showRecentBooks;
@@ -144,9 +144,6 @@ export default {
         this.pagesReadLocal = newVal;
       },
     },
-  },
-  created() {
-    this.$store.dispatch('fetchBooks');
   },
   methods: {
     toggleShowRecentBooks(){

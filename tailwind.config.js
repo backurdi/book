@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      height: { 150: "150px" },
+      height: { 150: "150px", '70-screen': '70vh'},
       width: { 150: "150px" },
       colors: {
         readee: {
@@ -12,6 +12,9 @@ module.exports = {
           dark: "#258972",
         },
       },
+      maxHeight: {
+        '70-screen': '70vh'
+       }
     },
   },
   variants: {

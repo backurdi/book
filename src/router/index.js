@@ -3,6 +3,8 @@ import Home from "../views/Home.vue";
 import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import ProfileSettings from "../views/ProfileSettings.vue";
+import CreateClub from "../views/CreateClub.vue";
 
 function guardMyroute(to, from, next) {
   let isAuthenticated = false;
@@ -33,6 +35,33 @@ const routes = [
     meta: {
       layout: "appLayoutHome",
     },
+  },
+  {
+    path: '/me',
+    name: 'Me',
+    component: ProfileSettings,
+    beforeEnter: guardMyroute,
+    meta:{
+      layout: 'appLayoutHome'
+    }
+  },
+  {
+    path: '/club',
+    name: 'Create Club',
+    component: CreateClub,
+    beforeEnter: guardMyroute,
+    meta:{
+      layout: 'appLayoutHome'
+    }
+  },
+  {
+    path: '/club/:clubId',
+    name: 'Club',
+    component: CreateClub,
+    beforeEnter: guardMyroute,
+    meta:{
+      layout: 'appLayoutHome'
+    }
   },
   {
     path: "/login",

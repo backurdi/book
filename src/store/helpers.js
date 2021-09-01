@@ -3,11 +3,13 @@ export const getDefaultState = () => ({
     recentBooksArr: [],
     books: [],
     user: {},
-    clubs: {},
+    clubs: [],
     activeClub: {},
+    invites:[],
     posts: [],
     token: "",
     showRecentBooks: false,
+    usersForInvite:[]
   });
 
 export const sortBooks = (state, books) => {

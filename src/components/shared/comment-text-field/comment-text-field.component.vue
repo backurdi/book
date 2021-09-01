@@ -59,7 +59,7 @@ export default {
   components:{QuillEditor, SelectDropdown, ToggleButton},
   computed: {
     maxPages() {
-      return this.$store.state.focusedBook.pagesTotal;
+      return this.$store.state.focusedBook?.pagesTotal;
     },
   },
   mounted(){

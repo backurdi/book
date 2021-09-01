@@ -9,6 +9,10 @@ export class BaseApiService {
   }
 
   getUrl(id = "") {
-    return `${this.baseUrl}/${this.resource}/${id}`;
+    if(id.length){
+      return `${this.baseUrl}/${this.resource}/${id}`;
+    }else{
+      return `${this.baseUrl}/${this.resource}`;
+    }
   }
 }

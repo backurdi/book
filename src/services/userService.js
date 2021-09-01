@@ -9,7 +9,7 @@ export default class UserService extends ModelApiService {
 
   async login(data = {}) {
     try {
-      const response = await axios.post(`${this.getUrl()}login`, data);
+      const response = await axios.post(`${this.getUrl()}/login`, data);
 
       return response.data;
     } catch (err) {

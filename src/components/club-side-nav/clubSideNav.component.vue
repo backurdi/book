@@ -4,13 +4,13 @@
       <div
         class="hover-trigger relative mx-auto w-12 h-12 mb-5 bg-cover rounded-full"
         :style="{
-                'background-image': `url(${require('@/assets/images/default-avatar.png')})`,
+                'background-image': `url(${club.photo ? club.photo : require('@/assets/images/default-avatar.png')})`,
               }"
       >
         <p class="hover-target bg-white text-gray-600 p-2 rounded">{{club.name}}</p>
       </div>
     </div>
-    <div class="flex" @click="goToCreateClub">
+    <div class="flex cursor-pointer" @click="goToCreateClub">
       <div class="relative w-12 h-12 mb-5 bg-cover flex hover-trigger">
         <div class="w-full h-full absolute rounded-full bg-white flex justify-center items-center">
           <PlusIcon class="w-8 h-8"></PlusIcon>

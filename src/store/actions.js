@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 export const actions = {
   login(_state, loginInfo) {
     return this.$api.users
@@ -10,7 +10,7 @@ export const actions = {
       });
   },
   logout() {
-    return this.$api.users.logout().then((_user) => {
+    return this.$api.users.logout().then(() => {
       return this.commit("logout");
     });
   },
@@ -25,12 +25,12 @@ export const actions = {
       .then((user) => {
         return this.commit("setCurrentUser", user.data);
       })
-      .catch((_err) => {
+      .catch(() => {
         return this.commit("logout");
       });
   },
-  updateMe({state}, data){
-    return new Promise((resolve, reject)=>{
+  updateMe(_state, data){
+    return new Promise((resolve)=>{
       this.$api.users.patch('updateMe', data).then(updatedUser=>{
         resolve('');
         return this.commit('setCurrentUser', updatedUser.data.user);
@@ -40,10 +40,18 @@ export const actions = {
       });
     })
   },
+  getUsersForInvite({state}){
+    console.log(state.activeClub);
+    return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then(userForInviteList=>{
+      return this.commit('setUsersForInvite', userForInviteList.data)
+    })
+  },
   getActiveClub(_state, clubId) {
     return this.$api.clubs
       .get(clubId)
-      .then((club) => this.commit("setActiveClub", club.data));
+      .then((club) => {
+        this.commit("setActiveClub", club.data)
+      });
   },
   selectClub({ state }, clubId) {
     const clubInState = state.clubs.find((club) => club._id === clubId);
@@ -54,6 +62,15 @@ export const actions = {
         .then((club) => this.commit("setActiveClub", club.data));
     }
     return this.commit("setActiveClub", clubInState);
+  },
+  createClub(_state, body){
+    this.$api.clubs.post(body).then((club)=>this.commit('insertClub', club.data));
+  },
+  answerInvite(_state, data){
+    this.$api.clubs.answerInvite(data).then((res)=>this.commit('answerInvite', {accepted:data.accepted, club:res.data}))
+  },
+  inviteUsers({state}, invites){
+    this.$api.clubs.inviteUsers(invites, state.activeClub._id)
   },
   fetchBooks() {
     return new Promise((resolve) => {
@@ -70,7 +87,8 @@ export const actions = {
         return this.commit("setBook", updatedBook.data.data);
       });
   },
-  addBook({ state }, body) {
+  addBook({state}, body) {
+    body = {...body, club:state.activeClub._id}
     return this.$api.books.post(body).then((addedBook) => {
       return this.commit("addBook", addedBook.data);
     });
@@ -80,7 +98,7 @@ export const actions = {
       return this.commit("deleteBook");
     });
   },
-  searchBooks({ state }, data) {
+  searchBooks(_state, data) {
     return new Promise((resolve) => {
       this.$api.books.searchBooks(data).then((data) => {
         resolve(data);
@@ -93,7 +111,7 @@ export const actions = {
       .post(data)
       .then((post) => this.commit("addPost", post.data));
   },
-  updatePost({ state }, data) {
+  updatePost(_state, data) {
     return new Promise((resolve, reject) => {
       this.$api.posts
         .patch(data.id, data.content)
@@ -106,7 +124,7 @@ export const actions = {
         });
     });
   },
-  deletePost({state}, data){
+  deletePost(_state, data){
     return new Promise((resolve, reject) => {
       this.$api.posts
         .delete(data.postId)
@@ -119,7 +137,7 @@ export const actions = {
         });
     })
   },
-  addComment({ state }, data) {
+  addComment(_state, data) {
     return new Promise((resolve, reject) => {
       this.$api.comments
         .post(data)

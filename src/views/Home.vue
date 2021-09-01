@@ -8,7 +8,7 @@
       </div>
     </div>
     <div v-else>
-      No clubs !
+      <router-link class="border-2 border-white bg-readee rounded py-4 px-6 text-white" to="/club">Create club</router-link>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
     clubs(){
       return this.$store.state.clubs;
     }
-  }
+  },
 };
 </script>
 

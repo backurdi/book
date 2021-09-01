@@ -16,10 +16,17 @@ export const mutations = {
     },
     setCurrentUser(state, user){
       state.user = {id:user._id, name:user.name, email:user.email, photo:user.photo};
+      state.invites = user.invites;
       state.clubs = user.clubs;
       if(user.clubs.length){
         this.dispatch('getActiveClub', user.clubs[0]._id);
       }
+    },
+    setUsersForInvite(state, usersForInvite){
+      state.usersForInvite = usersForInvite;
+    },
+    insertClub(state, club){
+      state.clubs.push(club);
     },
     setActiveClub(state, club){
       state.activeClub = club;
@@ -28,17 +35,22 @@ export const mutations = {
       if(!clubArrInstance.books){
         state.clubs[state.clubs.indexOf(clubArrInstance)] = club;
       }
+      this.dispatch('getUsersForInvite');
 
       this.commit('setBooks', club.books);
       state.posts = club.posts;
     },
-    addBook(state, book) {
-      state.booksArr.push(book);
-      if (state.focusedBook?.title) {
-        state.recentBooksArr.unshift(book);
-      } else {
-        state.focusedBook = book;
+    answerInvite(state, response){
+      console.log(response);
+      if(response.answer){
+        state.invites.splice(state.invites.indexOf(response.club._id), 1);
+        state.clubs.push(response.club);
+      }else{
+        state.invites.splice(state.invites.indexOf(response.club), 1);
       }
+    },
+    addBook(state, book) {
+      state.books.push(book);
     },
     setBooks(state, booksApiRes) {
       sortBooks(state, booksApiRes);

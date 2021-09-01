@@ -16,6 +16,20 @@
         <!-- to bar right  -->
         <ul class="flex items-center">
           <li class="pr-6">
+            <div class="relative" @click="showInviteDropwdown=!showInviteDropwdown">
+              <UserAddIcon class="w-6 h-6 duration-150 text-white"></UserAddIcon>
+              <div class="absolute mt-2 right-0 w-80" v-if="showInviteDropwdown">
+                <div v-if="invites.length">
+                  <InviteDropdown v-for="(invite, index) in invites" :invite="invite" :key="index" @accept="answerInvite($event, true)" @decline="answerInvite($event, false)"></InviteDropdown>
+                </div>
+                <div v-else class="bg-white">
+                  No invites
+                </div>
+
+              </div>
+            </div>
+          </li>
+          <li class="pr-6">
             <router-link to="/" class="hover:text-readee">
               <HomeIcon class="w-6 h-6 duration-150 text-white"></HomeIcon>
             </router-link>
@@ -29,7 +43,7 @@
             <div
               class="hover-trigger relative mx-auto w-full h-full bg-cover rounded-full"
               :style="{
-                'background-image': `url(${user?.photo})`,
+                'background-image': `url(${user.photo ? user.photo : require('@/assets/images/default-avatar.png')})`,
               }"
             >
               <div class="h-12"></div>
@@ -58,16 +72,22 @@
               v-if="user"
               class="relative mx-auto w-full h-full bg-cover rounded-full"
               :style="{
-                'background-image': `url(${user?.photo})`,
+                'background-image': `url(${user.photo ? user.photo : require('@/assets/images/default-avatar.png')})`,
               }"
               @click="showDropdown = !showDropdown"
             >
               <div class="h-12"></div>
               <div
-                class="border-grey-100 absolute right-0 w-150 bg-white border rounded"
+                class="border-grey-100 absolute right-0 w-150 bg-white border rounded z-20"
                 v-if="showDropdown"
               >
                 <ul>
+                  <li
+                    class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
+                    @click="goToProfile()"
+                  >
+                    <span class="font-bold">Profile</span>
+                  </li>
                   <li
                     class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
                     @click="logOut()"
@@ -85,18 +105,23 @@
 </template>
 
 <script>
-import { LightBulbIcon, HomeIcon } from "@heroicons/vue/solid";
+import { LightBulbIcon, HomeIcon, UserAddIcon } from "@heroicons/vue/solid";
+import InviteDropdown from '../components/shared/invite-dropdown/inviteDropdown.component.vue';
 
 export default {
   name: "AppLayoutLinks",
-  components: { LightBulbIcon, HomeIcon },
+  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown },
   computed:{
     user(){
-      return this.$store.state.user
+      return this.$store.state.user;
+    },
+    invites(){
+      return this.$store.state.invites;
     }
   },
   data:()=>({
     showDropdown:false,
+    showInviteDropwdown:false
   }),
   methods: {
     logOut() {
@@ -104,6 +129,9 @@ export default {
     },
     goToProfile(){
       this.$router.push('me')
+    },
+    answerInvite(club, accepted){
+      this.$store.dispatch('answerInvite', {accepted, club})
     }
   },
 };

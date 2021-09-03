@@ -41,7 +41,6 @@ export const actions = {
     })
   },
   getUsersForInvite({state}){
-    console.log(state.activeClub);
     return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then(userForInviteList=>{
       return this.commit('setUsersForInvite', userForInviteList.data)
     })

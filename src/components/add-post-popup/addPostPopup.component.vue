@@ -13,7 +13,7 @@
     <div class="bg-gray-600 text-white py-4 px-10 w-10/12 rounded-full" @click="addPostPopup()">
       <h3>Make a post</h3>
     </div>
-    <div class="cursor-pointer relative" @click="showDropdown = !showDropdown">
+    <div class="cursor-pointer relative" @click="showDropdown = !showDropdown" v-if="club.owner === user.id">
       <div
         class="self-center rounded-full flex items-center justify-center text-gray-600 border border-gray-600 w-12 h-12 hover:text-white hover:bg-gray-600"
       >
@@ -85,6 +85,12 @@ export default {
     usersToInviteArr(){
       return this.$store.state.usersForInvite
     },
+    club(){
+      return this.$store.state.activeClub
+    },
+    user(){
+      return this.$store.state.user
+    }
   },
   methods: {
     addPost(body) {
@@ -108,7 +114,7 @@ export default {
       this.open = !this.open;
     },
     inviteUsers(){
-      this.$store.dispatch('inviteUsers', this.usersToInvite);
+      this.$store.dispatch('inviteUsers', {invites: this.usersToInvite});
     }
   },
 };

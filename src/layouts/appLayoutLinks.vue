@@ -30,7 +30,7 @@
             </div>
           </li>
           <li class="pr-6">
-            <router-link to="/" class="hover:text-readee">
+            <router-link :to="'/'+clubs[0]?._id" class="hover:text-readee">
               <HomeIcon class="w-6 h-6 duration-150 text-white"></HomeIcon>
             </router-link>
           </li>
@@ -117,6 +117,9 @@ export default {
     },
     invites(){
       return this.$store.state.invites;
+    },
+    clubs(){
+      return this.$store.state.clubs
     }
   },
   data:()=>({

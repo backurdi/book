@@ -5,12 +5,13 @@
 </template>
 
 <script>
+import { shallowRef} from 'vue'
 import AppLayoutDefault from "./appLayoutDefault.vue";
 
 export default {
   name: "AppLayout",
   data: () => ({
-    layout: AppLayoutDefault,
+    layout: shallowRef(AppLayoutDefault),
   }),
   watch: {
     $route: {

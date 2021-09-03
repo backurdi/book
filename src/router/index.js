@@ -19,7 +19,7 @@ function guardMyroute(to, from, next) {
 
 const routes = [
   {
-    path: "/",
+    path: "/:clubId?",
     name: "Home",
     component: Home,
     beforeEnter: guardMyroute,

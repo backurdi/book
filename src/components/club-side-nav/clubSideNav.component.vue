@@ -1,14 +1,14 @@
 <template>
   <div class="flex-col max-w-1/6 h-70-screen bg-gray-600 rounded p-5 self-start mr-10 top-5 sticky">
     <div class="flex" v-for="(club, index) in clubs" :key="index" @click="selectClub(club._id)">
-      <div
+      <router-link :to="'/'+club._id"
         class="hover-trigger relative mx-auto w-12 h-12 mb-5 bg-cover rounded-full"
         :style="{
                 'background-image': `url(${club.photo ? club.photo : require('@/assets/images/default-avatar.png')})`,
               }"
       >
         <p class="hover-target bg-white text-gray-600 p-2 rounded">{{club.name}}</p>
-      </div>
+      </router-link>
     </div>
     <div class="flex cursor-pointer" @click="goToCreateClub">
       <div class="relative w-12 h-12 mb-5 bg-cover flex hover-trigger">
@@ -26,12 +26,10 @@ import {PlusIcon} from '@heroicons/vue/solid'
 export default {
     name: 'ClubSideComponent',
     components:{PlusIcon},
-    data: ()=>({
-    }),
     computed:{
         clubs() {
             return this.$store.state.clubs;
-        }
+        },
     },
     methods:{
       selectClub(clubId){
@@ -39,13 +37,17 @@ export default {
       },
       goToCreateClub(){
         this.$router.push('club')
-      }
+      },
     }
 
 }
 </script>
 
 <style lang="scss" scoped>
+.router-link-active {
+  border: 3px solid rgb(12, 111, 204);
+}
+
 .hover-trigger .hover-target {
   display: none;
 }

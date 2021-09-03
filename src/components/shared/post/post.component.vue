@@ -2,7 +2,7 @@
   <div class="post text-white mb-4 flex-col border-b-2 border-gray-400 pb-4 relative">
         <div class="flex justify-between">
           <div class="mb-5" v-html="domDecoder(post.text)"></div>
-          <div @click="showDropdown = !showDropdown">
+          <div @click="showDropdown = !showDropdown" v-if="user.id === post.user">
             <DotsVerticalIcon class="w-6 h-6 -mt-5 -mr-5 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
             <XIcon class="w-6 h-6 -mt-5 -mr-5 cursor-pointer" v-if="showDropdown"></XIcon>
           </div>
@@ -51,6 +51,11 @@ export default {
       openUpdate:false,
       openDelete:false,
     }),
+    computed:{
+      user(){
+        return this.$store.state.user;
+      }
+    },
     methods:{
       domDecoder (str) {
         let parser = new DOMParser();

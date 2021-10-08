@@ -15,16 +15,19 @@ export const mutations = {
       router.push({ path: "login" });
     },
     setCurrentUser(state, user){
-      const currentClubId = router.currentRoute._value.params.clubId ? router.currentRoute._value.params.clubId : user.clubs[0]._id;
-      state.user = {id:user._id, name:user.name, email:user.email, photo:user.photo};
+      state.user = {id:user._id, name:user.name, email:user.email, photo:user.photo, role:user.role};
       state.invites = user.invites;
       state.clubs = user.clubs;
       if(user.clubs.length){
+        const currentClubId = router.currentRoute._value.params.clubId ? router.currentRoute._value.params.clubId : user.clubs[0]._id;
         this.dispatch('getActiveClub', currentClubId);
       }
     },
     setUsersForInvite(state, usersForInvite){
       state.usersForInvite = usersForInvite;
+    },
+    setStudents(state, students){
+      state.students = students;
     },
     insertClub(state, club){
       state.clubs.push(club);

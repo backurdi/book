@@ -41,7 +41,9 @@
     </div>
   </div>
   <Popup @closePopUp="open = false" :open="open" :buttonText="'Add post'">
-    <CommentTextField class="overflow-visible" @emitBody="addPost" buttonText="Add post"></CommentTextField>
+    <h3 class="text-black text-3xl font-bold mb-5">Create post</h3>
+    <!-- <CommentTextField class="overflow-visible" @emitBody="addPost" buttonText="Add post"></CommentTextField> -->
+    <TextField></TextField>
   </Popup>
   <Popup @closePopUp="addBookOpen = false" :open="addBookOpen" :buttonText="'Add post'">
     <AddBook></AddBook>
@@ -54,7 +56,8 @@
 
 <script>
 import Popup from '@/components/shared/popup/popup.component';
-import CommentTextField from '@/components/shared/comment-text-field/comment-text-field.component';
+// import CommentTextField from '@/components/shared/comment-text-field/comment-text-field.component';
+import TextField from '@/components/shared/text-field/text-field.component'
 import AddBook from '../add-book/addBook.component.vue';
 import MultiSelectDropdown from '../shared/multiselect-dropdown/multiselectDropdown.component.vue'
 import {
@@ -66,7 +69,8 @@ export default {
   components: {
     DotsVerticalIcon,
     Popup,
-    CommentTextField,
+    // CommentTextField,
+    TextField,
     AddBook,
     MultiSelectDropdown
   },
@@ -119,3 +123,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.create-post-title{
+
+}
+</style>

@@ -20,7 +20,7 @@ export default class UserService extends ModelApiService {
 
   async logout() {
     try {
-      await axios.get(`${this.getUrl()}logout`, {
+      await axios.get(`${this.getUrl()}/logout`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export default class UserService extends ModelApiService {
 
   async signup(data = {}) {
     try {
-      const response = await axios.post(`${this.getUrl()}signup`, data);
+      const response = await axios.post(`${this.getUrl()}/signup`, data);
 
       return response.data;
     } catch (err) {

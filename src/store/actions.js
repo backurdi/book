@@ -25,8 +25,10 @@ export const actions = {
       .then((user) => {
         return this.commit("setCurrentUser", user.data);
       })
-      .catch(() => {
-        return this.commit("logout");
+      .catch((err) => {
+        if(err){
+          return this.commit("logout");
+        }
       });
   },
   updateMe(_state, data){
@@ -39,6 +41,16 @@ export const actions = {
         return _err;
       });
     })
+  },
+  getStudents(){
+    return this.$api.users.get('students').then((students) => {
+      return this.commit("setStudents", students.data);
+    })
+    .catch((err) => {
+      if(err){
+        return this.commit("logout");
+      }
+    });
   },
   getUsersForInvite({state}){
     return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then(userForInviteList=>{
@@ -149,13 +161,12 @@ export const actions = {
         });
     });
   },
-  /* eslint-disable */
-  deleteComment({ state }, commentId) {
+  deleteComment(_state, commentId) {
     return this.$api.comments.delete(commentId).then(() => {
       return this.commit("deleteComment", commentId);
     });
   },
-  sendEmail({ state }, emailData) {
+  sendEmail(_state, emailData) {
     return new Promise((resolve) => {
       this.$api.contact.post(emailData).then(() => {
         resolve("");

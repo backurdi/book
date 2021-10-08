@@ -3,12 +3,17 @@ import Home from "../views/Home.vue";
 import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import Teacher from "../views/Teacher.vue";
+import StudentPage from "../views/StudentPage.vue";
 import ProfileSettings from "../views/ProfileSettings.vue";
 import CreateClub from "../views/CreateClub.vue";
+import multiguard from 'vue-router-multiguard';
+import VueJwtDecode from 'vue-jwt-decode';
 
 function guardMyroute(to, from, next) {
   let isAuthenticated = false;
-  if (localStorage.getItem("jwt")) isAuthenticated = true;
+  const token = localStorage.getItem("jwt")
+  if (token) isAuthenticated = true;
   else isAuthenticated = false;
   if (isAuthenticated) {
     next(); // allow to enter route
@@ -17,12 +22,26 @@ function guardMyroute(to, from, next) {
   }
 }
 
+function roleGuard(to, from, next){
+  let isTeacher = false;
+  if(VueJwtDecode.decode(localStorage.getItem("jwt")).role === 'Teacher'){
+    isTeacher = true;
+  }
+  if(isTeacher && to.name !== 'Teacher'){
+    next("/teacher");
+  }else if(!isTeacher && to.name === 'Teacher'){
+    next('/');
+  }else{
+    next();
+  }
+}
+
 const routes = [
   {
     path: "/:clubId?",
     name: "Home",
     component: Home,
-    beforeEnter: guardMyroute,
+    beforeEnter: multiguard([guardMyroute, roleGuard]),
     meta: {
       layout: "appLayoutHome",
     },
@@ -58,6 +77,24 @@ const routes = [
     path: '/club/:clubId',
     name: 'Club',
     component: CreateClub,
+    beforeEnter: guardMyroute,
+    meta:{
+      layout: 'appLayoutHome'
+    }
+  },
+  {
+    path: '/teacher',
+    name: 'Teacher',
+    component: Teacher,
+    beforeEnter: multiguard([guardMyroute, roleGuard]),
+    meta:{
+      layout: 'appLayoutHome'
+    },
+  },
+  {
+    path: '/teacher/:studentId',
+    name: 'Student Page',
+    component: StudentPage,
     beforeEnter: guardMyroute,
     meta:{
       layout: 'appLayoutHome'

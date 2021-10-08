@@ -1,8 +1,8 @@
 <template>
-  <div class="flex-col max-w-1/6 h-70-screen bg-gray-600 rounded p-5 self-start mr-10 top-5 sticky">
+  <div class="flex flex-row mb-10 bg-gray-600 rounded p-5 self-start mr-10 top-5 md:sticky md:flex-col md:h-70-screen">
     <div class="flex" v-for="(club, index) in clubs" :key="index" @click="selectClub(club._id)">
       <router-link :to="'/'+club._id"
-        class="hover-trigger relative mx-auto w-12 h-12 mb-5 bg-cover rounded-full"
+        class="hover-trigger relative mx-auto w-12 h-12 bg-cover rounded-full md:mb-5"
         :style="{
                 'background-image': `url(${club.photo ? club.photo : require('@/assets/images/default-avatar.png')})`,
               }"
@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="flex cursor-pointer" @click="goToCreateClub">
-      <div class="relative w-12 h-12 mb-5 bg-cover flex hover-trigger">
+      <div class="relative w-12 h-12 bg-cover flex hover-trigger md:mb-5">
         <div class="w-full h-full absolute rounded-full bg-white flex justify-center items-center">
           <PlusIcon class="w-8 h-8"></PlusIcon>
         </div>

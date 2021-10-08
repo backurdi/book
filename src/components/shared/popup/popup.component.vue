@@ -36,10 +36,8 @@
           <div
             class="inline-block align-bottom w-full text-left bg-white rounded shadow-xl transform transition-all sm:align-middle sm:my-8 lg:w-4/6"
           >
-            <div class="pb-4 pt-5 px-4 bg-white sm:p-6 sm:pb-4 rounded">
-              <div class="">
+            <div class="pb-4 pt-5 px-4 bg-white sm:p-6 sm:pb-4 rounded w-fit-content">
                 <slot></slot>
-              </div>
             </div>
           </div>
         </TransitionChild>

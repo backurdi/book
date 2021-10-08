@@ -9,7 +9,8 @@ export const getDefaultState = () => ({
     posts: [],
     token: "",
     showRecentBooks: false,
-    usersForInvite:[]
+    usersForInvite:[],
+    students:[]
   });
 
 export const sortBooks = (state, books) => {

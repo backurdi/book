@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto w-5/6">
-    <div class="flex w-full h-auto" v-if="clubs.length">
+    <div class="flex flex-col w-full h-auto md:flex-row" v-if="clubs.length">
       <ClubSideComponent></ClubSideComponent>
       <div class="flex-col flex-grow">
         <AddPostPopUp></AddPostPopUp>

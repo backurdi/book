@@ -117,7 +117,7 @@ export const actions = {
     });
   },
   addPost({ state }, data) {
-    data = { ...data, club: state.activeClub._id };
+    data.append('club', state.activeClub._id);
     return this.$api.posts
       .post(data)
       .then((post) => this.commit("addPost", post.data));

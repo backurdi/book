@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="books mb-10 bg-gray-600 p-8 rounded" v-for="(post, index) in posts" :key="index">
+    <div class="posts mb-10 bg-gray-600 rounded" v-for="(post, index) in posts" :key="index">
       <Post :post="post" :books="books"></Post>
       <Comment :comments="post.comments" :postId="post._id"></Comment>
     </div>
@@ -24,6 +24,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  .posts{
+    max-width: 750px;
+  }
 </style>

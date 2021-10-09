@@ -1,5 +1,5 @@
 <template>
-    <div class="comments">
+    <div class="comments py-4 px-4">
         <div class="flex justify-between items-end">
             <!-- <input class="bg-gray-500 rounded-full w-10/12 px-5 py-2 placeholder-gray-400 text-white outline-none" type="text" v-model="commentText" placeholder="Add comment"> -->
             <div class="bg-gray-500 w-11/12 px-4 pt-2 pb-3 rounded-t-3xl rounded-b-3xl flex justify-between items-end">

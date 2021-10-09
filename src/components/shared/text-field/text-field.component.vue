@@ -1,27 +1,65 @@
 <template>
+<form>
 <div class="flex flex-col mb-10 w-full">
-  <textarea class="text-field textarea h-64 resize-none bg-gray-200 text-black outline-none" name="" id="" cols="30" rows="10"></textarea>
+  <textarea class="text-field textarea h-64 resize-none bg-gray-200 text-black outline-none" name="" id="" cols="30" rows="10" v-model="postText"></textarea>
   <img v-if="url.length" :src="url" class="text-field-image" alt="">
   <input ref="textFieldInput" type="file" style="visibility:hidden" @change="readUrl" />
-  <button class="border-2 text-black w-fit-content border-black rounded" @click="uploadImage"><PhotographIcon class="w-12 h-12 text-green-400"></PhotographIcon></button>
+  <button class="border-2 text-black w-fit-content border-black rounded" @click.prevent="uploadImage"><PhotographIcon class="w-12 h-12 text-green-400"></PhotographIcon></button>
 </div>
+<div class="flex-col w-full">
+      <ToggleButton toggleLabel="Comment for reading" @toggleStateChanged="toggleState = $event"></ToggleButton>
+      <div v-if="toggleState" class="flex justify-between items-end w-10/12 mb-5">
+        <SelectDropdown @dropdownChanged="selectedBook=$event" dropdownLabel="Select book"></SelectDropdown>
+        <div class="flex flex-col w-3/12">
+          <label for="from" class="w-2/6">From:</label>
+          <input
+            id="from"
+            v-model="pagesFrom"
+            type="number"
+            class="border-teal-500 mr-5 px-2 w-4/6 text-gray-700 leading-tight bg-transparent border-b focus:border-green-700 focus:outline-none appearance-none"
+            placeholder="From"
+            aria-label="Full name"
+          />
+        </div>
+        <div class="flex flex-col w-3/12">
+          <label for="to" class="w-2/6">To:</label>
+          <input
+            id="to"
+            v-model="pagesTo"
+            type="number"
+            min="0"
+            class="border-teal-500 mr-5 px-2 w-4/6 text-gray-700 leading-tight bg-transparent border-b focus:border-green-700 focus:outline-none appearance-none"
+            placeholder="From"
+            aria-label="Full name"
+          />
+        </div>
+      </div>
+    </div>
 <div class="flex justify-end">
-  <button class="border-2 text-black w-fit-content border-black rounded px-6 py-3 bg-green-400 hover:bg-green-700 hover:text-white">Creat post</button>
+  <button class="border-2 text-black w-fit-content border-black rounded px-6 py-3 bg-green-400 hover:bg-green-700 hover:text-white" @click.prevent="addPost">Creat post</button>
 </div>
+</form>
 </template>
 
 <script>
-import {PhotographIcon} from '@heroicons/vue/solid' 
+import {PhotographIcon} from '@heroicons/vue/solid';
+import SelectDropdown from '../select-dropdown/selectDropdown.component.vue';
+import ToggleButton from '../toggle-button/toggleButton.component.vue';
 export default {
   name:'Textfield',
   data:()=>({
     url:'',
+    file:'',
+    postText: '',
+    pagesFrom: 0,
+    pagesTo: 0,
+    form: new FormData,
+    toggleState: false,
   }),
-  components:{PhotographIcon},
+  components:{PhotographIcon,SelectDropdown,ToggleButton},
   methods:{
     uploadImage(){
       this.$refs.textFieldInput.click();
-
     },
     readUrl(e){
       const file = e.target.files[0];
@@ -29,6 +67,33 @@ export default {
         this.file = file;
         this.url = URL.createObjectURL(file);
       },
+      emitPost(){
+        },
+      addPost() {
+        console.log(this.form)
+        this.form.append('text', this.postText);
+        this.form.append('photo', this.file);
+        this.form.append('pagesFrom', this.pagesFrom);
+        this.form.append('pagesTo', this.pagesTo);
+        for (var p of this.form) {
+          console.log(p);
+        }
+      this.$store.dispatch("addPost", this.form).then(()=>{
+        this.postText = "";
+        this.pagesFrom = 0;
+        this.pagesTo = 0;
+        this.open = false;
+      })
+      .catch(err=>{
+        this.errorMessage = err.message;
+        this.displayError = true;
+
+        setTimeout(()=>{
+          this.errorMessage = '';
+          this.displayError = false;
+        }, 5000)
+      });
+    },
   }
 
 }

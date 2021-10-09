@@ -1,13 +1,13 @@
 <template>
   <div class="post text-white mb-4 flex-col border-b-2 border-gray-400 pb-4 relative">
-        <div class="flex justify-between">
+        <div class="flex justify-between px-8 pt-4">
           <div class="mb-5" v-html="domDecoder(post.text)"></div>
           <div @click="showDropdown = !showDropdown" v-if="user.id === post.user">
-            <DotsVerticalIcon class="w-6 h-6 -mt-5 -mr-5 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
-            <XIcon class="w-6 h-6 -mt-5 -mr-5 cursor-pointer" v-if="showDropdown"></XIcon>
+            <DotsVerticalIcon class="w-6 h-6 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
+            <XIcon class="w-6 h-6 cursor-pointer" v-if="showDropdown"></XIcon>
           </div>
         </div>
-        <div class="border-grey-100 absolute -right-5 top-2 w-150 bg-white border rounded text-gray-600" v-if="showDropdown">
+        <div class="border-grey-100 absolute right-5 top-12 w-150 bg-white border rounded text-gray-600" v-if="showDropdown">
           <ul>
             <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="openPopup('Update')">
               <span class="font-bold">Update post</span>
@@ -26,6 +26,9 @@
               <p>to: {{post.pagesTo}}</p>
             </div>
           </div>
+        </div>
+        <div class="flex justify-center bg-black image-container">
+          <img :src="post.photo" alt="">
         </div>
       </div>
       <Popup v-if="openUpdate" @closePopUp="openUpdate = false" :open="openUpdate">
@@ -89,6 +92,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
 </style>

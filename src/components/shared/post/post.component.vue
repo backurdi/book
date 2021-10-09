@@ -1,8 +1,15 @@
 <template>
   <div class="post text-white mb-4 flex-col border-b-2 border-gray-400 pb-4 relative">
-        <div class="flex justify-between px-8 pt-4">
-          <div class="mb-5" v-html="domDecoder(post.text)"></div>
-          <div @click="showDropdown = !showDropdown" v-if="user.id === post.user">
+        <div class="flex justify-between px-4 pt-4">
+          <div class="flex items-center">
+            <div class="hover-trigger relative mx-auto w-12 h-12 bg-cover rounded-full mr-3"
+                :style="{
+                'background-image': `url(${post.user.photo ? post.user.photo : require('@/assets/images/default-avatar.png')})`,
+              }"
+          ></div>
+          <p>{{post.user.name}}</p>
+          </div>
+          <div @click="showDropdown = !showDropdown" v-if="user.id === post.user._id">
             <DotsVerticalIcon class="w-6 h-6 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
             <XIcon class="w-6 h-6 cursor-pointer" v-if="showDropdown"></XIcon>
           </div>
@@ -17,13 +24,16 @@
             </li>
           </ul>
         </div>
-        <div class="flex justify-end" v-if="bookForPost(post.book)">
-          <img class="mr-5 border border-gray-200 w-8 rounded " :src="bookForPost(post.book).image" :alt="'cover of '+bookForPost(post.book).title">
-          <div>
-            <p>{{bookForPost(post.book).title.length > 18 ?  `${bookForPost(post.book).title.substring(0, 18)}...` : bookForPost(post.book).title}}</p>
-            <div class="flex">
-              <p class="mr-5">from: {{post.pagesFrom}}</p>
-              <p>to: {{post.pagesTo}}</p>
+        <div class="p-4">
+          <div class="mb-5" v-html="domDecoder(post.text)"></div>
+          <div class="flex justify-end" v-if="bookForPost(post.book)">
+            <img class="mr-5 border border-gray-200 w-8 rounded " :src="bookForPost(post.book).image" :alt="'cover of '+bookForPost(post.book).title">
+            <div>
+              <p>{{bookForPost(post.book).title.length > 18 ?  `${bookForPost(post.book).title.substring(0, 18)}...` : bookForPost(post.book).title}}</p>
+              <div class="flex">
+                <p class="mr-5">from: {{post.pagesFrom}}</p>
+                <p>to: {{post.pagesTo}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -32,7 +42,8 @@
         </div>
       </div>
       <Popup v-if="openUpdate" @closePopUp="openUpdate = false" :open="openUpdate">
-        <CommentTextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></CommentTextField>
+        <!-- <CommentTextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></CommentTextField> -->
+        <TextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></TextField>
       </Popup>
       <Popup v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
         <DeletePopup @delete="deletePost" @cancle="closeDelete"></DeletePopup>
@@ -42,12 +53,13 @@
 <script>
 import {DotsVerticalIcon, XIcon} from '@heroicons/vue/solid';
 import Popup from '@/components/shared/popup/popup.component';
-import CommentTextField from '@/components/shared/comment-text-field/comment-text-field.component';
+// import CommentTextField from '@/components/shared/comment-text-field/comment-text-field.component';
+import TextField from '@/components/shared/text-field/text-field.component';
 import DeletePopup from '../../delete-popup/deletePopup.component.vue';
 
 export default {
     name:'Post',
-    components:{DotsVerticalIcon, XIcon, Popup, CommentTextField, DeletePopup},
+    components:{DotsVerticalIcon, XIcon, Popup, TextField, DeletePopup},
     props:['post', 'books'],
     data:()=>({
       showDropdown:false,

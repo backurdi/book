@@ -14,7 +14,10 @@
         </div>
         <img v-if="url.length" :src="url" class="text-field-image w-12" alt="">
         <input ref="fileInput" type="file" style="visibility:hidden" @change="readUrl" />
-        <p v-for="(comment, index) in comments" :key="index" class="rounded bg-gray-100 p-2 mt-5">{{comment.text}}</p>
+        <div v-for="(comment, index) in comments" :key="index">
+            <p class="rounded bg-gray-100 p-2 mt-5">{{comment.text}}</p>
+            <img class="w-96 mt-2 rounded" v-if="comment.photo" :src="comment.photo" alt="">
+        </div>
     </div>  
 </template>
 
@@ -27,17 +30,32 @@ export default {
     data:()=>({
         edited: false,
         txt:'',
-        url:''
+        url:'',
+        file:'',
+        form: new FormData
     }),
     created(){
         this.txt = this.edited ? '' : 'Edit me';
     },
     methods:{
         uplaodComment(){
-            console.log(this.txt);
-            // this.$store.dispatch('addComment', {post:this.postId, text:this.commentText}).then(()=>{
-            //     this.commentText = '';
-            // })
+            if(this.edited){
+                this.form.append('post', this.postId)
+                this.form.append('text', this.txt)
+                if(this.file.name){
+                    this.form.append('photo', this.file)
+                }
+    
+                this.$store.dispatch('addComment', this.form).then(()=>{
+                    this.txt = 'Edit me';
+                    this.edited = false;
+                    this.file = '';
+                    this.url = '';
+                    this.form.forEach(formField=>{
+                        this.form.delete(formField);
+                    })
+                })
+            }
         },
         onEdit(evt){
              var src = evt.target.innerText

@@ -39,7 +39,6 @@ export const mutations = {
       if(!clubArrInstance.books){
         state.clubs[state.clubs.indexOf(clubArrInstance)] = club;
       }
-      this.dispatch('getUsersForInvite');
 
       this.commit('setBooks', club.books);
       state.posts = club.posts;

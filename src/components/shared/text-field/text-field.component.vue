@@ -1,10 +1,10 @@
 <template>
-<form>
+<form class="text-field w-5/12">
 <div class="flex flex-col mb-10 w-full">
-  <textarea class="text-field textarea h-64 resize-none bg-gray-200 text-black outline-none" name="" id="" cols="30" rows="10" v-model="postText"></textarea>
+  <textarea class="textarea h-32 md:h-64 resize-none bg-gray-200 text-black outline-none" name="" id="" cols="30" v-model="postText"></textarea>
   <img v-if="url.length" :src="url" class="text-field-image" alt="">
   <input ref="textFieldInput" type="file" style="visibility:hidden" @change="readUrl" />
-  <button class="border-2 text-black w-fit-content border-black rounded" @click.prevent="uploadImage"><PhotographIcon class="w-12 h-12 text-green-400"></PhotographIcon></button>
+  <button class="border-2 text-black w-fit-content border-black rounded" @click.prevent="uploadImage"><PhotographIcon class="h-8 w-8 md:w-12 md:h-12 text-green-400"></PhotographIcon></button>
 </div>
 <div class="flex-col w-full">
       <ToggleButton toggleLabel="Comment for reading" @toggleStateChanged="toggleState = $event"></ToggleButton>
@@ -36,7 +36,7 @@
       </div>
     </div>
 <div class="flex justify-end">
-  <button class="border-2 text-black w-fit-content border-black rounded px-6 py-3 bg-green-400 hover:bg-green-700 hover:text-white" @click.prevent="addPost">Creat post</button>
+  <button class="border-2 text-black w-fit-content border-black rounded px-4 py-2 md:px-6 md:py-3 bg-green-400 hover:bg-green-700 hover:text-white" @click.prevent="addPost">{{buttonText}}</button>
 </div>
 </form>
 </template>
@@ -53,10 +53,17 @@ export default {
     postText: '',
     pagesFrom: 0,
     pagesTo: 0,
+    selectedBook:'',
     form: new FormData,
     toggleState: false,
   }),
+  props:['textFromParent','buttonText'],
   components:{PhotographIcon,SelectDropdown,ToggleButton},
+  created(){
+    if(this.textFromParent){
+      this.postText = this.textFromParent;
+    }
+  },
   methods:{
     uploadImage(){
       this.$refs.textFieldInput.click();
@@ -70,29 +77,13 @@ export default {
       emitPost(){
         },
       addPost() {
-        console.log(this.form)
         this.form.append('text', this.postText);
         this.form.append('photo', this.file);
         this.form.append('pagesFrom', this.pagesFrom);
         this.form.append('pagesTo', this.pagesTo);
-        for (var p of this.form) {
-          console.log(p);
-        }
-      this.$store.dispatch("addPost", this.form).then(()=>{
-        this.postText = "";
-        this.pagesFrom = 0;
-        this.pagesTo = 0;
-        this.open = false;
-      })
-      .catch(err=>{
-        this.errorMessage = err.message;
-        this.displayError = true;
-
-        setTimeout(()=>{
-          this.errorMessage = '';
-          this.displayError = false;
-        }, 5000)
-      });
+        this.form.append('book', this.selectedBook);
+        
+        this.$emit('emitBody', this.form);
     },
   }
 
@@ -101,11 +92,17 @@ export default {
 
 <style lang="scss">
 .text-field{
-  max-width: 500px;
+  width: 500px;
 }
 
 .text-field-image{
   max-width: 500px;
+}
+
+@media screen and (max-width: 500px) {
+  .text-field{
+    width: 100%;
+  }
 }
 
 </style>

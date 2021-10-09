@@ -1,16 +1,18 @@
 <template>
-<form class="text-field w-5/12">
+<form class="text-field w-5/12 overflow-visible">
 <div class="flex flex-col mb-10 w-full">
   <textarea class="textarea h-32 md:h-64 resize-none bg-gray-200 text-black outline-none" name="" id="" cols="30" v-model="postText"></textarea>
-  <img v-if="url.length" :src="url" class="text-field-image" alt="">
+  <div class="text-field-image">
+    <img v-if="url.length" :src="url" alt="">
+  </div>
   <input ref="textFieldInput" type="file" style="visibility:hidden" @change="readUrl" />
   <button class="border-2 text-black w-fit-content border-black rounded" @click.prevent="uploadImage"><PhotographIcon class="h-8 w-8 md:w-12 md:h-12 text-green-400"></PhotographIcon></button>
 </div>
 <div class="flex-col w-full">
       <ToggleButton toggleLabel="Comment for reading" @toggleStateChanged="toggleState = $event"></ToggleButton>
-      <div v-if="toggleState" class="flex justify-between items-end w-10/12 mb-5">
+      <div v-if="toggleState" class="flex-col md:flex-row justify-between items-end w-10/12 mb-5">
         <SelectDropdown @dropdownChanged="selectedBook=$event" dropdownLabel="Select book"></SelectDropdown>
-        <div class="flex flex-col w-3/12">
+        <div class="flex flex-col w-4/12">
           <label for="from" class="w-2/6">From:</label>
           <input
             id="from"
@@ -21,7 +23,7 @@
             aria-label="Full name"
           />
         </div>
-        <div class="flex flex-col w-3/12">
+        <div class="flex flex-col w-4/12">
           <label for="to" class="w-2/6">To:</label>
           <input
             id="to"
@@ -102,6 +104,10 @@ export default {
 @media screen and (max-width: 500px) {
   .text-field{
     width: 100%;
+  }
+  .text-field-image{
+    max-height: 100px;
+    overflow: scroll;
   }
 }
 

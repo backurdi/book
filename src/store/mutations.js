@@ -96,6 +96,12 @@ export const mutations = {
         post.comments = [comment];
       }
     },
+    updateComment(state, updatedComment){
+      const post = state.activeClub.posts.find(post=>post._id === updatedComment.post);
+      const commentToUpdate = post.comments.find(comment=>comment._id === updatedComment._id);
+      
+      post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
+    },
     deleteComment(state, commentId) {
       const commentToDelete = state.focusedBook.comments.find(
         (comment) => comment._id === commentId

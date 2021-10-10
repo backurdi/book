@@ -42,7 +42,6 @@
         </div>
       </div>
       <Popup v-if="openUpdate" @closePopUp="openUpdate = false" :open="openUpdate">
-        <!-- <CommentTextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></CommentTextField> -->
         <TextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></TextField>
       </Popup>
       <Popup v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
@@ -53,7 +52,6 @@
 <script>
 import {DotsVerticalIcon, XIcon} from '@heroicons/vue/solid';
 import Popup from '@/components/shared/popup/popup.component';
-// import CommentTextField from '@/components/shared/comment-text-field/comment-text-field.component';
 import TextField from '@/components/shared/text-field/text-field.component';
 import DeletePopup from '../../delete-popup/deletePopup.component.vue';
 

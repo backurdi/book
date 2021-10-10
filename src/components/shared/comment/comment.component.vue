@@ -1,88 +1,64 @@
 <template>
     <div class="comments py-4 px-4">
-        <form>
-        <div class="flex justify-between items-end">
-            <!-- <input class="bg-gray-500 rounded-full w-10/12 px-5 py-2 placeholder-gray-400 text-white outline-none" type="text" v-model="commentText" placeholder="Add comment"> -->
-            <div class="bg-gray-500 w-11/12 px-4 pt-2 pb-3 rounded-t-3xl rounded-b-3xl flex justify-between items-end">
-                <div id="comment-field" contenteditable="true" class="w-9/12 text-white outline-none cursor-text flex-row-reverse" :class = "{['text-gray-400']: !edited}" v-text="txt" @blur="onEdit" @focus="checkEdited"></div>
-                <div class="flex items-center">
-                    <button class="text-gray-700 hover:text-white" @click.prevent="uploadImage"><CameraIcon class="w-6 h-6"></CameraIcon></button>
+        <CommentTextFieldComponent :postId="postId" buttonAction="addComment"></CommentTextFieldComponent>
+        <div v-for="(comment, index) in comments" :key="index" class="mb-5">
+            <div class="flex">
+                <div class="w-1/12">
+                    <div class="mx-auto w-12 h-12 bg-cover rounded-full mr-2"
+                            :style="{
+                            'background-image': `url(${comment.user.photo ? comment.user.photo : require('@/assets/images/default-avatar.png')})`,
+                        }"
+                    ></div>
                 </div>
-            </div>
-            <div>
-                <button class="border border-white rounded-full text-white hover:bg-white hover:text-black" @click.prevent="uplaodComment"><ArrowSmDownIcon class="w-6 h-6"></ArrowSmDownIcon></button>
+                <div class="w-10/12 px-3">
+                    <div v-if="editComment !== index">
+                        <p class="rounded bg-gray-100 p-2">{{comment.text}}</p>
+                        <img class="w-96 mt-2 rounded" v-if="comment.photo" :src="comment.photo" alt="">
+                    </div>
+                    <CommentTextFieldComponent v-else :editText="comment.text" :editImage="comment.photo" :postId="postId" buttonAction="updateComment" @commentActionDone="editComment = null" :commentId="comment._id"></CommentTextFieldComponent>
+                </div>
+                <DotsDropdownComponent v-if="user.id === comment.user._id" :commentIndex="index" @update="editComment = $event" @Delete="openDelete = true"></DotsDropdownComponent>
             </div>
         </div>
-        </form>
-        <img v-if="url.length" :src="url" class="text-field-image w-12" alt="">
-        <input ref="fileInput" type="file" style="visibility:hidden" @change="readUrl" />
-        <div v-for="(comment, index) in comments" :key="index">
-            <p class="rounded bg-gray-100 p-2 mt-5">{{comment.text}}</p>
-            <img class="w-96 mt-2 rounded" v-if="comment.photo" :src="comment.photo" alt="">
-        </div>
-    </div>  
+    </div>
+    <PopupComponent v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
+        <DeletePopupComponent @delete="deletePost" @cancle="closeDelete"></DeletePopupComponent>
+    </PopupComponent>
 </template>
 
 <script>
-import {ArrowSmDownIcon, CameraIcon} from '@heroicons/vue/solid';
+import DotsDropdownComponent from '../dots-dropdown/dots-dropdown.component.vue';
+import DeletePopupComponent from '../../delete-popup/deletePopup.component.vue';
+import PopupComponent from '../../shared/popup/popup.component.vue';
+import CommentTextFieldComponent from '../comment-text-field/comment-text-field.component.vue';
 export default {
     name:'Comment',
     props:['comments', 'postId'],
-    components:{ArrowSmDownIcon, CameraIcon},
+    components:{CommentTextFieldComponent, DotsDropdownComponent, DeletePopupComponent, PopupComponent},
     data:()=>({
-        edited: false,
-        txt:'',
-        url:'',
-        file:'',
-        form: new FormData
+        openUpdate:false,
+        openDelete:false,
+        editComment:null,
     }),
-    created(){
-        this.txt = this.edited ? '' : 'Edit me';
+    computed:{
+      user(){
+        return this.$store.state.user;
+      }
     },
     methods:{
-        uplaodComment(){
-            if(this.edited){
-                this.form.append('post', this.postId)
-                this.form.append('text', this.txt)
-                if(this.file.name){
-                    this.form.append('photo', this.file)
-                }
-    
-                this.$store.dispatch('addComment', this.form).then(()=>{
-                    this.txt = 'Edit me';
-                    this.edited = false;
-                    this.file = '';
-                    this.url = '';
-                    this.form.delete('post');
-                    this.form.delete('text');
-                    this.form.delete('photo');
-                })
-            }
+        updatePost(updatedPost){
+            this.$store.dispatch('updatePost', {id: this.post._id, content: updatedPost}).then(()=>{
+            this.openUpdate = false;
+        });
         },
-        onEdit(evt){
-             var src = evt.target.innerText
-             if(src.length){
-                 this.txt = src;
-             }else{
-                 this.edited = false;
-                 this.txt = 'Edit me';
-             }
-         },
-         checkEdited(){
-             if(!this.edited){
-                this.txt = '';
-                this.edited = true;
-             }
-         },
-         uploadImage(){
-            this.$refs.fileInput.click();
+        closeDelete(){
+            this.openDelete = false;
         },
-        readUrl(e){
-            const file = e.target.files[0];
-            
-            this.file = file;
-            this.url = URL.createObjectURL(file);
-        },
+        deletePost(){
+            this.$store.dispatch('deletePost', {postId: this.post._id, clubId: this.post.club}).then(()=>{
+            this.openDelete = false;
+        });
+        }
     }
 }
 </script>

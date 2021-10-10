@@ -161,6 +161,20 @@ export const actions = {
         });
     });
   },
+  updateComment(_state, data) {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      this.$api.comments
+        .patch(data.id, data.formData)
+        .then((comment) => {
+          resolve("");
+          return this.commit("updateComment", comment.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   deleteComment(_state, commentId) {
     return this.$api.comments.delete(commentId).then(() => {
       return this.commit("deleteComment", commentId);

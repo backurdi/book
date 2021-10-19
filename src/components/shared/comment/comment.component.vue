@@ -1,7 +1,6 @@
 <template>
-    <div class="comments py-4 px-4">
-        <CommentTextFieldComponent :postId="postId" buttonAction="addComment"></CommentTextFieldComponent>
-        <div v-for="(comment, index) in comments" :key="index" class="mb-5">
+    <div class="comments">
+        <div class="mb-5">
             <div class="flex">
                 <div class="w-1/12">
                     <div class="mx-auto w-12 h-12 bg-cover rounded-full mr-2"
@@ -17,12 +16,12 @@
                     </div>
                     <CommentTextFieldComponent v-else :editText="comment.text" :editImage="comment.photo" :postId="postId" buttonAction="updateComment" @commentActionDone="editComment = null" :commentId="comment._id"></CommentTextFieldComponent>
                 </div>
-                <DotsDropdownComponent v-if="user.id === comment.user._id" :commentIndex="index" @update="editComment = $event" @Delete="openDelete = true"></DotsDropdownComponent>
+                <DotsDropdownComponent v-if="user.id === comment.user._id" :commentIndex="index" dropdownContext="comment" @update="editComment = $event" @delete="openDelete = true"></DotsDropdownComponent>
             </div>
         </div>
     </div>
     <PopupComponent v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
-        <DeletePopupComponent @delete="deletePost" @cancle="closeDelete"></DeletePopupComponent>
+        <DeletePopupComponent @delete="deleteComment" @cancle="closeDelete"></DeletePopupComponent>
     </PopupComponent>
 </template>
 
@@ -33,7 +32,7 @@ import PopupComponent from '../../shared/popup/popup.component.vue';
 import CommentTextFieldComponent from '../comment-text-field/comment-text-field.component.vue';
 export default {
     name:'Comment',
-    props:['comments', 'postId'],
+    props:['comment', 'postId', 'index'],
     components:{CommentTextFieldComponent, DotsDropdownComponent, DeletePopupComponent, PopupComponent},
     data:()=>({
         openUpdate:false,
@@ -54,8 +53,8 @@ export default {
         closeDelete(){
             this.openDelete = false;
         },
-        deletePost(){
-            this.$store.dispatch('deletePost', {postId: this.post._id, clubId: this.post.club}).then(()=>{
+        deleteComment(){
+            this.$store.dispatch('deleteComment', {commentId:this.comment._id, postId: this.postId}).then(()=>{
             this.openDelete = false;
         });
         }

@@ -15,7 +15,7 @@
 
         <!-- to bar right  -->
         <ul class="flex items-center">
-          <li class="pr-6" v-if="this.user.role==='Student'">
+          <li class="pr-6" v-if="user.role==='Student'">
             <div class="relative" @click="showInviteDropwdown=!showInviteDropwdown">
               <UserAddIcon class="w-6 h-6 duration-150 text-white"></UserAddIcon>
               <div class="absolute mt-2 right-0 w-80" v-if="showInviteDropwdown">

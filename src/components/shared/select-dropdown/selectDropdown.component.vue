@@ -42,7 +42,6 @@ import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } f
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 
 export default {
-
     components: {
         Listbox,
         ListboxButton,
@@ -52,7 +51,7 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
-    props:['dropdownLabel'],
+    props:['dropdownLabel', 'selectedBook'],
     data:()=>({
         selected:{}
     }),
@@ -62,8 +61,13 @@ export default {
         },
     },
     mounted(){
-        this.selected = this.books[0];
-        this.$emit('dropdownChanged', this.selected._id);
+        console.log(this.selectedBook);
+        if(this.selectedBook){
+          this.selected = this.selectedBook;
+        }else{
+          this.selected = this.books[0];
+        }
+          this.$emit('dropdownChanged', this.selected._id);
     },
     methods:{
         dropdownChange(){

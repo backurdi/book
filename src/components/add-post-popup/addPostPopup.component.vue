@@ -14,24 +14,21 @@
     </div>
   </div>
   <Popup @closePopUp="open = false" :open="open" :buttonText="'Add post'">
-    <h3 class="text-black text-3xl font-bold mb-5">Create post</h3>
-    <TextField @emitBody="createPost" buttonText="Create post"></TextField>
+    <CreatePost ref="createPost" buttonText="Create post" @close="open=false" @emitBody="addPost"></CreatePost>
   </Popup>
 </template>
 
 <script>
 import Popup from '@/components/shared/popup/popup.component';
-import TextField from '@/components/shared/text-field/text-field.component'
+import CreatePost from '@/components/shared/create-post/create-post.component.vue';
 
 export default {
   name:'Add post popup',
   components: {
     Popup,
-    TextField,
+    CreatePost
   },
   data: () => ({
-    searchText: "",
-    booksData: [],
     open: false,
     errorMessage: '',
     displayError: false,
@@ -48,22 +45,23 @@ export default {
     addPostPopup() {
       this.open = !this.open;
     },
-    createPost(data){
-      this.$store.dispatch("addPost", data).then(()=>{
-        this.postText = "";
-        this.pagesFrom = 0;
-        this.pagesTo = 0;
-        this.open = false;
-      })
-      .catch(err=>{
-        this.errorMessage = err.message;
-        this.displayError = true;
+    addPost(event){
+      this.$store
+        .dispatch("addPost", event)
+        .then(() => {
+          this.$refs.createPost.clearFields();
+          this.$refs.createPost.clearForm();
+          this.open = false;
+        })
+        .catch((err) => {
+          this.errorMessage = err.message;
+          this.displayError = true;
 
-        setTimeout(()=>{
-          this.errorMessage = '';
-          this.displayError = false;
-        }, 5000)
-      });
+          setTimeout(() => {
+            this.errorMessage = "";
+            this.displayError = false;
+          }, 5000);
+        });
     }
   },
 };

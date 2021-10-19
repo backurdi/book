@@ -24,10 +24,16 @@
 <script>
 export default {
     name:'Toggle Button',
-    props:['toggleLabel'],
+    props:['toggleLabel', 'toggleStateFromParent'],
     data:()=>({
         toggleState:false,
     }),
+    mounted(){
+      console.log(this.toggleStateFromParent);
+      if(this.toggleStateFromParent){
+        this.toggleState=this.toggleStateFromParent;
+      }
+    },
     methods:{
         toggleStateChange(){
             this.$emit('toggleStateChanged', this.toggleState);

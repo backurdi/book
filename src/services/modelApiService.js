@@ -45,6 +45,7 @@ export class ModelApiService extends ReadOnlyApiService {
   }
 
   async delete(id) {
+    console.log(id);
     return new Promise((resolve, reject) => {
       axios
         .delete(this.getUrl(id), {

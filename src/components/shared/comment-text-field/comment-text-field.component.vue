@@ -41,7 +41,6 @@ export default {
     methods:{
         commentActionClicked(){
             if(this.edited){
-                console.log(this.buttonAction);
                 this.form.append('post', this.postId)
                 this.form.append('text', this.txt)
                 if(this.file.name){

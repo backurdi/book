@@ -9,20 +9,7 @@
           ></div>
           <p>{{post.user.name}}</p>
           </div>
-          <div @click="showDropdown = !showDropdown" v-if="user.id === post.user._id">
-            <DotsVerticalIcon class="w-6 h-6 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
-            <XIcon class="w-6 h-6 cursor-pointer" v-if="showDropdown"></XIcon>
-          </div>
-        </div>
-        <div class="border-grey-100 absolute right-5 top-12 w-150 bg-white border rounded text-gray-600" v-if="showDropdown">
-          <ul>
-            <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="openPopup('Update')">
-              <span class="font-bold">Update post</span>
-            </li>
-            <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="openPopup('Delete')">
-              <span class="font-bold">Delete post</span>
-            </li>
-          </ul>
+          <DotsDropdownComponent v-if="user.id === post.user._id" dropdownContext="post" @update="openPopup('Update')" @delete="openPopup('Delete')"></DotsDropdownComponent>
         </div>
         <div class="p-4">
           <div class="mb-5" v-html="domDecoder(post.text)"></div>
@@ -42,7 +29,7 @@
         </div>
       </div>
       <Popup v-if="openUpdate" @closePopUp="openUpdate = false" :open="openUpdate">
-        <TextField class="overflow-visible" @emitBody="updatePost" :textFromParent="post.text" buttonText="Update"></TextField>
+        <CreatePost buttonText="Update post" @close="open=false" @emitBody="updatePost" :postData="post"></CreatePost>
       </Popup>
       <Popup v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
         <DeletePopup @delete="deletePost" @cancle="closeDelete"></DeletePopup>
@@ -50,14 +37,14 @@
 </template>
 
 <script>
-import {DotsVerticalIcon, XIcon} from '@heroicons/vue/solid';
+import DotsDropdownComponent from '../dots-dropdown/dots-dropdown.component.vue';
 import Popup from '@/components/shared/popup/popup.component';
-import TextField from '@/components/shared/text-field/text-field.component';
 import DeletePopup from '../../delete-popup/deletePopup.component.vue';
+import CreatePost from '@/components/shared/create-post/create-post.component.vue';
 
 export default {
     name:'Post',
-    components:{DotsVerticalIcon, XIcon, Popup, TextField, DeletePopup},
+    components:{DotsDropdownComponent, Popup, DeletePopup, CreatePost},
     props:['post', 'books'],
     data:()=>({
       showDropdown:false,

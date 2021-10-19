@@ -175,9 +175,9 @@ export const actions = {
         });
     });
   },
-  deleteComment(_state, commentId) {
-    return this.$api.comments.delete(commentId).then(() => {
-      return this.commit("deleteComment", commentId);
+  deleteComment(_state, data) {
+    return this.$api.comments.delete(data.commentId).then(() => {
+      return this.commit("deleteComment", data);
     });
   },
   sendEmail(_state, emailData) {
@@ -187,4 +187,11 @@ export const actions = {
       });
     });
   },
+  getGifs(_state, searchTerm){
+    return new Promise((resolve) => {
+      this.$api.gif.get(searchTerm).then((res) => {
+        resolve(res);
+      });
+    });
+  }
 };

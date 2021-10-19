@@ -1,10 +1,10 @@
 <template>
-  <div class="w-1/12 mt-2 relative">
+  <div class=" mt-2 relative">
     <div class=" text-white" @click="showDropdown = !showDropdown">
         <DotsVerticalIcon class="w-6 h-6 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
         <XIcon class="w-6 h-6 cursor-pointer" v-if="showDropdown"></XIcon>
     </div>  
-    <div class="border-grey-100 absolute right-5 top-12 w-150 bg-white border rounded text-gray-600 z-10" v-if="showDropdown">
+    <div class="border-grey-100 absolute right-1 top-8 w-150 bg-white border rounded text-gray-600 z-10" v-if="showDropdown">
         <ul>
             <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="emitAction('update')">
             <span class="font-bold">Update post</span>
@@ -21,7 +21,7 @@
 import {DotsVerticalIcon, XIcon } from '@heroicons/vue/solid';
 export default {
     name: 'Dots dropdown',
-    props:['commentIndex'],
+    props:['commentIndex', 'dropdownContext'],
     data:()=>({
         showDropdown:false,
     }),

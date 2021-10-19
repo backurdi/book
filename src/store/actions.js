@@ -187,9 +187,9 @@ export const actions = {
       });
     });
   },
-  getGifs(_state, searchTerm){
+  getGifs(_state, data){
     return new Promise((resolve) => {
-      this.$api.gif.get(searchTerm).then((res) => {
+      this.$api.gif.get(data).then((res) => {
         resolve(res);
       });
     });

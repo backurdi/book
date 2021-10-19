@@ -8,9 +8,9 @@ export default class GifService {
     
     constructor() {}
 
-    async get(searchTerm){
+    async get({searchTerm, offset}){
         try {
-            const response = await axios.get(`${this.searchEndPoint}&api_key=${this.apiKey}&q=${searchTerm}&limit=${this.limit}`);
+            const response = await axios.get(`${this.searchEndPoint}&api_key=${this.apiKey}&q=${searchTerm}&limit=${this.limit}&offset=${offset}`);
             return response;
           } catch (err) {
             handleErrors(err);

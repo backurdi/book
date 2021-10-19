@@ -68,11 +68,11 @@ export default {
   },
   methods: {
     createPost() {
-      this.form.append("text", this.text);
-      this.form.append("photo", this.photo);
-      this.form.append("pagesFrom", this.pagesFrom);
-      this.form.append("pagesTo", this.pagesTo);
-      this.form.append("book", this.book);
+      if(this.text){this.form.append("text", this.text)}
+      if(this.photo){this.form.append("photo", this.photo)}
+      if(this.pagesFrom){this.form.append("pagesFrom", this.pagesFrom)}
+      if(this.pagesTo !== 0){this.form.append("pagesTo", this.pagesTo)}
+      if(this.book !== ''){this.form.append("book", this.book)}
 
       this.$emit('emitBody', this.form);
     },

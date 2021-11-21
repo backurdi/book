@@ -1,74 +1,115 @@
 <template>
-  <div class="cursor-pointer relative" @click="showDropdown = !showDropdown" v-if="club.owner === user.id">
-      <div
-        class="border-grey-100 w-full bg-gray-600 border rounded top-12 z-30 text-white"
-      >
-        <ul>
-          <li
-            class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
-            @click="addBookOpen=!addBookOpen"
-          >
-            <span class="font-bold">Add book</span>
-          </li>
-          <li
-            class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
-            @click="openInviteUsers()"
-          >
-            <span class="font-bold">Invite users</span>
-          </li>
-        </ul>
+  <div class="relative" @click="showDropdown = !showDropdown" v-if="club.owner === user.id">
+    <div class="border-grey-100 z-30 top-12 w-full text-white border rounded">
+      <div class="current-books flex justify-between text-gray-600">
+        <p class="font-bold">Books</p>
+        <button><PlusCircleIcon class="w-6 h-6"></PlusCircleIcon></button>
       </div>
+      <ul class="mb-10 bg-gray-600">
+        <li class="w-full" v-for="(book, index) in books" :key="index">
+          <span class="flex p-2" :class="{ 'bg-blue-400': index === 0 }">
+            <img :src="book.image" class="mr-2 w-8" alt="" />
+            <div class="flex flex-col">
+              <p class="text-xs">{{ setSubStr(book.title) }}</p>
+              <BookOpenIcon class="self-end w-4 h-4" v-if="index === 0"></BookOpenIcon>
+            </div>
+          </span>
+        </li>
+      </ul>
+
+      <div class="current-books flex justify-between text-gray-600">
+        <p class="font-bold">Memebers</p>
+        <button><PlusCircleIcon class="w-6 h-6" @click="openInviteUsers()"></PlusCircleIcon></button>
+      </div>
+      <ul class="mb-10 bg-gray-600">
+        <li class="w-full" v-for="(member, index) in members" :key="index">
+          <span class="flex items-center p-2">
+            <div
+              class="mr-2 w-10 h-10 bg-cover rounded-full"
+              :style="{
+                'background-image': `url(${
+                  member.photo ? member.photo : require('@/assets/images/default-avatar.png')
+                })`,
+              }"
+            ></div>
+            <p class="text-xs">{{ member.name }}</p>
+          </span>
+        </li>
+      </ul>
     </div>
-    <Popup @closePopUp="addBookOpen = false" :open="addBookOpen" :buttonText="'Add post'">
+  </div>
+  <Popup @closePopUp="addBookOpen = false" :open="addBookOpen" :buttonText="'Add post'">
     <AddBook></AddBook>
   </Popup>
   <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen" :buttonText="'Add post'">
-    <MultiSelectDropdown :dropdownData="usersToInviteArr" @inviteFriendsChanged="usersToInvite = $event"></MultiSelectDropdown>
+    <MultiSelectDropdown
+      :dropdownData="usersToInviteArr"
+      @inviteFriendsChanged="usersToInvite = $event"
+    ></MultiSelectDropdown>
     <button @click="inviteUsers">Invite</button>
   </Popup>
 </template>
 
 <script>
-import Popup from '@/components/shared/popup/popup.component';
-import AddBook from '../add-book/addBook.component.vue';
-import MultiSelectDropdown from '../shared/multiselect-dropdown/multiselectDropdown.component.vue'
+import Popup from "@/components/shared/popup/popup.component";
+import AddBook from "../add-book/addBook.component.vue";
+import MultiSelectDropdown from "../shared/multiselect-dropdown/multiselectDropdown.component.vue";
+import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 export default {
-    name: 'Club site settings',
-    data:()=>({
-        addBookOpen:false,
-        inviteUsersOpen:false,
-        usersToInvite:[],
-        showDropdown: false,
-    }),
-    components:{
+  name: "Club site settings",
+  data: () => ({
+    addBookOpen: false,
+    inviteUsersOpen: false,
+    usersToInvite: [],
+    showDropdown: false,
+  }),
+  components: {
     AddBook,
     MultiSelectDropdown,
-    Popup
+    Popup,
+    PlusCircleIcon,
+    BookOpenIcon,
   },
-    computed:{
-    club(){
+  computed: {
+    club() {
       return this.$store.state.activeClub;
     },
-    user(){
-      return this.$store.state.user
+    user() {
+      return this.$store.state.user;
     },
-    usersToInviteArr(){
-      return this.$store.state.usersForInvite
+    usersToInviteArr() {
+      return this.$store.state.usersForInvite;
+    },
+    books() {
+      return this.$store.state.books;
+    },
+    members() {
+      return this.$store.state.activeClub.members;
     },
   },
-  methods:{
-      openInviteUsers(){
-          this.$store.dispatch('getUsersForInvite');
-          this.inviteUsersOpen = true;
-      },
-      inviteUsers(){
-      this.$store.dispatch('inviteUsers', {invites: this.usersToInvite});
+  methods: {
+    openInviteUsers() {
+      this.$store.dispatch("getUsersForInvite");
+      this.inviteUsersOpen = true;
     },
-  }
+    inviteUsers() {
+      this.$store.dispatch("inviteUsers", { invites: this.usersToInvite });
+    },
+    setSubStr(str) {
+      let subStr = 20;
 
-}
+      if (str) {
+        while (str?.substring(subStr - 1, subStr).trim() !== "" && str?.substring(subStr - 1, subStr) !== " ") {
+          debugger;
+          subStr++;
+        }
+
+        return str?.substring(1, subStr).trim() + "...";
+      }
+      return str;
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

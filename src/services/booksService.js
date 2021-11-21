@@ -1,6 +1,6 @@
 import { ModelApiService } from "./modelApiService";
 import { handleErrors } from "./servicesHelper";
-import axios from 'axios';
+import axios from "axios";
 
 export default class BooksService extends ModelApiService {
   constructor() {
@@ -14,7 +14,7 @@ export default class BooksService extends ModelApiService {
         `https://www.googleapis.com/books/v1/volumes?q=${id}&maxResults=20
         `
       );
-      const filteredData = response.data.items.filter(book => book.volumeInfo.pageCount)
+      const filteredData = response.data.items.filter((book) => book.volumeInfo.pageCount);
       return filteredData;
     } catch (err) {
       handleErrors(err);

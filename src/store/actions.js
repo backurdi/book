@@ -1,4 +1,3 @@
-
 export const actions = {
   login(_state, loginInfo) {
     return this.$api.users
@@ -15,9 +14,7 @@ export const actions = {
     });
   },
   signup(_state, signupInfo) {
-    return this.$api.users
-      .signup(signupInfo)
-      .then((user) => this.commit("login", user));
+    return this.$api.users.signup(signupInfo).then((user) => this.commit("login", user));
   },
   getMe() {
     return this.$api.users
@@ -26,62 +23,64 @@ export const actions = {
         return this.commit("setCurrentUser", user.data);
       })
       .catch((err) => {
-        if(err){
+        if (err) {
           return this.commit("logout");
         }
       });
   },
-  updateMe(_state, data){
-    return new Promise((resolve)=>{
-      this.$api.users.patch('updateMe', data).then(updatedUser=>{
-        resolve('');
-        return this.commit('setCurrentUser', updatedUser.data.user);
-      })
-      .catch((_err) => {
-        return _err;
-      });
-    })
-  },
-  getStudents(){
-    return this.$api.users.get('students').then((students) => {
-      return this.commit("setStudents", students.data);
-    })
-    .catch((err) => {
-      if(err){
-        return this.commit("logout");
-      }
+  updateMe(_state, data) {
+    return new Promise((resolve) => {
+      this.$api.users
+        .patch("updateMe", data)
+        .then((updatedUser) => {
+          resolve("");
+          return this.commit("setCurrentUser", updatedUser.data.user);
+        })
+        .catch((_err) => {
+          return _err;
+        });
     });
   },
-  getUsersForInvite({state}){
-    return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then(userForInviteList=>{
-      return this.commit('setUsersForInvite', userForInviteList.data)
-    })
+  getStudents() {
+    return this.$api.users
+      .get("students")
+      .then((students) => {
+        return this.commit("setStudents", students.data);
+      })
+      .catch((err) => {
+        if (err) {
+          return this.commit("logout");
+        }
+      });
+  },
+  getUsersForInvite({ state }) {
+    return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then((userForInviteList) => {
+      return this.commit("setUsersForInvite", userForInviteList.data);
+    });
   },
   getActiveClub(_state, clubId) {
-    return this.$api.clubs
-      .get(clubId)
-      .then((club) => {
-        this.commit("setActiveClub", club.data)
-      });
+    return this.$api.clubs.get(clubId).then((club) => {
+      this.commit("setActiveClub", club.data);
+    });
   },
   selectClub({ state }, clubId) {
     const clubInState = state.clubs.find((club) => club._id === clubId);
 
     if (!clubInState.books) {
-      return this.$api.clubs
-        .get(clubId)
-        .then((club) => this.commit("setActiveClub", club.data));
+      return this.$api.clubs.get(clubId).then((club) => this.commit("setActiveClub", club.data));
     }
     return this.commit("setActiveClub", clubInState);
   },
-  createClub(_state, body){
-    this.$api.clubs.post(body).then((club)=>this.commit('insertClub', club.data));
+  createClub(_state, body) {
+    this.$api.clubs.post(body).then((club) => this.commit("insertClub", club.data));
   },
-  answerInvite(_state, data){
-    this.$api.clubs.answerInvite(data).then((res)=>this.commit('answerInvite', {accepted:data.accepted, club:res.data}))
+  answerInvite(_state, data) {
+    this.$api.clubs
+      .answerInvite(data)
+      .then((res) => this.commit("answerInvite", { accepted: data.accepted, club: res.data }));
   },
-  inviteUsers({state}, invites){
-    this.$api.clubs.inviteUsers(invites, state.activeClub._id)
+  inviteUsers({ state }, invites) {
+    this.$api.clubs.inviteUsers(invites, state.activeClub._id);
   },
   fetchBooks() {
     return new Promise((resolve) => {
@@ -92,14 +91,12 @@ export const actions = {
     });
   },
   updateBook({ state }, data) {
-    return this.$api.books
-      .patch(state.focusedBook._id, data.body)
-      .then((updatedBook) => {
-        return this.commit("setBook", updatedBook.data.data);
-      });
+    return this.$api.books.patch(state.focusedBook._id, data.body).then((updatedBook) => {
+      return this.commit("setBook", updatedBook.data.data);
+    });
   },
-  addBook({state}, body) {
-    body = {...body, club:state.activeClub._id}
+  addBook({ state }, body) {
+    body = { ...body, club: state.activeClub._id };
     return this.$api.books.post(body).then((addedBook) => {
       return this.commit("addBook", addedBook.data);
     });
@@ -117,10 +114,8 @@ export const actions = {
     });
   },
   addPost({ state }, data) {
-    data.append('club', state.activeClub._id);
-    return this.$api.posts
-      .post(data)
-      .then((post) => this.commit("addPost", post.data));
+    data.append("club", state.activeClub._id);
+    return this.$api.posts.post(data).then((post) => this.commit("addPost", post.data));
   },
   updatePost(_state, data) {
     return new Promise((resolve, reject) => {
@@ -135,23 +130,24 @@ export const actions = {
         });
     });
   },
-  deletePost(_state, data){
+  deletePost(_state, data) {
     return new Promise((resolve, reject) => {
       this.$api.posts
         .delete(data.postId)
-        .then(()=>{
+        .then(() => {
           resolve("");
-          return this.commit("deletePost", data)
+          return this.commit("deletePost", data);
         })
         .catch((err) => {
           reject(err);
         });
-    })
+    });
   },
   addComment(_state, data) {
+    console.log(data);
     return new Promise((resolve, reject) => {
       this.$api.comments
-        .post(data)
+        .post(data.formData)
         .then((comment) => {
           resolve("");
           return this.commit("addComment", comment.data);
@@ -187,11 +183,11 @@ export const actions = {
       });
     });
   },
-  getGifs(_state, data){
+  getGifs(_state, data) {
     return new Promise((resolve) => {
       this.$api.gif.get(data).then((res) => {
         resolve(res);
       });
     });
-  }
+  },
 };

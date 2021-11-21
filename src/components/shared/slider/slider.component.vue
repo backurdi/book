@@ -1,51 +1,34 @@
 <template>
-  <div class="slider-container relative overflow-x-hidden">
-    <button v-if="slide>1" class="z-50 absolute left-0 top-0 text-black" @click="previousSlide"><ArrowNarrowLeftIcon class="h-8 w-8 p-1 rounded-full text-black border-2 border-black hover:bg-black hover:text-white ease-in"></ArrowNarrowLeftIcon></button>
-    <div class="flex mt-12">
-    <div
-      class="
-        slide
-        inset-0
-        transform
-        translate-x-0
-        transition-all
-        duration-1000
-        ease-in-out
-        w-full
-      "
-    >
-      <slot name="main-page"></slot>
+  <div class="slider-container overflow-x-hidden">
+    <div class="relative" :class="{ 'h-12': slide > 1 }">
+      <button v-if="slide > 1" class="absolute z-50 left-0 top-0 text-black" @click="previousSlide">
+        <ArrowNarrowLeftIcon
+          class="p-1 w-8 h-8 text-black hover:text-white hover:bg-black border-2 border-black rounded-full ease-in"
+        ></ArrowNarrowLeftIcon>
+      </button>
     </div>
-    <div
-      class="
-        slide
-        inset-0
-        transform
-        translate-x-full
-        transition-all
-        duration-1000
-        ease-in-out
-        top-8
-        w-0
-      "
-    >
-      <slot name="next-page"></slot>
-    </div>
+    <div class="flex">
+      <div class="slide inset-0 w-full transform translate-x-0 transition-all duration-1000 ease-in-out">
+        <slot name="main-page"></slot>
+      </div>
+      <div class="slide inset-0 top-8 w-0 transform translate-x-full transition-all duration-1000 ease-in-out">
+        <slot name="next-page"></slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {ArrowNarrowLeftIcon} from '@heroicons/vue/solid';
+import { ArrowNarrowLeftIcon } from "@heroicons/vue/solid";
 export default {
-  components:{ArrowNarrowLeftIcon},
-  data:()=>({
-      slide:1,
+  components: { ArrowNarrowLeftIcon },
+  data: () => ({
+    slide: 1,
   }),
   methods: {
     nextSlide() {
       setTimeout(() => {
-        this.slide++
+        this.slide++;
       }, 500);
       let activeSlide = document.querySelector(".slide.translate-x-0");
       activeSlide.classList.remove("translate-x-0");
@@ -63,7 +46,7 @@ export default {
     },
 
     previousSlide() {
-      this.slide--
+      this.slide--;
       let activeSlide = document.querySelector(".slide.translate-x-0");
       activeSlide.classList.remove("translate-x-0");
       activeSlide.classList.remove("w-full");

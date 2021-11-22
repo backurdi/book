@@ -3,7 +3,7 @@
     <div class="border-grey-100 z-30 top-12 w-full text-white border rounded">
       <div class="current-books flex justify-between text-gray-600">
         <p class="font-bold">Books</p>
-        <button><PlusCircleIcon class="w-6 h-6"></PlusCircleIcon></button>
+        <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
       </div>
       <ul class="mb-10 bg-gray-600">
         <li class="w-full" v-for="(book, index) in books" :key="index">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <Popup @closePopUp="addBookOpen = false" :open="addBookOpen" :buttonText="'Add post'">
-    <AddBook></AddBook>
+    <AddBook @bookAdded="addBookOpen = false"></AddBook>
   </Popup>
   <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen" :buttonText="'Add post'">
     <MultiSelectDropdown
@@ -104,7 +104,7 @@ export default {
           subStr++;
         }
 
-        return str?.substring(1, subStr).trim() + "...";
+        return str?.substring(0, subStr).trim() + "...";
       }
       return str;
     },

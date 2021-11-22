@@ -97,8 +97,16 @@ export const actions = {
   },
   addBook({ state }, body) {
     body = { ...body, club: state.activeClub._id };
-    return this.$api.books.post(body).then((addedBook) => {
-      return this.commit("addBook", addedBook.data);
+    return new Promise((resolve, reject) => {
+      this.$api.books
+        .post(body)
+        .then((addedBook) => {
+          resolve("");
+          return this.commit("addBook", addedBook.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   },
   deleteBook({ state }) {
@@ -144,7 +152,6 @@ export const actions = {
     });
   },
   addComment(_state, data) {
-    console.log(data);
     return new Promise((resolve, reject) => {
       this.$api.comments
         .post(data.formData)

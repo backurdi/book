@@ -8,10 +8,10 @@
       </button>
     </div>
     <div class="flex">
-      <div class="slide inset-0 w-full transform translate-x-0 transition-all duration-1000 ease-in-out">
+      <div class="slide inset-0 w-full transform translate-x-0 transition-all duration-100 ease-in-out">
         <slot name="main-page"></slot>
       </div>
-      <div class="slide inset-0 top-8 w-0 transform translate-x-full transition-all duration-1000 ease-in-out">
+      <div class="slide inset-0 top-8 w-0 transform translate-x-full transition-all duration-100 ease-in-out">
         <slot name="next-page"></slot>
       </div>
     </div>
@@ -29,7 +29,7 @@ export default {
     nextSlide() {
       setTimeout(() => {
         this.slide++;
-      }, 500);
+      }, 0);
       let activeSlide = document.querySelector(".slide.translate-x-0");
       activeSlide.classList.remove("translate-x-0");
       activeSlide.classList.remove("w-full");

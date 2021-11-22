@@ -3,8 +3,8 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      height: { 150: "150px", '70-screen': '70vh'},
-      width: { 150: "150px", 'fit-content': 'fit-content' },
+      height: { 150: "150px", "70-screen": "70vh" },
+      width: { 150: "150px", "fit-content": "fit-content" },
       colors: {
         readee: {
           light: "#D6EBEB",
@@ -13,14 +13,12 @@ module.exports = {
         },
       },
       maxHeight: {
-        '70-screen': '70vh'
-       }
+        "70-screen": "70vh",
+      },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [
-    require('daisyui'),
-  ],
+  plugins: [],
 };

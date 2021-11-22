@@ -91,12 +91,11 @@ export default {
         isbn: data.industryIdentifiers[0].identifier,
       };
 
-      await this.$store.dispatch("addBook", body);
+      await this.$store.dispatch("addBook", body).then(() => {
+        this.$emit("bookAdded");
+      });
 
       this.open = false;
-    },
-    addBookPopup() {
-      this.open = !this.open;
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
-  <TransitionRoot as="template" :show="open" class="flex justify-center">
+  <TransitionRoot as="template" :show="open" class="flex items-center justify-center">
     <Dialog as="div" static class="fixed z-10 inset-0 overflow-y-auto" :open="open" @close="$emit('closePopUp')">
-      <div class="flex items-end justify-center pb-20 pt-4 px-4 min-h-screen text-center sm:block sm:p-0">
+      <div class="items-end justify-center pb-20 pt-4 px-4 h-screen text-center">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"

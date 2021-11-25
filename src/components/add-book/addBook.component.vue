@@ -33,6 +33,7 @@
           "
           type="text"
           placeholder="Search"
+          @keydown="keydownHandler"
         />
         <button
           class="
@@ -53,7 +54,8 @@
         </button>
       </div>
     </div>
-    <div v-if="booksData.length">
+    <LoadingSpinner v-if="isLoading"></LoadingSpinner>
+    <div v-if="booksData.length && !isLoading">
       <AddBookResultCard
         v-for="(data, index) in booksData"
         :key="index"
@@ -66,21 +68,31 @@
 
 <script>
 import AddBookResultCard from "./add-book-result-card/add-book-result-card.component.vue";
+import LoadingSpinner from "../shared/loading-spinner/loading-spinner.component.vue";
 
 export default {
   components: {
     AddBookResultCard,
+    LoadingSpinner,
   },
   emits: [AddBookResultCard],
   data: () => ({
     searchText: "",
     booksData: [],
     open: false,
+    isLoading: false,
   }),
   methods: {
     async searchBooks() {
+      this.isLoading = true;
       const res = await this.$store.dispatch("searchBooks", this.searchText);
+      this.isLoading = false;
       this.booksData = res;
+    },
+    keydownHandler(event) {
+      if (event.code === "Enter") {
+        this.searchBooks();
+      }
     },
     async addBook(data) {
       const body = {

@@ -62,7 +62,6 @@ export default {
 
       if (str) {
         while (str?.substring(subStr - 1, subStr).trim() !== "" && str?.substring(subStr - 1, subStr) !== " ") {
-          debugger;
           subStr++;
         }
 

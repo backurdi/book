@@ -5,8 +5,8 @@
         <p class="font-bold">Books</p>
         <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
       </div>
-      <ul class="mb-10 bg-gray-600">
-        <li class="w-full" v-for="(book, index) in books" :key="index">
+      <ul class="scroll mb-10 h-60 bg-gray-600 overflow-scroll">
+        <li class="w-full h-16" v-for="(book, index) in books" :key="index">
           <span class="flex p-2" :class="{ 'bg-blue-400': index === 0 }">
             <img :src="book.image" class="mr-2 w-8" alt="" />
             <div class="flex flex-col">
@@ -100,7 +100,6 @@ export default {
 
       if (str) {
         while (str?.substring(subStr - 1, subStr).trim() !== "" && str?.substring(subStr - 1, subStr) !== " ") {
-          debugger;
           subStr++;
         }
 

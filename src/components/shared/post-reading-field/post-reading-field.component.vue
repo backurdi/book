@@ -5,6 +5,7 @@
         @dropdownChanged="$emit('selectedBookEmit', $event)"
         dropdownLabel="Select book"
         :selectedBook="book"
+        :books="books"
       ></SelectDropdown>
       <div class="flex mt-4">
         <div class="flex flex-col w-4/12">
@@ -56,6 +57,23 @@
         </div>
       </div>
     </div>
+    <button
+      class="
+        px-4
+        py-2
+        w-fit-content
+        text-black
+        hover:text-white
+        bg-green-400
+        hover:bg-green-700
+        border-2 border-black
+        rounded
+        md:px-4 md:py-2
+      "
+      @click="selectReadRef()"
+    >
+      Submit
+    </button>
   </div>
 </template>
 
@@ -67,7 +85,6 @@ export default {
   props: ["input"],
   components: { SelectDropdown },
   data: () => ({
-    toggleState: false,
     pagesFrom: 0,
     pagesTo: 0,
     selectedBook: "",
@@ -75,6 +92,7 @@ export default {
   created() {
     this.pagesFrom = this.input.pagesFrom;
     this.pagesTo = this.input.pagesTo;
+    this.selectedBook = this.books[0];
 
     if (this.pagesTo) {
       this.toggleState = true;
@@ -86,6 +104,14 @@ export default {
         return this.$store.state.books?.filter((book) => book._id === this.input.book)[0];
       }
       return "";
+    },
+    books() {
+      return this.$store.state.books;
+    },
+  },
+  methods: {
+    selectReadRef() {
+      this.$emit("readRefSelected", { book: this.selectedBook, pagesTo: this.pagesTo, pagesFrom: this.pagesFrom });
     },
   },
 };

@@ -45,13 +45,7 @@
     </template>
     <template v-slot:next-page>
       <gif-editor @mediaEmit="gifSelected" v-if="nextPage === 'gif'"></gif-editor>
-      <ReadingField
-        @selectedBookEmit="book = $event"
-        @pagesFrom="pagesFrom = $event"
-        @pagesTo="pagesTo = $event"
-        :input="{ book, pagesFrom, pagesTo }"
-        v-else
-      ></ReadingField>
+      <ReadingField @readRefSelected="setBookData($event)" :input="{ book, pagesFrom, pagesTo }" v-else></ReadingField>
     </template>
   </slider>
 </template>
@@ -84,7 +78,6 @@ export default {
     form: new FormData(),
   }),
   created() {
-    console.log(this.postData);
     if (this.postData) {
       const { text, photo, pagesFrom, pagesTo, book } = this.postData;
       this.text = text;
@@ -135,6 +128,12 @@ export default {
     goToNextPage(nextPage) {
       this.$refs.slider.nextSlide();
       this.nextPage = nextPage;
+    },
+    setBookData(bookData) {
+      this.book = bookData.book._id;
+      this.pagesFrom = bookData.pagesFrom;
+      this.pagesTo = bookData.pagesTo;
+      this.$refs.slider.previousSlide();
     },
   },
 };

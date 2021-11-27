@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <textarea
-      class="textarea h-32 text-black bg-gray-200 outline-none resize-none md:h-48"
+      class="textarea p-5 h-32 text-black bg-gray-200 outline-none resize-none md:h-48"
       name=""
       id=""
       cols="20"

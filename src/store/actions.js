@@ -53,8 +53,12 @@ export const actions = {
         }
       });
   },
-  getUsersForInvite({ state }) {
-    return this.$api.clubs.get(`${state.activeClub._id}/usersForInvite`).then((userForInviteList) => {
+  getUsersForInvite({ state }, isNew = false) {
+    let clubId;
+    if (!isNew) {
+      clubId = state.activeClub._id;
+    }
+    return this.$api.clubs.get(`${clubId}/usersForInvite`).then((userForInviteList) => {
       return this.commit("setUsersForInvite", userForInviteList.data);
     });
   },
@@ -72,7 +76,12 @@ export const actions = {
     return this.commit("setActiveClub", clubInState);
   },
   createClub(_state, body) {
-    this.$api.clubs.post(body).then((club) => this.commit("insertClub", club.data));
+    return new Promise((resolve) => {
+      this.$api.clubs.post(body).then((club) => {
+        resolve();
+        return this.commit("insertClub", club.data);
+      });
+    });
   },
   answerInvite(_state, data) {
     this.$api.clubs

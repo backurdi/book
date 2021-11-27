@@ -1,8 +1,8 @@
 <template>
-  <div class="text-field-media">
+  <div class="text-field-media w-8/12">
     <img v-if="url.length" :src="url" alt="" />
+    <input class="h-0" ref="textFieldInput" type="file" style="visibility: hidden" @change="readUrl" />
   </div>
-  <input class="h-0" ref="textFieldInput" type="file" style="visibility: hidden" @change="readUrl" />
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss">
 .text-field-media {
-  width: 100px;
+  max-height: 150px;
   overflow: scroll;
 }
 </style>

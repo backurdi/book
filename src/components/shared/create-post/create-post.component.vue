@@ -4,7 +4,10 @@
       <h3 class="mb-5 text-black text-3xl font-bold">Create post</h3>
       <TextField @emitText="text = $event" :postText="text"></TextField>
       <div>
-        <MediaField ref="mediaField" @mediaEmit="photo = $event" :media="photo"></MediaField>
+        <div class="flex my-4">
+          <MediaField ref="mediaField" @mediaEmit="photo = $event" :media="photo"></MediaField>
+          <ReadingField v-if="book" ref="readingField" :bookData="{ book, pagesFrom, pagesTo }"></ReadingField>
+        </div>
         <div class="button-container flex">
           <button
             class="mr-5 w-fit-content text-black border-2 border-black rounded"
@@ -45,7 +48,11 @@
     </template>
     <template v-slot:next-page>
       <gif-editor @mediaEmit="gifSelected" v-if="nextPage === 'gif'"></gif-editor>
-      <ReadingField @readRefSelected="setBookData($event)" :input="{ book, pagesFrom, pagesTo }" v-else></ReadingField>
+      <ReadingFieldSelector
+        @readRefSelected="setBookData($event)"
+        :input="{ book, pagesFrom, pagesTo }"
+        v-else
+      ></ReadingFieldSelector>
     </template>
   </slider>
 </template>
@@ -53,6 +60,7 @@
 <script>
 import TextField from "@/components/shared/text-field/text-field.component";
 import ReadingField from "@/components/shared/post-reading-field/post-reading-field.component";
+import ReadingFieldSelector from "@/components/shared/post-reading-field/post-reading-field-selector.component";
 import MediaField from "@/components/shared/post-media-field/post-media-field.component";
 import GifEditor from "@/components/shared/gif-picker/gif-picker.component.vue";
 import Slider from "@/components/shared/slider/slider.component.vue";
@@ -65,6 +73,7 @@ export default {
     GifEditor,
     Slider,
     ReadingField,
+    ReadingFieldSelector,
     MediaField,
     PhotographIcon,
   },

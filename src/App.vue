@@ -19,4 +19,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+button:disabled {
+  background-color: rgb(160, 172, 187);
+  color: rgb(131, 141, 153);
+  border: 1px solid #2c3e50;
+}
 </style>

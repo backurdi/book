@@ -6,7 +6,7 @@
         <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
       </div>
       <ul class="scroll mb-10 h-60 bg-gray-600 overflow-scroll">
-        <li class="w-full h-16" v-for="(book, index) in books" :key="index">
+        <li class="w-full h-16" v-for="(book, index) in books" :key="index" @click="displayBookInfo(book)">
           <span class="flex p-2" :class="{ 'bg-blue-400': index === 0 }">
             <img :src="book.image" class="mr-2 w-8" alt="" />
             <div class="flex flex-col">
@@ -38,10 +38,13 @@
       </ul>
     </div>
   </div>
-  <Popup @closePopUp="addBookOpen = false" :open="addBookOpen" :buttonText="'Add post'">
+  <Popup @closePopUp="bookDescriptionOpen = false" :open="bookDescriptionOpen" :buttonText="'close'">
+    <BookInfo @close="bookDescriptionOpen = false"></BookInfo>
+  </Popup>
+  <Popup @closePopUp="addBookOpen = false" :open="addBookOpen">
     <AddBook @bookAdded="addBookOpen = false"></AddBook>
   </Popup>
-  <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen" :buttonText="'Add post'">
+  <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen">
     <MultiSelectDropdown
       :dropdownData="usersToInviteArr"
       @inviteFriendsChanged="usersToInvite = $event"
@@ -53,6 +56,7 @@
 <script>
 import Popup from "@/components/shared/popup/popup.component";
 import AddBook from "../add-book/addBook.component.vue";
+import BookInfo from "../book-info/book-info.component.vue";
 import MultiSelectDropdown from "../shared/multiselect-dropdown/multiselectDropdown.component.vue";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 export default {
@@ -62,6 +66,7 @@ export default {
     inviteUsersOpen: false,
     usersToInvite: [],
     showDropdown: false,
+    bookDescriptionOpen: false,
   }),
   components: {
     AddBook,
@@ -69,6 +74,7 @@ export default {
     Popup,
     PlusCircleIcon,
     BookOpenIcon,
+    BookInfo,
   },
   computed: {
     club() {
@@ -106,6 +112,11 @@ export default {
         return str?.substring(0, subStr).trim() + "...";
       }
       return str;
+    },
+    async displayBookInfo(book) {
+      debugger;
+      await this.$store.commit("setFocusedBook", book);
+      this.bookDescriptionOpen = true;
     },
   },
 };

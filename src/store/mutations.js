@@ -55,7 +55,7 @@ export const mutations = {
     }
   },
   addBook(state, book) {
-    state.books.push(book);
+    state.books.unshift(book);
   },
   setBooks(state, booksApiRes) {
     sortBooks(state, booksApiRes);
@@ -63,12 +63,15 @@ export const mutations = {
   setBook(state, updatedBookData) {
     state.focusedBook = updatedBookData;
   },
+  setFocusedBook(state, book) {
+    debugger;
+    state.focusedBook = book;
+  },
   deleteBook(state) {
-    if (state.recentBooksArr.length) {
-      state.focusedBook = state.recentBooksArr.shift();
+    if (state.books.length) {
+      state.focusedBook = state.books.shift();
     } else {
       state.focusedBook = {};
-      state.booksArr = [];
     }
   },
   addPost(state, post) {

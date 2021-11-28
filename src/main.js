@@ -5,8 +5,4 @@ import router from "./router";
 import store from "./store/store";
 import AppLayout from "./layouts/appLayout.vue";
 
-createApp(App)
-  .use(store)
-  .use(router)
-  .component("AppLayout", AppLayout)
-  .mount("#app");
+createApp(App).use(store).use(router).component("AppLayout", AppLayout).mount("#app");

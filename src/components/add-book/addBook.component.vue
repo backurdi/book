@@ -99,6 +99,7 @@ export default {
         title: data.title,
         pagesTotal: data.pageCount,
         image: data.imageLinks?.thumbnail,
+        description: data.description,
         bookType: "book",
         isbn: data.industryIdentifiers[0].identifier,
       };

@@ -2763,6 +2763,11 @@
   "resolved" "https://registry.npmjs.org/cli-width/-/cli-width-3.0.0.tgz"
   "version" "3.0.0"
 
+"click-outside-vue3@^4.0.1":
+  "integrity" "sha512-sbplNecrup5oGqA3o4bo8XmvHRT6q9fvw21Z67aDbTqB9M6LF7CuYLTlLvNtOgKU6W3zst5H5zJuEh4auqA34g=="
+  "resolved" "https://registry.npmjs.org/click-outside-vue3/-/click-outside-vue3-4.0.1.tgz"
+  "version" "4.0.1"
+
 "clipboardy@^2.3.0":
   "integrity" "sha512-mKhiIL2DrQIsuXMgBgnfEHOZOryC7kY7YO//TN6c63wlEm3NG5tz+YgY5rVi29KCmq/QQjKYvM7a19+MDOTHOQ=="
   "resolved" "https://registry.npmjs.org/clipboardy/-/clipboardy-2.3.0.tgz"

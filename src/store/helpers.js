@@ -1,24 +1,26 @@
 export const getDefaultState = () => ({
-    focusedBook: {},
-    recentBooksArr: [],
-    books: [],
-    user: {},
-    clubs: [],
-    activeClub: {},
-    invites:[],
-    posts: [],
-    token: "",
-    showRecentBooks: false,
-    usersForInvite:[],
-    students:[]
-  });
+  focusedBook: {},
+  books: [],
+  user: {},
+  clubs: [],
+  activeClub: {},
+  invites: [],
+  posts: [],
+  token: "",
+  showRecentBooks: false,
+  usersForInvite: [],
+  students: [],
+});
 
 export const sortBooks = (state, books) => {
-    // Bug where wrong book is displayed in recent books debug splice
-    const booksArr = [...books];
-    const focusedBook = books.find((book) => book.isCurrent)
-    state.books = [...books];
-    state.focusedBook = focusedBook ? focusedBook : books[0];
-    booksArr.splice(booksArr.indexOf(focusedBook), 1);
-    state.recentBooksArr = booksArr;
-  };
+  if (books.length) {
+    books = books.sort((a, b) => {
+      return a.createdAt > b.createdAt ? -1 : 1;
+    });
+  }
+
+  // Bug where wrong book is displayed in recent books debug splice
+  const focusedBook = books.find((book) => book.isCurrent);
+  state.books = [...books];
+  state.focusedBook = focusedBook ? focusedBook : books[0];
+};

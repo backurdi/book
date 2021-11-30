@@ -25,37 +25,37 @@
         Search
       </button>
     </div>
-    <div class="gif-container overflow-scroll" ref='scrollContainer'>
-      <img v-for="gif in gifs" :src="gif" :key="gif.id" @click="selectGif" ref='scrollComponent'/>
+    <div class="gif-container overflow-scroll" ref="scrollContainer">
+      <img v-for="gif in gifs" :src="gif" :key="gif.id" @click="selectGif" ref="scrollComponent" />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "gif search",
   data: () => ({
     searchTerm: "",
     gifs: [],
   }),
-  mounted(){
-      this.$refs.scrollContainer.addEventListener("scroll", this.handleScroll);
+  mounted() {
+    this.$refs.scrollContainer.addEventListener("scroll", this.handleScroll);
   },
-  unmounted(){
-      window.removeEventListener("scroll", this.handleScroll);
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    ...mapActions("otherStore", ["getGifs"]),
     getGifs(offset) {
-      if(!offset){
-          this.gifs = [];
+      if (!offset) {
+        this.gifs = [];
       }
-      this.$store
-        .dispatch("getGifs", { searchTerm: this.searchTerm, offset })
-        .then((json) => {
-          this.buildGifs(json);
-        });
+      this.getGifs({ searchTerm: this.searchTerm, offset }).then((json) => {
+        this.buildGifs(json);
+      });
     },
-    handleScroll(){
+    handleScroll() {
       let container = this.$refs.scrollContainer;
       let element = this.$refs.scrollComponent;
       if (Math.floor(element.getBoundingClientRect().bottom) <= container.getBoundingClientRect().bottom) {
@@ -63,11 +63,14 @@ export default {
       }
     },
     buildGifs(json) {
-      this.gifs = [...this.gifs, ...json.data.data
-        .map((gif) => gif.id)
-        .map((gifId) => {
-          return `https://media.giphy.com/media/${gifId}/giphy.gif`;
-        })];
+      this.gifs = [
+        ...this.gifs,
+        ...json.data.data
+          .map((gif) => gif.id)
+          .map((gifId) => {
+            return `https://media.giphy.com/media/${gifId}/giphy.gif`;
+          }),
+      ];
     },
     selectGif(event) {
       this.$emit("mediaEmit", event.target.currentSrc);

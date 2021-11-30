@@ -1,13 +1,20 @@
 <template>
   <div v-if="updateSucces">Update success</div>
-  <div class="w-8/12 mx-auto">
+  <div class="mx-auto w-8/12">
     <form class="flex flex-col mt-2 lg:w-1/2">
-      <div
-        class="h-15 relative flex flex-wrap items-stretch mb-6 pr-10 w-full bg-white rounded"
-      >
+      <div class="h-15 relative flex flex-wrap items-stretch mb-6 pr-10 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
-            class="flex items-center px-3 text-gray-600 text-2xl leading-normal bg-white border-0 rounded rounded-r-none"
+            class="
+              flex
+              items-center
+              px-3
+              text-gray-600 text-2xl
+              leading-normal
+              bg-white
+              border-0
+              rounded rounded-r-none
+            "
           >
             <UserCircleIcon class="mr-2 w-6 h-6"></UserCircleIcon>
           </span>
@@ -15,16 +22,38 @@
         <input
           v-model="user.name"
           type="text"
-          class="border-grey-light font-roboto relative flex-auto flex-grow flex-shrink self-center px-3 w-px h-10 text-xl leading-normal bg-white border-0 rounded rounded-l-none outline-none"
+          class="
+            border-grey-light
+            font-roboto
+            relative
+            flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
+            text-xl
+            leading-normal
+            bg-white
+            border-0
+            rounded rounded-l-none
+            outline-none
+          "
           placeholder="Name"
         />
       </div>
-      <div
-        class="h-15 relative flex flex-wrap items-stretch mb-6 pr-10 w-full bg-white rounded"
-      >
+      <div class="h-15 relative flex flex-wrap items-stretch mb-6 pr-10 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
-            class="flex items-center px-3 text-gray-600 text-2xl leading-normal bg-white border-0 rounded rounded-r-none"
+            class="
+              flex
+              items-center
+              px-3
+              text-gray-600 text-2xl
+              leading-normal
+              bg-white
+              border-0
+              rounded rounded-r-none
+            "
           >
             <MailIcon class="mr-2 w-6 h-6"></MailIcon>
           </span>
@@ -32,37 +61,94 @@
         <input
           v-model="user.email"
           type="text"
-          class="border-grey-light font-roboto relative flex-auto flex-grow flex-shrink self-center px-3 w-px h-10 text-xl leading-normal bg-white border-0 rounded rounded-l-none outline-none"
+          class="
+            border-grey-light
+            font-roboto
+            relative
+            flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
+            text-xl
+            leading-normal
+            bg-white
+            border-0
+            rounded rounded-l-none
+            outline-none
+          "
           placeholder="Email"
         />
       </div>
-      <div class="relative flex flex-wrap items-stretch mb-6 pr-10 bg-white rounded p-2">
+      <div class="relative flex flex-wrap items-stretch mb-6 p-2 pr-10 bg-white rounded">
         <span
-          class="h-24 w-24 flex items-center px-3 bg-cover text-gray-600 leading-normal bg-white border-0 rounded-full"
+          class="flex items-center px-3 w-24 h-24 text-gray-600 leading-normal bg-white bg-cover border-0 rounded-full"
           :style="{
-                'background-image': `url(${url ? url : user?.photo})`,
-              }"
+            'background-image': `url(${url ? url : user?.photo})`,
+          }"
         ></span>
         <input
           type="file"
           @change="readUrl"
-          class="border-grey-light font-roboto relative flex-auto flex-grow flex-shrink self-center px-3 w-px h-10 text-xl leading-normal bg-white border-0 rounded rounded-l-none outline-none"
+          class="
+            border-grey-light
+            font-roboto
+            relative
+            flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
+            text-xl
+            leading-normal
+            bg-white
+            border-0
+            rounded rounded-l-none
+            outline-none
+          "
           placeholder="Email"
         />
       </div>
       <button
-        class="px-17 mb-4 mt-4 py-4 text-center text-white font-sans text-xl leading-tight bg-blue-400 rounded md:px-12 md:py-4 md:text-base"
-        @click.prevent="save([{key:'name', value:user.name},{key:'email', value:user.email},{key:'photo', value:file}])"
-      >Save</button>
+        class="
+          px-17
+          mb-4
+          mt-4
+          py-4
+          text-center text-white
+          font-sans
+          text-xl
+          leading-tight
+          bg-blue-400
+          rounded
+          md:px-12 md:py-4 md:text-base
+        "
+        @click.prevent="
+          save([
+            { key: 'name', value: user.name },
+            { key: 'email', value: user.email },
+            { key: 'photo', value: file },
+          ])
+        "
+      >
+        Save
+      </button>
     </form>
 
     <form action>
-      <div
-        class="h-15 relative flex flex-wrap items-stretch mb-4 w-full bg-white rounded"
-      >
+      <div class="h-15 relative flex flex-wrap items-stretch mb-4 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
-            class="whitespace-no-wrap flex items-center px-3 text-gray-600 text-xl leading-normal bg-white rounded rounded-r-none"
+            class="
+              whitespace-no-wrap
+              flex
+              items-center
+              px-3
+              text-gray-600 text-xl
+              leading-normal
+              bg-white
+              rounded rounded-r-none
+            "
           >
             <LockClosedIcon class="mr-2 w-6 h-6"></LockClosedIcon>
           </span>
@@ -70,12 +156,35 @@
         <input
           v-model="password"
           :type="hidePass ? 'password' : 'text'"
-          class="font-roboto relative flex-auto flex-grow flex-shrink self-center px-3 w-px h-10 text-xl leading-normal bg-white border-0 outline-none"
+          class="
+            font-roboto
+            relative
+            flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
+            text-xl
+            leading-normal
+            bg-white
+            border-0
+            outline-none
+          "
           placeholder="Password"
         />
         <div class="flex -mr-px">
           <span
-            class="whitespace-no-wrap flex items-center px-3 text-gray-600 leading-normal bg-white border-0 rounded rounded-l-none"
+            class="
+              whitespace-no-wrap
+              flex
+              items-center
+              px-3
+              text-gray-600
+              leading-normal
+              bg-white
+              border-0
+              rounded rounded-l-none
+            "
             @click="hidePass = !hidePass"
           >
             <EyeOffIcon v-if="!hidePass" class="mr-2 w-6 h-6"></EyeOffIcon>
@@ -83,12 +192,19 @@
           </span>
         </div>
       </div>
-      <div
-        class="h-15 relative flex flex-wrap items-stretch mb-4 w-full bg-white rounded"
-      >
+      <div class="h-15 relative flex flex-wrap items-stretch mb-4 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
-            class="whitespace-no-wrap flex items-center px-3 text-gray-600 text-xl leading-normal bg-white rounded rounded-r-none"
+            class="
+              whitespace-no-wrap
+              flex
+              items-center
+              px-3
+              text-gray-600 text-xl
+              leading-normal
+              bg-white
+              rounded rounded-r-none
+            "
           >
             <LockClosedIcon class="mr-2 w-6 h-6"></LockClosedIcon>
           </span>
@@ -96,12 +212,35 @@
         <input
           v-model="passwordConfirm"
           :type="hideConfirmPass ? 'password' : 'text'"
-          class="font-roboto relative flex-auto flex-grow flex-shrink self-center px-3 w-px h-10 text-xl leading-normal bg-white border-0 outline-none"
+          class="
+            font-roboto
+            relative
+            flex-auto flex-grow flex-shrink
+            self-center
+            px-3
+            w-px
+            h-10
+            text-xl
+            leading-normal
+            bg-white
+            border-0
+            outline-none
+          "
           placeholder="Confirm password"
         />
         <div class="flex -mr-px">
           <span
-            class="whitespace-no-wrap flex items-center px-3 text-gray-600 leading-normal bg-white border-0 rounded rounded-l-none"
+            class="
+              whitespace-no-wrap
+              flex
+              items-center
+              px-3
+              text-gray-600
+              leading-normal
+              bg-white
+              border-0
+              rounded rounded-l-none
+            "
             @click="hideConfirmPass = !hideConfirmPass"
           >
             <EyeOffIcon v-if="!hideConfirmPass" class="mr-2 w-6 h-6"></EyeOffIcon>
@@ -110,24 +249,38 @@
         </div>
       </div>
       <button
-        class="px-17 mb-4 mt-4 py-4 text-center text-white font-sans text-xl leading-tight bg-blue-400 rounded md:px-12 md:py-4 md:text-base"
-        @click.prevent="save([{key:'password', value:password},{key:'passwordConfirm', value:passwordConfirm}])"
-      >Update password</button>
+        class="
+          px-17
+          mb-4
+          mt-4
+          py-4
+          text-center text-white
+          font-sans
+          text-xl
+          leading-tight
+          bg-blue-400
+          rounded
+          md:px-12 md:py-4 md:text-base
+        "
+        @click.prevent="
+          save([
+            { key: 'password', value: password },
+            { key: 'passwordConfirm', value: passwordConfirm },
+          ])
+        "
+      >
+        Update password
+      </button>
     </form>
   </div>
 </template>
 
 <script>
-import {
-  UserCircleIcon,
-  LockClosedIcon,
-  EyeOffIcon,
-  EyeIcon,
-  MailIcon,
-} from "@heroicons/vue/solid";
+import { UserCircleIcon, LockClosedIcon, EyeOffIcon, EyeIcon, MailIcon } from "@heroicons/vue/solid";
+import { mapActions, mapState } from "vuex";
 export default {
-    name:'Profile settings',
-    components: {
+  name: "Profile settings",
+  components: {
     UserCircleIcon,
     LockClosedIcon,
     EyeOffIcon,
@@ -136,42 +289,39 @@ export default {
   },
   data: () => ({
     url: null,
-    file:null,
+    file: null,
     password: "",
     passwordConfirm: "",
     hidePass: true,
     hideConfirmPass: true,
-    form: new FormData,
+    form: new FormData(),
     updateSucces: false,
   }),
-  computed:{
-      user(){
-          return this.$store.state.user;
-      }
+  computed: {
+    ...mapState("userStore", ["user"]),
   },
-  methods:{
-      readUrl(e){
-        const file = e.target.files[0];
-        this.file = file;
-        this.url = URL.createObjectURL(file);
-      },
-      save(body){
-          console.log(body);
-          body.forEach(element => {
-              this.form.append(element.key, element.value);
-          });
-          this.$store.dispatch('updateMe', this.form).then(()=>{
-              this.updateSucces = true;
-              this.form = new FormData
-              setTimeout(()=>{this.updateSucces = false}, 1500)
-          });
-      }
-  }
-
-
-}
+  methods: {
+    ...mapActions("userStore", ["updateMe"]),
+    readUrl(e) {
+      const file = e.target.files[0];
+      this.file = file;
+      this.url = URL.createObjectURL(file);
+    },
+    save(body) {
+      console.log(body);
+      body.forEach((element) => {
+        this.form.append(element.key, element.value);
+      });
+      this.updateMe(this.form).then(() => {
+        this.updateSucces = true;
+        this.form = new FormData();
+        setTimeout(() => {
+          this.updateSucces = false;
+        }, 1500);
+      });
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

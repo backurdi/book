@@ -21,7 +21,6 @@
     </div>
     <div class="p-4">
       <div class="mb-5" v-html="domDecoder(post.text)"></div>
-      <div class="mb-5" v-html="domDecoder(post.createdAt)"></div>
       <div class="flex justify-end" v-if="bookForPost(post.book)">
         <img
           class="mr-5 w-8 border border-gray-200 rounded"
@@ -60,6 +59,7 @@ import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue"
 import Popup from "@/components/shared/popup/popup.component";
 import DeletePopup from "../../delete-popup/deletePopup.component.vue";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Post",
@@ -71,11 +71,10 @@ export default {
     openDelete: false,
   }),
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
+    ...mapState("userStore", ["user"]),
   },
   methods: {
+    ...mapActions("postStore", ["updatePost", "deletePost"]),
     domDecoder(str) {
       let parser = new DOMParser();
       let dom = parser.parseFromString("<!doctype html><body>" + str, "text/html");
@@ -88,7 +87,7 @@ export default {
       this[`open${popUp}`] = !this[`open${popUp}`];
     },
     updatePost(updatedPost) {
-      this.$store.dispatch("updatePost", { id: this.post._id, content: updatedPost }).then(() => {
+      this.updatePost({ id: this.post._id, content: updatedPost }).then(() => {
         this.showDropdown = false;
         this.openUpdate = false;
       });
@@ -98,7 +97,7 @@ export default {
       this.openDelete = false;
     },
     deletePost() {
-      this.$store.dispatch("deletePost", { postId: this.post._id, clubId: this.post.club }).then(() => {
+      this.deletePost({ postId: this.post._id, clubId: this.post.club }).then(() => {
         this.showDropdown = false;
         this.openDelete = false;
       });

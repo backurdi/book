@@ -11,6 +11,16 @@ module.exports = {
           DEFAULT: "#48D0B0",
           dark: "#258972",
         },
+        primary: {
+          light: "#EFE9E2",
+          DEFAULT: "#f8bd6e",
+        },
+        secondary: {
+          DEFAULT: "#e0526d",
+        },
+        dark: {
+          DEFAULT: "#142F43",
+        },
       },
       maxHeight: {
         "70-screen": "70vh",

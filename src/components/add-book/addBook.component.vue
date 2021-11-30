@@ -69,6 +69,7 @@
 <script>
 import AddBookResultCard from "./add-book-result-card/add-book-result-card.component.vue";
 import LoadingSpinner from "../shared/loading-spinner/loading-spinner.component.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -83,9 +84,10 @@ export default {
     isLoading: false,
   }),
   methods: {
+    ...mapActions("bookStore", ["searchBooks", "addBook"]),
     async searchBooks() {
       this.isLoading = true;
-      const res = await this.$store.dispatch("searchBooks", this.searchText);
+      const res = await this.searchBooks(this.searchText);
       this.isLoading = false;
       this.booksData = res;
     },
@@ -104,7 +106,7 @@ export default {
         isbn: data.industryIdentifiers[0].identifier,
       };
 
-      await this.$store.dispatch("addBook", body).then(() => {
+      await this.addBook(body).then(() => {
         this.$emit("bookAdded");
       });
 

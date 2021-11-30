@@ -29,15 +29,14 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Book info",
   data: () => ({
     open: false,
   }),
   computed: {
-    book() {
-      return this.$store.state.focusedBook;
-    },
+    ...mapState("booksStore", ["focusedBook"]),
   },
   methods: {
     close() {

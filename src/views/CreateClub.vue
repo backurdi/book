@@ -90,6 +90,7 @@
 <script>
 import { LibraryIcon } from "@heroicons/vue/solid";
 import MultiselectDropdown from "../components/shared/multiselect-dropdown/multiselectDropdown.component.vue";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Create club",
   data: () => ({
@@ -100,22 +101,19 @@ export default {
     form: new FormData(),
   }),
   mounted() {
-    this.$store.dispatch("getUsersForInvite", true);
+    this.getUsersForInvite(true);
   },
   computed: {
-    usersForInvite() {
-      console.log(this.$store.state.usersForInvite);
-      return this.$store.state.usersForInvite;
-    },
-    club() {
-      return this.$store.state.currentClub;
-    },
+    ...mapState("userStore", ["usersForInvite"]),
+    ...mapState("clubStore", [{ club: "currentClub" }]),
   },
   components: {
     LibraryIcon,
     MultiselectDropdown,
   },
   methods: {
+    ...mapActions("userStore", ["getUsersForInvite"]),
+    ...mapActions("clubStore", ["createClub"]),
     readUrl(e) {
       const file = e.target.files[0];
       this.file = file;
@@ -137,7 +135,7 @@ export default {
         this.form.append(element.key, element.value);
       });
 
-      this.$store.dispatch("createClub", this.form).then(() => this.$router.push("/"));
+      this.createClub(this.form).then(() => this.$router.push("/"));
     },
   },
 };

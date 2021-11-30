@@ -4,7 +4,7 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/contacts">Contacts</router-link>-->
     <div class="flex flex-1 flex-col">
-      <nav class="flex justify-between px-4 h-16 bg-gray-600 rounded">
+      <nav class="bg-dark flex justify-between px-4 h-16 rounded">
         <!-- top bar left -->
         <ul class="flex items-center">
           <!-- add button -->
@@ -95,6 +95,7 @@
 import { LightBulbIcon, HomeIcon, UserAddIcon } from "@heroicons/vue/solid";
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "AppLayoutLinks",
@@ -103,29 +104,23 @@ export default {
     clickOutside: vClickOutside.directive,
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    invites() {
-      return this.$store.state.invites;
-    },
-    clubs() {
-      return this.$store.state.clubs;
-    },
+    ...mapState("userStore", ["user", "invites"]),
+    ...mapState("clubStore", ["clubs"]),
   },
   data: () => ({
     showDropdown: false,
     showInviteDropwdown: false,
   }),
   methods: {
+    ...mapActions("userStore", ["logout", "answerInvite"]),
     logOut() {
-      this.$store.dispatch("logout");
+      this.logout();
     },
     goToProfile() {
       this.$router.push("me");
     },
     answerInvite(club, accepted) {
-      this.$store.dispatch("answerInvite", { accepted, club });
+      this.answerInvite({ accepted, club });
     },
     clickOutsideUserSettingHandler() {
       this.showDropdown = false;

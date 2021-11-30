@@ -15,13 +15,10 @@
           >
             <PhotographIcon class="w-8 h-8 text-green-400 md:w-12 md:h-12"></PhotographIcon>
           </button>
-          <button
-            class="gif-icon mr-5 w-fit-content text-black border-2 border-black rounded"
-            @click="goToNextPage('gif')"
-          >
+          <button class="gif-icon mr-5 text-black border-2 border-black rounded" @click="goToNextPage('gif')">
             <span>GIF</span>
           </button>
-          <button class="gif-icon w-fit-content text-black border-2 border-black rounded" @click="goToNextPage('book')">
+          <button class="gif-icon text-black border-2 border-black rounded" @click="goToNextPage('book')">
             <span>Book</span>
           </button>
         </div>
@@ -33,9 +30,8 @@
             py-2
             w-fit-content
             text-black
-            hover:text-white
-            bg-green-400
-            hover:bg-green-700
+            hover:text-white hover:bg-green-700
+            bg-primary
             border-2 border-black
             rounded
             md:px-6 md:py-3
@@ -139,7 +135,7 @@ export default {
       this.nextPage = nextPage;
     },
     setBookData(bookData) {
-      this.book = bookData.book._id;
+      this.book = bookData.book;
       this.pagesFrom = bookData.pagesFrom;
       this.pagesTo = bookData.pagesTo;
       this.$refs.slider.previousSlide();
@@ -148,4 +144,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "@/styling/_variables.scss";
+button {
+  background-color: $primary;
+}
+</style>

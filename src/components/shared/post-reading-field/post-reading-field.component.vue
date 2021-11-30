@@ -2,8 +2,8 @@
   <div class="flex justify-end w-8/12 h-16">
     <img
       class="mr-5 w-8 border border-gray-200 rounded"
-      :src="bookForPost(bookData.book).image"
-      :alt="'cover of ' + bookForPost(bookData.book).title"
+      :src="bookForPost(bookData.book)?.image"
+      :alt="'cover of ' + bookForPost(bookData.book)?.title"
     />
     <div>
       <p>
@@ -22,15 +22,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: ["bookData"],
   computed: {
-    books() {
-      return this.$store.state.books;
-    },
+    ...mapState("bookStore", ["books"]),
   },
   methods: {
     bookForPost(bookId) {
+      debugger;
       return this.books.find((book) => book._id === bookId);
     },
   },

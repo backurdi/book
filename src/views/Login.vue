@@ -1,22 +1,8 @@
 <template>
-  <div
-    class="flex flex-col items-center ml-auto mr-auto w-full md:w-3/5 lg:w-2/3"
-  >
+  <div class="flex flex-col items-center ml-auto mr-auto w-full md:w-3/5 lg:w-2/3">
     <h1 class="my-10 text-black text-2xl font-bold">Login</h1>
     <form action="" class="flex flex-col mt-2 w-8/12 lg:w-1/2">
-      <div
-        class="
-          h-15
-          relative
-          flex flex-wrap
-          items-center items-stretch
-          mb-4 mb-6
-          pr-10
-          w-full
-          bg-white
-          rounded
-        "
-      >
+      <div class="h-15 relative flex flex-wrap items-center items-stretch mb-4 mb-6 pr-10 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
@@ -55,18 +41,7 @@
           placeholder="Email"
         />
       </div>
-      <div
-        class="
-          h-15
-          relative
-          flex flex-wrap
-          items-center items-stretch
-          mb-4
-          w-full
-          bg-white
-          rounded
-        "
-      >
+      <div class="h-15 relative flex flex-wrap items-center items-stretch mb-4 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
@@ -122,16 +97,7 @@
           </span>
         </div>
       </div>
-      <a
-        href="#"
-        class="
-          font-roboto
-          mb-6
-          text-right text-black
-          hover:underline
-          text-base
-          leading-normal
-        "
+      <a href="#" class="font-roboto mb-6 text-right text-black hover:underline text-base leading-normal"
         >Forgot Password ?</a
       >
       <button
@@ -148,20 +114,13 @@
           rounded
           md:px-12 md:py-4 md:text-base
         "
-        @click="login"
+        @click.prevent="submit"
       >
         Login
       </button>
       <router-link
         to="/signup"
-        class="
-          font-roboto
-          mb-6
-          text-center text-black
-          hover:text-green-500 hover:underline
-          text-base
-          leading-normal
-        "
+        class="font-roboto mb-6 text-center text-black hover:text-green-500 hover:underline text-base leading-normal"
         >Or register now</router-link
       >
     </form>
@@ -169,12 +128,8 @@
 </template>
 
 <script>
-import {
-  UserCircleIcon,
-  LockClosedIcon,
-  EyeOffIcon,
-  EyeIcon,
-} from "@heroicons/vue/solid";
+import { UserCircleIcon, LockClosedIcon, EyeOffIcon, EyeIcon } from "@heroicons/vue/solid";
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -190,9 +145,9 @@ export default {
     hidePass: true,
   }),
   methods: {
-    login(e) {
-      e.preventDefault();
-      this.$store.dispatch("login", {
+    ...mapActions("userStore", ["login"]),
+    submit() {
+      this.login({
         email: this.email,
         password: this.password,
       });

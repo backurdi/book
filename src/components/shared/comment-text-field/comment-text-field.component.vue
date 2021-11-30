@@ -31,6 +31,7 @@
 
 <script>
 import { ArrowSmDownIcon, CameraIcon } from "@heroicons/vue/solid";
+import { mapActions } from "vuex";
 export default {
   name: "Comment text field",
   components: { ArrowSmDownIcon, CameraIcon },
@@ -54,6 +55,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("commentStore", ["updateComment", "addComment"]),
     commentActionClicked() {
       if (this.edited) {
         this.form.append("post", this.postId);
@@ -62,7 +64,7 @@ export default {
           this.form.append("photo", this.file);
         }
 
-        this.$store.dispatch(this.buttonAction, { id: this.commentId, formData: this.form }).then(() => {
+        this[this.buttonAction]({ id: this.commentId, formData: this.form }).then(() => {
           this.txt = "Edit me";
           this.edited = false;
           this.file = "";

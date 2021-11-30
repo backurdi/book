@@ -1,7 +1,12 @@
 <template>
   <div class="flex-col w-full text-black">
     <div class="flex-col items-end justify-between mb-5 w-10/12 md:flex-row">
-      <SelectDropdown dropdownLabel="Select book" :selectedBook="book" :books="books"></SelectDropdown>
+      <SelectDropdown
+        dropdownLabel="Select book"
+        :selectedBook="book"
+        :books="books"
+        @dropdownChanged="setBook"
+      ></SelectDropdown>
       <div class="flex mt-4">
         <div class="flex flex-col w-4/12">
           <label for="from" class="w-2/6">From:</label>
@@ -72,6 +77,7 @@
 
 <script>
 import SelectDropdown from "@/components/shared/select-dropdown/selectDropdown.component.vue";
+import { mapState } from "vuex";
 // import ToggleButton from '@/components/shared/toggle-button/toggleButton.component.vue';
 export default {
   name: "Post reading picker",
@@ -81,6 +87,7 @@ export default {
     pagesFrom: 0,
     pagesTo: 0,
     selectedBook: "",
+    book: null,
   }),
   created() {
     this.pagesFrom = this.input.pagesFrom;
@@ -90,21 +97,20 @@ export default {
     if (this.pagesTo) {
       this.toggleState = true;
     }
+
+    if (this.input.book) {
+      this.book = this.books?.filter((book) => book._id === this.input.book)[0];
+    }
   },
   computed: {
-    book() {
-      if (this.input.book) {
-        return this.$store.state.books?.filter((book) => book._id === this.input.book)[0];
-      }
-      return "";
-    },
-    books() {
-      return this.$store.state.books;
-    },
+    ...mapState("bookStore", ["books"]),
   },
   methods: {
     selectReadRef() {
       this.$emit("readRefSelected", { book: this.selectedBook, pagesTo: this.pagesTo, pagesFrom: this.pagesFrom });
+    },
+    setBook(event) {
+      this.selectedBook = event;
     },
   },
 };

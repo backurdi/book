@@ -5,7 +5,7 @@
         <p class="font-bold">Books</p>
         <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
       </div>
-      <ul class="scroll mb-10 h-60 bg-gray-600 overflow-scroll">
+      <ul class="scroll bg-dark mb-10 h-60 overflow-scroll">
         <li class="w-full h-16" v-for="(book, index) in books" :key="index" @click="displayBookInfo(book)">
           <span class="flex p-2" :class="{ 'bg-blue-400': index === 0 }">
             <img :src="book.image" class="mr-2 w-8" alt="" />
@@ -21,8 +21,8 @@
         <p class="font-bold">Memebers</p>
         <button><PlusCircleIcon class="w-6 h-6" @click="openInviteUsers()"></PlusCircleIcon></button>
       </div>
-      <ul class="mb-10 bg-gray-600">
-        <li class="w-full" v-for="(member, index) in members" :key="index">
+      <ul class="bg-dark mb-10">
+        <li class="w-full" v-for="(member, index) in club.members" :key="index">
           <span class="flex items-center p-2">
             <div
               class="mr-2 w-10 h-10 bg-cover rounded-full"
@@ -59,6 +59,7 @@ import AddBook from "../add-book/addBook.component.vue";
 import BookInfo from "../book-info/book-info.component.vue";
 import MultiSelectDropdown from "../shared/multiselect-dropdown/multiselectDropdown.component.vue";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   name: "Club site settings",
   data: () => ({
@@ -77,29 +78,19 @@ export default {
     BookInfo,
   },
   computed: {
-    club() {
-      return this.$store.state.activeClub;
-    },
-    user() {
-      return this.$store.state.user;
-    },
-    usersToInviteArr() {
-      return this.$store.state.usersForInvite;
-    },
-    books() {
-      return this.$store.state.books;
-    },
-    members() {
-      return this.$store.state.activeClub.members;
-    },
+    ...mapState("clubStore", { club: "activeClub" }),
+    ...mapState("userStore", ["user", "usersForInvite"]),
+    ...mapState("bookStore", ["books"]),
   },
   methods: {
+    ...mapActions("userStore", ["getUsersForInvite", "inviteUsers"]),
+    ...mapMutations("bookStore", ["setFocusedBook"]),
     openInviteUsers() {
-      this.$store.dispatch("getUsersForInvite");
+      this.getUsersForInvite();
       this.inviteUsersOpen = true;
     },
     inviteUsers() {
-      this.$store.dispatch("inviteUsers", { invites: this.usersToInvite });
+      this.inviteUsers({ invites: this.usersToInvite });
     },
     setSubStr(str) {
       let subStr = 20;
@@ -114,8 +105,7 @@ export default {
       return str;
     },
     async displayBookInfo(book) {
-      debugger;
-      await this.$store.commit("setFocusedBook", book);
+      await this.setFocusedBook(book);
       this.bookDescriptionOpen = true;
     },
   },

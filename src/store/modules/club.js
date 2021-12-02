@@ -8,6 +8,23 @@ const clubStore = {
     activeClub: {},
   }),
   mutations: {
+    addPost(state, post) {
+      const club = state.clubs.find((club) => club._id === post.club);
+
+      club.posts.unshift(post);
+    },
+    updatePost(state, updatedPost) {
+      const club = state.clubs.find((club) => club._id === updatedPost.club);
+      const postToUpdate = club.posts.find((post) => post._id === updatedPost._id);
+
+      club.posts[club.posts.indexOf(postToUpdate)] = updatedPost;
+    },
+    deletePost(state, data) {
+      const club = state.clubs.find((club) => club._id === data.clubId);
+      const postToDelete = club.posts.find((post) => post._id === data.postId);
+
+      club.posts.splice(club.posts.indexOf(postToDelete), 1);
+    },
     insertClub(state, club) {
       state.clubs.push(...club);
     },
@@ -32,13 +49,13 @@ const clubStore = {
         commit("setActiveClub", club.data);
       });
     },
-    selectClub({ state }, clubId) {
+    selectClub({ state, commit }, clubId) {
       const clubInState = state.clubs.find((club) => club._id === clubId);
 
       if (!clubInState.books) {
-        return this.$api.clubs.get(clubId).then((club) => this.commit("setActiveClub", club.data));
+        return this.$api.clubs.get(clubId).then((club) => commit("setActiveClub", club.data));
       }
-      return this.commit("setActiveClub", clubInState);
+      return commit("setActiveClub", clubInState);
     },
     createClub(_state, body) {
       return new Promise((resolve) => {

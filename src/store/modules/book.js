@@ -20,7 +20,6 @@ const bookStore = {
       state.focusedBook = updatedBookData;
     },
     setFocusedBook(state, book) {
-      debugger;
       state.focusedBook = book;
     },
     deleteBook(state) {

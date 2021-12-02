@@ -6,12 +6,12 @@
     <p class="font-bold" :class="{ visible: displayError, invisible: !displayError }">{{ errorMessage }}</p>
   </div>
   <div class="create-post flex justify-between mb-5">
-    <div class="bg-dark px-10 py-4 w-full text-white rounded-full" @click="addPostPopup()">
+    <div class="px-10 py-4 w-full text-white bg-dark rounded-full" @click="addPostPopup()">
       <h3>Make a post</h3>
     </div>
   </div>
   <Popup @closePopUp="open = false" :open="open" :buttonText="'Add post'">
-    <CreatePost ref="createPost" buttonText="Create post" @close="open = false" @emitBody="addPost"></CreatePost>
+    <CreatePost ref="createPost" buttonText="Create post" @close="open = false" @emitBody="addPostMethod"></CreatePost>
   </Popup>
 </template>
 
@@ -40,7 +40,8 @@ export default {
     addPostPopup() {
       this.open = !this.open;
     },
-    addPost(event) {
+    addPostMethod(event) {
+      event.append("club", this.activeClub._id);
       this.addPost(event)
         .then(() => {
           this.$refs.createPost.clearFields();

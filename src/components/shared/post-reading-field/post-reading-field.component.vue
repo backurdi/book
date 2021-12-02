@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     bookForPost(bookId) {
-      debugger;
       return this.books.find((book) => book._id === bookId);
     },
   },

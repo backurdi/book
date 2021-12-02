@@ -1,14 +1,14 @@
 <template>
   <div class="mx-auto w-11/12">
     <div class="flex flex-col w-full h-auto md:flex-row" v-if="clubs.length">
-      <ClubSideNav></ClubSideNav>
+      <SideNav></SideNav>
       <div class="flex-col flex-grow mx-auto w-full md:w-7/12 lg:px-16">
         <AddPostPopUp></AddPostPopUp>
         <ClubFeed></ClubFeed>
       </div>
-      <div class="w-2/12">
+      <!-- <div class="w-2/12">
         <ClubSideSettings></ClubSideSettings>
-      </div>
+      </div> -->
     </div>
     <div v-else>
       <router-link class="px-6 py-4 text-white bg-readee border-2 border-white rounded" to="/club"
@@ -19,15 +19,16 @@
 </template>
 
 <script>
-import ClubSideNav from "../components/club-side-nav/clubSideNav.component.vue";
-import ClubSideSettings from "../components/club-side-settings/club-side-settings.component.vue";
+// import ClubSideNav from "../components/club-side-nav/clubSideNav.component.vue";
+// import ClubSideSettings from "../components/club-side-settings/club-side-settings.component.vue";
+import SideNav from "../layouts/side-nav/side-nav.component.vue";
 import ClubFeed from "../components/club-feed/clubFeed.component.vue";
 import AddPostPopUp from "../components/add-post-popup/addPostPopup.component.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "Home",
-  components: { ClubSideNav, ClubSideSettings, ClubFeed, AddPostPopUp },
+  components: { SideNav, ClubFeed, AddPostPopUp },
   computed: {
     ...mapState("clubStore", ["clubs"]),
   },

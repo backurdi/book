@@ -8,87 +8,90 @@ const postStore = {
   }),
   mutations: {
     setPosts(state, posts) {
-      state.posts.push(...posts);
+      state.posts = posts;
     },
-    addPost(state, post) {
-      const club = state.clubs.find((club) => club._id === post.club);
+    addComment(state, comment) {
+      const post = state.posts.find((post) => post._id === comment.post);
 
-      club.posts.unshift(post);
+      if (post.comments) {
+        post.comments.unshift(comment);
+      } else {
+        post.comments = [comment];
+      }
     },
-    updatePost(state, updatedPost) {
-      const club = state.clubs.find((club) => club._id === updatedPost.club);
-      const postToUpdate = club.posts.find((post) => post._id === updatedPost._id);
+    updateComment(state, updatedComment) {
+      const post = state.activeClub.posts.find((post) => post._id === updatedComment.post);
+      const commentToUpdate = post.comments.find((comment) => comment._id === updatedComment._id);
 
-      club.posts[club.posts.indexOf(postToUpdate)] = updatedPost;
+      post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
     },
-    deletePost(state, data) {
-      const club = state.clubs.find((club) => club._id === data.clubId);
-      const postToDelete = club.posts.find((post) => post._id === data.postId);
+    deleteComment(state, data) {
+      const post = state.activeClub.posts.find((post) => (post._id = data.postId));
+      const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
 
-      club.posts.splice(club.posts.indexOf(postToDelete), 1);
+      post.comments.splice(post.comments.indexOf(commentToDelete), 1);
     },
   },
   actions: {
-    addPost({ state }, data) {
-      data.append("club", state.activeClub._id);
-      return this.$api.posts.post(data).then((post) => this.commit("addPost", post.data));
+    addPost(_state, data) {
+      return this.$api.posts.post(data).then((post) => this.commit("clubStore/addPost", post.data));
     },
-    updatePost(_state, data) {
+    updatePost({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
           .patch(data.id, data.content)
           .then((post) => {
             resolve("");
-            return this.commit("updatePost", post.data);
+            return commit("updatePost", post.data);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
-    deletePost(_state, data) {
+    deletePost({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
           .delete(data.postId)
           .then(() => {
             resolve("");
-            return this.commit("deletePost", data);
+            return commit("deletePost", data);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
-    addComment(_state, data) {
+    addComment({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$api.comments
           .post(data.formData)
           .then((comment) => {
             resolve("");
-            return this.commit("addComment", comment.data);
+            return commit("addComment", comment.data);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
-    updateComment(_state, data) {
+    updateComment({ commit }, data) {
       console.log(data);
       return new Promise((resolve, reject) => {
         this.$api.comments
           .patch(data.id, data.formData)
           .then((comment) => {
             resolve("");
-            return this.commit("updateComment", comment.data);
+            return commit("updateComment", comment.data);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
-    deleteComment(_state, data) {
+    deleteComment({ commit }, data) {
       return this.$api.comments.delete(data.commentId).then(() => {
-        return this.commit("deleteComment", data);
+        return commit("deleteComment", data);
       });
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark top-5 flex flex-row self-start mb-10 mr-10 p-5 rounded md:sticky md:flex-col md:h-70-screen">
+  <div class="top-5 flex flex-row self-start mb-10 mr-10 p-5 bg-dark rounded md:sticky md:flex-col md:h-70-screen">
     <div class="flex" v-for="(club, index) in clubs" :key="index" @click="selectClub(club._id)">
       <router-link
         :to="'/' + club._id"
@@ -24,18 +24,12 @@
 
 <script>
 import { PlusIcon } from "@heroicons/vue/solid";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "ClubSideComponent",
   components: { PlusIcon },
   computed: {
     ...mapState("clubStore", ["clubs"]),
-  },
-  methods: {
-    ...mapActions("clubStore", ["selectClub"]),
-    goToCreateClub() {
-      this.$router.push("club");
-    },
   },
 };
 </script>

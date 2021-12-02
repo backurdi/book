@@ -88,27 +88,27 @@ export const mutations = {
 
   //   club.posts.splice(club.posts.indexOf(postToDelete), 1);
   // },
-  addComment(state, comment) {
-    const post = state.posts.find((post) => post._id === comment.post);
+  // addComment(state, comment) {
+  //   const post = state.posts.find((post) => post._id === comment.post);
 
-    if (post.comments) {
-      post.comments.unshift(comment);
-    } else {
-      post.comments = [comment];
-    }
-  },
-  updateComment(state, updatedComment) {
-    const post = state.activeClub.posts.find((post) => post._id === updatedComment.post);
-    const commentToUpdate = post.comments.find((comment) => comment._id === updatedComment._id);
+  //   if (post.comments) {
+  //     post.comments.unshift(comment);
+  //   } else {
+  //     post.comments = [comment];
+  //   }
+  // },
+  // updateComment(state, updatedComment) {
+  //   const post = state.activeClub.posts.find((post) => post._id === updatedComment.post);
+  //   const commentToUpdate = post.comments.find((comment) => comment._id === updatedComment._id);
 
-    post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
-  },
-  deleteComment(state, data) {
-    const post = state.activeClub.posts.find((post) => (post._id = data.postId));
-    const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
+  //   post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
+  // },
+  // deleteComment(state, data) {
+  //   const post = state.activeClub.posts.find((post) => (post._id = data.postId));
+  //   const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
 
-    post.comments.splice(post.comments.indexOf(commentToDelete), 1);
-  },
+  //   post.comments.splice(post.comments.indexOf(commentToDelete), 1);
+  // },
   changeFocusedBook(state, bookId) {
     state.recentBooksArr.unshift(state.focusedBook);
     state.focusedBook = state.recentBooksArr.find((book) => book._id === bookId);

@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("commentStore", ["updateComment", "addComment"]),
+    ...mapActions("postStore", ["updateComment", "addComment"]),
     commentActionClicked() {
       if (this.edited) {
         this.form.append("post", this.postId);
@@ -63,7 +63,6 @@ export default {
         if (this.file.name) {
           this.form.append("photo", this.file);
         }
-
         this[this.buttonAction]({ id: this.commentId, formData: this.form }).then(() => {
           this.txt = "Edit me";
           this.edited = false;

@@ -46,12 +46,12 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    ...mapActions("otherStore", ["getGifs"]),
+    ...mapActions("otherStore", ["fetchGifs"]),
     getGifs(offset) {
       if (!offset) {
         this.gifs = [];
       }
-      this.getGifs({ searchTerm: this.searchTerm, offset }).then((json) => {
+      this.fetchGifs({ searchTerm: this.searchTerm, offset }).then((json) => {
         this.buildGifs(json);
       });
     },

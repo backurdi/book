@@ -14,7 +14,7 @@ const otherStore = {
         });
       });
     },
-    getGifs(_state, data) {
+    fetchGifs(_state, data) {
       return new Promise((resolve) => {
         this.$api.gif.get(data).then((res) => {
           resolve(res);

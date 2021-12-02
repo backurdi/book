@@ -38,7 +38,7 @@
     </div>
   </div>
   <PopupComponent v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
-    <DeletePopupComponent @delete="deleteComment" @cancle="closeDelete"></DeletePopupComponent>
+    <DeletePopupComponent @delete="deleteCommentMethod()" @cancle="closeDelete"></DeletePopupComponent>
   </PopupComponent>
 </template>
 
@@ -65,7 +65,8 @@ export default {
     closeDelete() {
       this.openDelete = false;
     },
-    deleteComment() {
+    deleteCommentMethod() {
+      debugger;
       this.deleteComment({ commentId: this.comment._id, postId: this.postId }).then(() => {
         this.openDelete = false;
       });

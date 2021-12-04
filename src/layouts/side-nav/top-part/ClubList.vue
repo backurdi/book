@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="club-list flex items-center px-5 py-2 hover:bg-red-600 cursor-pointer"
+      class="club-list flex items-center px-5 py-2 hover:bg-blue-400 cursor-pointer"
       v-for="(club, index) in clubs"
       :key="index"
       @click="selectClub(club._id)"

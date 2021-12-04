@@ -1,5 +1,5 @@
 <template>
-  <div class="hover-trigger hidden lg:block">
+  <div class="hover-trigger lg:block">
     <div
       class="relative w-10 h-10 bg-cover rounded-full"
       :style="{
@@ -26,6 +26,9 @@ export default {
   name: "Profile picture",
   computed: {
     ...mapState("userStore", ["user"]),
+  },
+  created() {
+    console.log(this.user);
   },
 };
 </script>

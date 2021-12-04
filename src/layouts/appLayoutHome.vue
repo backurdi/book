@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="header" />
-    <AppLayoutLinks class="pb-10" />
+    <AppLayoutLinks />
     <slot />
   </div>
 </template>

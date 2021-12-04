@@ -1,7 +1,7 @@
 <template>
   <div class="relative" @click="showDropdown = !showDropdown" v-if="club.owner === user.id">
     <div class="border-grey-100 z-30 top-12 w-full text-white border rounded">
-      <div class="current-books flex justify-between text-gray-600">
+      <!-- <div class="current-books flex justify-between text-gray-600">
         <p class="font-bold">Books</p>
         <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
       </div>
@@ -15,13 +15,13 @@
             </div>
           </span>
         </li>
-      </ul>
+      </ul> -->
 
-      <div class="current-books flex justify-between text-gray-600">
+      <!-- <div class="current-books flex justify-between text-gray-600">
         <p class="font-bold">Memebers</p>
         <button><PlusCircleIcon class="w-6 h-6" @click="openInviteUsers()"></PlusCircleIcon></button>
       </div>
-      <ul class="bg-dark mb-10">
+      <ul class="mb-10 bg-dark">
         <li class="w-full" v-for="(member, index) in club.members" :key="index">
           <span class="flex items-center p-2">
             <div
@@ -35,7 +35,7 @@
             <p class="text-xs">{{ member.name }}</p>
           </span>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
   <Popup @closePopUp="bookDescriptionOpen = false" :open="bookDescriptionOpen" :buttonText="'close'">
@@ -54,28 +54,28 @@
 </template>
 
 <script>
-import Popup from "@/components/shared/popup/popup.component";
-import AddBook from "../add-book/addBook.component.vue";
-import BookInfo from "../book-info/book-info.component.vue";
+// import Popup from "@/components/shared/popup/popup.component";
+// import AddBook from "../add-book/addBook.component.vue";
+// import BookInfo from "../book-info/book-info.component.vue";
+// import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 import MultiSelectDropdown from "../shared/multiselect-dropdown/multiselectDropdown.component.vue";
-import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   name: "Club site settings",
   data: () => ({
-    addBookOpen: false,
     inviteUsersOpen: false,
     usersToInvite: [],
     showDropdown: false,
+    addBookOpen: false,
     bookDescriptionOpen: false,
   }),
   components: {
-    AddBook,
     MultiSelectDropdown,
-    Popup,
-    PlusCircleIcon,
-    BookOpenIcon,
-    BookInfo,
+    // Popup,
+    // AddBook,
+    // PlusCircleIcon,
+    // BookOpenIcon,
+    // BookInfo,
   },
   computed: {
     ...mapState("clubStore", { club: "activeClub" }),

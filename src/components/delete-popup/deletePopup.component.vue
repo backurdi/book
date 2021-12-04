@@ -1,32 +1,69 @@
 <template>
   <!--content-->
-  <div class="bg-white text-black flex-col justify-center items-center text-center">
+  <div class="flex-col items-center justify-center text-center text-black bg-white">
     <!--body-->
-    <TrashIcon class="w-16 h-16 mx-auto text-red-500"></TrashIcon>
-    <h3 class="text-xl font-bold py-4">Are you sure?</h3>
+    <TrashIcon class="mx-auto w-16 h-16 text-red-500"></TrashIcon>
+    <h3 class="py-4 text-xl font-bold">Are you sure?</h3>
     <!--footer-->
-    <div class="p-3 mt-2 text-center space-x-4 flex">
+    <div class="flex mt-2 p-3 text-center space-x-4">
       <button
-        class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded hover:shadow-lg hover:bg-gray-100"
-        @click="$emit('cancle')"
-      >Cancel</button>
+        class="
+          mb-2
+          px-5
+          py-2
+          text-gray-600 text-sm
+          font-medium
+          tracking-wider
+          hover:bg-gray-100
+          bg-white
+          border
+          rounded
+          hover:shadow-lg
+          shadow-sm
+          md:mb-0
+        "
+        @click="cancelClicked"
+      >
+        Cancel
+      </button>
       <button
-        class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded hover:shadow-lg hover:bg-red-600"
-        @click="$emit('delete')"
-      >Delete</button>
+        class="
+          mb-2
+          px-5
+          py-2
+          text-white text-sm
+          font-medium
+          tracking-wider
+          bg-red-500
+          hover:bg-red-600
+          border border-red-500
+          rounded
+          hover:shadow-lg
+          shadow-sm
+          md:mb-0
+        "
+        @click="deleteClicked"
+      >
+        Delete
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import {TrashIcon} from '@heroicons/vue/solid';
+import { TrashIcon } from "@heroicons/vue/solid";
 export default {
-    name:'Delete modal',
-    components:{TrashIcon}
-
-}
+  name: "Delete modal",
+  components: { TrashIcon },
+  methods: {
+    cancelClicked() {
+      this.$emit("cancle");
+    },
+    deleteClicked() {
+      this.$emit("delete-click");
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

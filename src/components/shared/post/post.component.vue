@@ -47,10 +47,15 @@
     </div>
   </div>
   <Popup v-if="openUpdate" @closePopUp="openUpdate = false" :open="openUpdate">
-    <CreatePost buttonText="Update post" @close="open = false" @emitBody="updatePost" :postData="post"></CreatePost>
+    <CreatePost
+      buttonText="Update post"
+      @close="open = false"
+      @emitBody="updatePostMethod"
+      :postData="post"
+    ></CreatePost>
   </Popup>
   <Popup v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
-    <DeletePopup @delete="deletePost" @cancle="closeDelete"></DeletePopup>
+    <DeletePopup @delete-click="deletePostMethod" @cancle="closeDelete"></DeletePopup>
   </Popup>
 </template>
 
@@ -86,7 +91,7 @@ export default {
     openPopup(popUp) {
       this[`open${popUp}`] = !this[`open${popUp}`];
     },
-    updatePost(updatedPost) {
+    updatePostMethod(updatedPost) {
       this.updatePost({ id: this.post._id, content: updatedPost }).then(() => {
         this.showDropdown = false;
         this.openUpdate = false;
@@ -96,7 +101,7 @@ export default {
       this.showDropdown = false;
       this.openDelete = false;
     },
-    deletePost() {
+    deletePostMethod() {
       this.deletePost({ postId: this.post._id, clubId: this.post.club }).then(() => {
         this.showDropdown = false;
         this.openDelete = false;

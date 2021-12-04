@@ -1,6 +1,6 @@
 <template>
   <div class="text-field-media w-8/12">
-    <img v-if="url.length" :src="url" alt="" />
+    <img v-if="url?.length" :src="url" alt="" />
     <input class="h-0" ref="textFieldInput" type="file" style="visibility: hidden" @change="readUrl" />
   </div>
 </template>

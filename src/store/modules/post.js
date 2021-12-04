@@ -19,14 +19,14 @@ const postStore = {
         post.comments = [comment];
       }
     },
-    updateComment(state, updatedComment) {
-      const post = state.activeClub.posts.find((post) => post._id === updatedComment.post);
+    updateComment(_state, updatedComment) {
+      const post = this.state.clubStore.activeClub.posts.find((post) => post._id === updatedComment.post);
       const commentToUpdate = post.comments.find((comment) => comment._id === updatedComment._id);
 
       post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
     },
     deleteComment(state, data) {
-      const post = state.activeClub.posts.find((post) => (post._id = data.postId));
+      const post = this.state.clubStore.activeClub.posts.find((post) => (post._id = data.postId));
       const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
 
       post.comments.splice(post.comments.indexOf(commentToDelete), 1);
@@ -49,13 +49,13 @@ const postStore = {
           });
       });
     },
-    deletePost({ commit }, data) {
+    deletePost(_state, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
           .delete(data.postId)
           .then(() => {
             resolve("");
-            return commit("deletePost", data);
+            return this.commit("clubStore/deletePost", data);
           })
           .catch((err) => {
             reject(err);
@@ -76,7 +76,6 @@ const postStore = {
       });
     },
     updateComment({ commit }, data) {
-      console.log(data);
       return new Promise((resolve, reject) => {
         this.$api.comments
           .patch(data.id, data.formData)

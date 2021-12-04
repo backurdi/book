@@ -35,7 +35,8 @@ import { mapActions } from "vuex";
 export default {
   name: "Comment text field",
   components: { ArrowSmDownIcon, CameraIcon },
-  props: ["editText", "editImage", "postId", "buttonAction", "commentId"],
+  props: ["editText", "editImage", "postId", "buttonAction" /*Can be updateComment or addComment*/, "commentId"],
+  emits: ["commentActionDone"],
   data: () => ({
     edited: false,
     txt: "",

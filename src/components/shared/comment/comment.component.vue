@@ -1,5 +1,5 @@
 <template>
-  <div class="comments">
+  <div class="comments text-dark">
     <div class="mb-5">
       <div class="flex">
         <div class="w-1/12">

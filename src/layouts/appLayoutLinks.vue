@@ -1,4 +1,8 @@
 <template>
+  <div
+    class="mobile-nav-bg absolute z-40 top-16 w-full h-full bg-white bg-opacity-30"
+    :class="{ hidden: !isNavOpen }"
+  ></div>
   <div id="nav" class="relative z-10 h-24 bg-primary-light">
     <div class="nav-container fixed w-full">
       <div class="flex flex-1 flex-col">
@@ -63,7 +67,7 @@
                 </div>
               </div>
             </li>
-            <li class="w-10 h-10 lg:hidden">
+            <li class="w-10 h-10 text-dark lg:hidden">
               <div
                 v-if="user"
                 class="relative mx-auto w-full h-full bg-cover rounded-full"
@@ -89,6 +93,9 @@
                 </div>
               </div>
             </li>
+            <li>
+              <MenuIcon class="w-8 h-8" @click="toggleNav"></MenuIcon>
+            </li>
           </ul>
         </nav>
       </div>
@@ -97,26 +104,28 @@
 </template>
 
 <script>
-import { LightBulbIcon, HomeIcon, UserAddIcon } from "@heroicons/vue/solid";
+import { LightBulbIcon, HomeIcon, UserAddIcon, MenuIcon } from "@heroicons/vue/solid";
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   name: "AppLayoutLinks",
-  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown },
+  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown, MenuIcon },
   directives: {
     clickOutside: vClickOutside.directive,
   },
   computed: {
     ...mapState("userStore", ["user", "invites"]),
     ...mapState("clubStore", ["clubs"]),
+    ...mapState("otherStore", ["isNavOpen"]),
   },
   data: () => ({
     showDropdown: false,
     showInviteDropwdown: false,
   }),
   methods: {
+    ...mapMutations("otherStore", ["toggleNav"]),
     ...mapActions("userStore", ["logout", "answerInvite"]),
     logOut() {
       this.logout();

@@ -1,11 +1,17 @@
 import storePlugins from "../../plugins/storePlugin";
-import { mutations } from "../mutations";
 
 const otherStore = {
   namespaced: true,
   plugins: [storePlugins],
-  state: () => ({}),
-  mutations,
+  state: () => ({
+    isNavOpen: false,
+  }),
+  mutations: {
+    toggleNav(state) {
+      debugger;
+      state.isNavOpen = !state.isNavOpen;
+    },
+  },
   actions: {
     sendEmail(_state, emailData) {
       return new Promise((resolve) => {

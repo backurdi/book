@@ -39,28 +39,28 @@ const bookStore = {
         });
       });
     },
-    updateBook({ state }, data) {
+    updateBook({ state, commit }, data) {
       return this.$api.books.patch(state.focusedBook._id, data.body).then((updatedBook) => {
-        return this.commit("setBook", updatedBook.data.data);
+        return commit("setBook", updatedBook.data.data);
       });
     },
-    addBook({ state }, body) {
-      body = { ...body, club: state.activeClub._id };
+    addBook({ commit }, body) {
+      body = { ...body, club: this.state.clubStore.activeClub._id };
       return new Promise((resolve, reject) => {
         this.$api.books
           .post(body)
           .then((addedBook) => {
             resolve("");
-            return this.commit("addBook", addedBook.data);
+            return commit("addBook", addedBook.data);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
-    deleteBook({ state }) {
+    deleteBook({ commit, state }) {
       return this.$api.books.delete(state.focusedBook._id).then(() => {
-        return this.commit("deleteBook");
+        return commit("deleteBook");
       });
     },
     searchBooks(_state, data) {

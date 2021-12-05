@@ -48,7 +48,7 @@
             focus:outline-none
           "
           type="button"
-          @click="searchBooks"
+          @click="searchBooksMethod"
         >
           Search
         </button>
@@ -60,7 +60,7 @@
         v-for="(data, index) in booksData"
         :key="index"
         :data="data"
-        @addBook="addBook($event)"
+        @addBook="addBookMethod($event)"
       ></AddBookResultCard>
     </div>
   </div>
@@ -85,18 +85,19 @@ export default {
   }),
   methods: {
     ...mapActions("bookStore", ["searchBooks", "addBook"]),
-    async searchBooks() {
+    async searchBooksMethod() {
       this.isLoading = true;
       const res = await this.searchBooks(this.searchText);
       this.isLoading = false;
       this.booksData = res;
     },
     keydownHandler(event) {
+      debugger;
       if (event.code === "Enter") {
-        this.searchBooks();
+        this.searchBooksMethod();
       }
     },
-    async addBook(data) {
+    async addBookMethod(data) {
       const body = {
         title: data.title,
         pagesTotal: data.pageCount,

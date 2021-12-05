@@ -1,10 +1,13 @@
 <template>
-  <div class="w-3/12 h-full invisible md:visible">
-    <div class="fixed">
+  <div class="w-5/12 h-0 md:h-screen">
+    <div
+      class="fixed z-50 transform duration-200 md:opacity-100 md:translate-x-0"
+      :class="{ 'opacity-100 -translate-x-0': isNavOpen, 'opacity-0 -translate-x-full': !isNavOpen }"
+    >
       <!-- Top boks, profile and club selector -->
       <div class="site-nav-top mb-10 py-5 h-1/2 bg-dark rounded">
         <!-- Top part -->
-        <div class="mb-10 px-5">
+        <div class="mb-5 px-5">
           <!-- Profile picture -->
           <!-- Notification for invites -->
           <ProfilePicture></ProfilePicture>
@@ -15,7 +18,7 @@
         </div>
       </div>
       <!-- Bottom boks, books and memeber in selected club -->
-      <div class="site-nav-bottom py-5 h-1/2 bg-dark rounded">
+      <div class="site-nav-bottom py-5 bg-dark rounded overflow-scroll">
         <div class="mb-10">
           <!-- Books in the current club -->
           <ClubBooks></ClubBooks>
@@ -43,9 +46,14 @@ export default {
     ClubMembers,
   },
   computed: {
+    ...mapState("otherStore", ["isNavOpen"]),
     ...mapState("clubStore", ["clubs"]),
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.site-nav-bottom {
+  height: 50vh;
+}
+</style>

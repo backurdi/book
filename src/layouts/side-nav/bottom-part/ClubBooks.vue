@@ -4,8 +4,8 @@
       <p class="font-bold">Books</p>
       <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
     </div>
-    <ul class="scroll h-40 overflow-scroll">
-      <li class="w-full" v-for="(book, index) in books" :key="index" @click="displayBookInfo(book)">
+    <ul class="h-50 overflow-hidden">
+      <li class="w-full" v-for="(book, index) in books.slice(0, 3)" :key="index" @click="displayBookInfo(book)">
         <div class="px-5 py-2 cursor-pointer" :class="{ 'bg-blue-400': index === 0 }">
           <div class="flex">
             <img :src="book.image" class="mr-2 w-8" alt="" />
@@ -14,7 +14,10 @@
               <BookOpenIcon class="self-end w-4 h-4" v-if="index === 0"></BookOpenIcon>
             </div>
           </div>
-          <div class="px-5 w-full h-2" :class="{ 'border-b border-gray-400': index !== books.length - 1 }"></div>
+          <div
+            class="px-5 w-full h-2"
+            :class="{ 'border-b border-gray-400': index !== (books.length - 1 < 2 ? books.length - 1 : 2) }"
+          ></div>
         </div>
       </li>
     </ul>

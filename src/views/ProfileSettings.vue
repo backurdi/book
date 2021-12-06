@@ -308,7 +308,6 @@ export default {
       this.url = URL.createObjectURL(file);
     },
     save(body) {
-      console.log(body);
       body.forEach((element) => {
         this.form.append(element.key, element.value);
       });

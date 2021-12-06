@@ -101,11 +101,9 @@ export default {
         this.form.append("photo", this.photo);
       }
       if (this.pagesFrom) {
-        console.log(this.pagesFrom);
         this.form.append("pagesFrom", this.pagesFrom);
       }
       if (this.pagesTo && this.pagesTo !== 0) {
-        console.log(this.pagesTo);
         this.form.append("pagesTo", this.pagesTo);
       }
       if (this.book !== "") {

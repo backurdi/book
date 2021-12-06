@@ -113,7 +113,6 @@ export default {
     selected: {},
   }),
   mounted() {
-    console.log(this.selectedBook);
     if (this.selectedBook) {
       this.selected = this.selectedBook;
     } else {

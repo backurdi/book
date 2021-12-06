@@ -97,10 +97,10 @@ const userStore = {
           }
         });
     },
-    getUsersForInvite({ state }, isNew = false) {
+    getUsersForInvite(_state, isNew = false) {
       let clubId;
       if (!isNew) {
-        clubId = state.activeClub._id;
+        clubId = this.state.clubStore.activeClub._id;
       }
       return this.$api.clubs.get(`${clubId}/usersForInvite`).then((userForInviteList) => {
         return this.commit("setUsersForInvite", userForInviteList.data);
@@ -109,7 +109,7 @@ const userStore = {
     answerInvite(_state, data) {
       this.$api.clubs
         .answerInvite(data)
-        .then((res) => this.commit("answerInvite", { accepted: data.accepted, club: res.data }));
+        .then((res) => this.commit("clubStore/answerInvite", { accepted: data.accepted, club: res.data }));
     },
     inviteUsers({ state }, invites) {
       this.$api.clubs.inviteUsers(invites, state.activeClub._id);

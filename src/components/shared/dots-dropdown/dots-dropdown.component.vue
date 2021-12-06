@@ -1,6 +1,6 @@
 <template>
   <div class="relative mt-2" v-click-outside="clickOutsideHandler">
-    <div class="text-white" @click="showDropdown = !showDropdown">
+    <div class="text-dark" @click="showDropdown = !showDropdown">
       <DotsVerticalIcon class="w-6 h-6 cursor-pointer" v-if="!showDropdown"></DotsVerticalIcon>
       <XIcon class="w-6 h-6 cursor-pointer" v-if="showDropdown"></XIcon>
     </div>

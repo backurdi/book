@@ -4,7 +4,7 @@
       <p class="font-bold">Memebers</p>
       <button><PlusCircleIcon class="w-6 h-6" @click="openInviteUsers()"></PlusCircleIcon></button>
     </div>
-    <ul class="bg-dark">
+    <ul>
       <li class="w-full" v-for="(member, index) in club.members" :key="index">
         <span class="flex items-center px-5 py-2">
           <div

@@ -8,7 +8,6 @@ const otherStore = {
   }),
   mutations: {
     toggleNav(state) {
-      debugger;
       state.isNavOpen = !state.isNavOpen;
     },
   },

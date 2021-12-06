@@ -1,5 +1,5 @@
 <template>
-  <div class="post relative flex-col mb-4 pb-4 text-white border-b-2 border-gray-400">
+  <div class="post relative flex-col pb-4 text-dark border-b-2 border-gray-400">
     <div class="flex justify-between pt-4 px-4">
       <div class="flex items-center">
         <div

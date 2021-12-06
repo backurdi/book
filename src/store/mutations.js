@@ -43,7 +43,6 @@ export const mutations = {
   //   state.posts = club.posts.sort((a, b) => a < b);
   // },
   answerInvite(state, response) {
-    console.log(response);
     if (response.answer) {
       state.invites.splice(state.invites.indexOf(response.club._id), 1);
       state.clubs.push(response.club);

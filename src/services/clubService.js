@@ -19,7 +19,6 @@ export default class ClubService extends ModelApiService {
 
       return response.data;
     } catch (err) {
-      console.log(err);
       return handleErrors(err);
     }
   }
@@ -36,7 +35,6 @@ export default class ClubService extends ModelApiService {
 
       return response.data;
     } catch (err) {
-      console.log(err);
       return handleErrors(err);
     }
   }

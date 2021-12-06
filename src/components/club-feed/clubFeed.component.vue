@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="posts bg-dark mb-10 rounded" v-for="(post, index) in posts" :key="index">
+    <div class="post mb-10 bg-white rounded-lg shadow-md" v-for="(post, index) in posts" :key="index">
       <Post :post="post" :books="books"></Post>
       <div class="p-4">
         <CommentTextFieldComponent :postId="post._id" buttonAction="addComment"></CommentTextFieldComponent>

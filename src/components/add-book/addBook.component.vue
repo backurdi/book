@@ -92,7 +92,6 @@ export default {
       this.booksData = res;
     },
     keydownHandler(event) {
-      debugger;
       if (event.code === "Enter") {
         this.searchBooksMethod();
       }

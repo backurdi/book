@@ -19,7 +19,6 @@ export default {
     text: "",
   }),
   mounted() {
-    console.log(this.postText);
     this.text = this.postText;
   },
 };

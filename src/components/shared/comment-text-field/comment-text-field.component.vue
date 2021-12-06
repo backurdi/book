@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-end justify-between">
-    <div class="flex items-end justify-between pb-3 pt-2 px-4 w-11/12 bg-gray-500 rounded-b-3xl rounded-t-3xl">
+    <div class="flex items-end justify-between pb-3 pt-2 px-4 w-11/12 bg-gray-200 rounded-b-3xl rounded-t-3xl">
       <div
         id="comment-field"
         contenteditable="true"

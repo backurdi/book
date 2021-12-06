@@ -36,13 +36,13 @@ const postStore = {
     addPost(_state, data) {
       return this.$api.posts.post(data).then((post) => this.commit("clubStore/addPost", post.data));
     },
-    updatePost({ commit }, data) {
+    updatePost(_state, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
           .patch(data.id, data.content)
           .then((post) => {
             resolve("");
-            return commit("updatePost", post.data);
+            return this.commit("clubStore/updatePost", post.data);
           })
           .catch((err) => {
             reject(err);

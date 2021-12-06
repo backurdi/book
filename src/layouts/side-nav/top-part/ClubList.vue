@@ -14,7 +14,7 @@
         }"
       >
       </router-link>
-      <p class="text-white text-sm">{{ club.name }}</p>
+      <p class="text-sm">{{ club.name }}</p>
     </div>
   </div>
 </template>

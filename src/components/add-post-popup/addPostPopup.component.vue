@@ -6,7 +6,7 @@
     <p class="font-bold" :class="{ visible: displayError, invisible: !displayError }">{{ errorMessage }}</p>
   </div>
   <div class="create-post flex justify-between mb-5">
-    <div class="px-10 py-4 w-full text-white bg-dark rounded-full" @click="addPostPopup()">
+    <div class="px-10 py-4 w-full text-dark bg-white rounded-full shadow-md" @click="addPostPopup()">
       <h3>Make a post</h3>
     </div>
   </div>

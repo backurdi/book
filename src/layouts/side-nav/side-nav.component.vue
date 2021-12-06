@@ -1,11 +1,11 @@
 <template>
-  <div class="w-5/12 h-0 md:h-screen">
+  <div class="w-4/12 h-0 md:h-screen">
     <div
-      class="fixed z-50 transform duration-200 md:opacity-100 md:translate-x-0"
-      :class="{ 'opacity-100 -translate-x-0': isNavOpen, 'opacity-0 -translate-x-full': !isNavOpen }"
+      class="fixed transform duration-200 md:opacity-100 md:translate-x-0"
+      :class="{ 'opacity-100 -translate-x-0 z-50': isNavOpen, 'opacity-0 -translate-x-full z-auto': !isNavOpen }"
     >
       <!-- Top boks, profile and club selector -->
-      <div class="site-nav-top mb-10 py-5 h-1/2 bg-dark rounded">
+      <div class="site-nav-top mb-10 py-5 h-1/2 text-dark bg-white rounded-lg shadow-md">
         <!-- Top part -->
         <div class="mb-5 px-5">
           <!-- Profile picture -->
@@ -18,7 +18,7 @@
         </div>
       </div>
       <!-- Bottom boks, books and memeber in selected club -->
-      <div class="site-nav-bottom py-5 bg-dark rounded overflow-scroll">
+      <div class="site-nav-bottom shadow-mdrounded py-5 text-dark bg-white rounded-lg overflow-scroll">
         <div class="mb-10">
           <!-- Books in the current club -->
           <ClubBooks></ClubBooks>

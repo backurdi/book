@@ -26,8 +26,8 @@
                       v-for="(invite, index) in invites"
                       :invite="invite"
                       :key="index"
-                      @accept="answerInvite($event, true)"
-                      @decline="answerInvite($event, false)"
+                      @accept="answerInvite({ club: $event, accepted: true })"
+                      @decline="answerInvite({ club: $event, accepted: false })"
                     ></InviteDropdown>
                   </div>
                   <div v-else class="bg-white">No invites</div>
@@ -93,7 +93,7 @@
                 </div>
               </div>
             </li>
-            <li>
+            <li class="md:hidden">
               <MenuIcon class="w-8 h-8" @click="toggleNav"></MenuIcon>
             </li>
           </ul>
@@ -132,9 +132,6 @@ export default {
     },
     goToProfile() {
       this.$router.push("me");
-    },
-    answerInvite(club, accepted) {
-      this.answerInvite({ accepted, club });
     },
     clickOutsideUserSettingHandler() {
       this.showDropdown = false;

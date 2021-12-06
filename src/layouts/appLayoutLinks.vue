@@ -3,7 +3,7 @@
     class="mobile-nav-bg absolute z-40 top-16 w-full h-full bg-black bg-opacity-30"
     :class="{ hidden: !isNavOpen }"
   ></div>
-  <div id="nav" class="relative z-10 h-24 bg-primary-light">
+  <div id="nav" class="relative z-50 h-16 bg-primary-light">
     <div class="nav-container fixed w-full">
       <div class="flex flex-1 flex-col">
         <nav class="flex justify-between px-4 h-16 bg-dark rounded-b">

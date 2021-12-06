@@ -9,6 +9,12 @@ const otherStore = {
   mutations: {
     toggleNav(state) {
       state.isNavOpen = !state.isNavOpen;
+      const body = document.querySelector("body");
+      if (state.isNavOpen) {
+        body.classList.add("nav-is-showing");
+      } else {
+        body.classList.remove("nav-is-showing");
+      }
     },
   },
   actions: {

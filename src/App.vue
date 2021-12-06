@@ -13,6 +13,9 @@ export default {
 </script>
 
 <style lang="scss">
+.nav-is-showing {
+  overflow: hidden;
+}
 #app {
   font-family: "Montserrat";
   -webkit-font-smoothing: antialiased;

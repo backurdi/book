@@ -4,7 +4,7 @@
       <h3 class="mb-5 text-black text-3xl font-bold">Create post</h3>
       <TextField @emitText="text = $event" :postText="text"></TextField>
       <div>
-        <div class="flex my-4">
+        <div class="flex my-4 w-full">
           <MediaField ref="mediaField" @mediaEmit="photo = $event" :media="photo"></MediaField>
           <ReadingField v-if="book" ref="readingField" :bookData="{ book, pagesFrom, pagesTo }"></ReadingField>
         </div>

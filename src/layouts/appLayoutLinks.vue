@@ -1,9 +1,9 @@
 <template>
   <div
-    class="mobile-nav-bg absolute z-40 top-16 w-full h-full bg-black bg-opacity-30"
+    class="mobile-nav-bg fixed z-40 top-16 w-full h-full bg-black bg-opacity-30"
     :class="{ hidden: !isNavOpen }"
   ></div>
-  <div id="nav" class="relative z-50 h-16 bg-primary-light">
+  <div id="nav" class="relative z-50 mb-5 h-16 bg-primary-light">
     <div class="nav-container fixed w-full">
       <div class="flex flex-1 flex-col">
         <nav class="flex justify-between px-4 h-16 bg-dark rounded-b">
@@ -94,7 +94,8 @@
               </div>
             </li>
             <li class="md:hidden">
-              <MenuIcon class="w-8 h-8" @click="toggleNav"></MenuIcon>
+              <XIcon v-if="isNavOpen" class="w-8 h-8" @click="toggleNav"></XIcon>
+              <MenuIcon v-else class="w-8 h-8" @click="toggleNav"></MenuIcon>
             </li>
           </ul>
         </nav>
@@ -104,14 +105,14 @@
 </template>
 
 <script>
-import { LightBulbIcon, HomeIcon, UserAddIcon, MenuIcon } from "@heroicons/vue/solid";
+import { LightBulbIcon, HomeIcon, UserAddIcon, MenuIcon, XIcon } from "@heroicons/vue/solid";
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
 import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   name: "AppLayoutLinks",
-  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown, MenuIcon },
+  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown, MenuIcon, XIcon },
   directives: {
     clickOutside: vClickOutside.directive,
   },

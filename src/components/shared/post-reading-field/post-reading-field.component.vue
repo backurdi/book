@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end w-8/12 h-16">
+  <div class="flex justify-end w-full h-16">
     <img
       class="mr-5 w-8 border border-gray-200 rounded"
       :src="bookForPost(bookData.book)?.image"

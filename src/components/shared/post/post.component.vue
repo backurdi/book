@@ -21,7 +21,7 @@
     </div>
     <div class="p-4">
       <div class="mb-5" v-html="domDecoder(post.text)"></div>
-      <div class="flex justify-end" v-if="bookForPost(post.book)">
+      <div class="flex justify-end cursor-pointer" v-if="bookForPost(post.book)" @click="bookDescriptionOpen = true">
         <img
           class="mr-5 w-8 border border-gray-200 rounded"
           :src="bookForPost(post.book).image"
@@ -57,10 +57,14 @@
   <Popup v-if="openDelete" @closePopUp="openDelete = false" :open="openDelete">
     <DeletePopup @delete-click="deletePostMethod" @cancle="closeDelete"></DeletePopup>
   </Popup>
+  <Popup @closePopUp="bookDescriptionOpen = false" :open="bookDescriptionOpen" :buttonText="'close'">
+    <BookInfo @close="bookDescriptionOpen = false"></BookInfo>
+  </Popup>
 </template>
 
 <script>
 import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue";
+import BookInfo from "@/components/book-info/book-info.component.vue";
 import Popup from "@/components/shared/popup/popup.component";
 import DeletePopup from "../../delete-popup/deletePopup.component.vue";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
@@ -68,12 +72,13 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Post",
-  components: { DotsDropdownComponent, Popup, DeletePopup, CreatePost },
+  components: { DotsDropdownComponent, BookInfo, Popup, DeletePopup, CreatePost },
   props: ["post", "books"],
   data: () => ({
     showDropdown: false,
     openUpdate: false,
     openDelete: false,
+    bookDescriptionOpen: false,
   }),
   computed: {
     ...mapState("userStore", ["user"]),

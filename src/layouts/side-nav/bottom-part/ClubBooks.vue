@@ -2,7 +2,7 @@
   <div>
     <div class="current-books flex justify-between px-5">
       <p class="font-bold">Books</p>
-      <button><PlusCircleIcon class="w-6 h-6" @click="addBookOpen = true"></PlusCircleIcon></button>
+      <button><PlusCircleIcon class="w-6 h-6" @click="addBookClickHandler()"></PlusCircleIcon></button>
     </div>
     <ul class="h-50 overflow-hidden">
       <li class="w-full" v-for="(book, index) in books.slice(0, 3)" :key="index" @click="displayBookInfo(book)">
@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     ...mapMutations("bookStore", ["setFocusedBook"]),
+    ...mapMutations("otherStore", ["toggleNav"]),
     setSubStr(str) {
       let subStr = 20;
 
@@ -66,7 +67,12 @@ export default {
       }
       return str;
     },
+    addBookClickHandler() {
+      this.addBookOpen = true;
+      this.toggleNav();
+    },
     async displayBookInfo(book) {
+      this.toggleNav();
       await this.setFocusedBook(book);
       this.bookDescriptionOpen = true;
     },

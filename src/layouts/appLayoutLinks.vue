@@ -1,6 +1,7 @@
 <template>
   <div
     class="mobile-nav-bg fixed z-40 top-16 w-full h-full bg-black bg-opacity-30"
+    @click="toggleNav"
     :class="{ hidden: !isNavOpen }"
   ></div>
   <div id="nav" class="relative z-50 mb-5 h-16 bg-primary-light">
@@ -135,9 +136,6 @@ export default {
       this.$router.push("me");
     },
     clickOutsideUserSettingHandler() {
-      this.showDropdown = false;
-    },
-    clickOutsideUserInviteHandler() {
       this.showDropdown = false;
     },
   },

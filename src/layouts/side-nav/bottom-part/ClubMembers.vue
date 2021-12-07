@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import MultiSelectDropdown from "@/components/shared/multiselect-dropdown/multiselectDropdown.component.vue";
 import Popup from "@/components/shared/popup/popup.component";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
@@ -50,8 +50,10 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["getUsersForInvite", "inviteUsers"]),
+    ...mapMutations("otherStore", ["toggleNav"]),
     async openInviteUsers() {
       await this.getUsersForInvite();
+      this.toggleNav();
       this.inviteUsersOpen = true;
     },
     inviteUsers() {

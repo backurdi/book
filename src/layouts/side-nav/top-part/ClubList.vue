@@ -4,7 +4,7 @@
       class="club-list flex items-center px-5 py-2 hover:bg-blue-400 cursor-pointer"
       v-for="(club, index) in clubs"
       :key="index"
-      @click="selectClub(club._id)"
+      @click="handleClick(club)"
     >
       <router-link
         :to="'/' + club._id"
@@ -20,14 +20,19 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "Club list",
   props: ["clubs"],
   methods: {
     ...mapActions("clubStore", ["selectClub"]),
+    ...mapMutations("otherStore", ["toggleNav"]),
     goToCreateClub() {
       this.$router.push("club");
+    },
+    handleClick(club) {
+      this.selectClub(club._id);
+      this.toggleNav();
     },
   },
 };

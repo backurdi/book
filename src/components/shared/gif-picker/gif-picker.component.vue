@@ -1,5 +1,5 @@
 <template>
-  <div class="gif-editor-container">
+  <div class="gif-editor-container text-black">
     <div class="flex">
       <input
         class="mr-2 w-10/12 border-2 border-black rounded"

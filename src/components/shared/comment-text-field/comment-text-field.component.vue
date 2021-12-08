@@ -4,21 +4,27 @@
       <div
         id="comment-field"
         contenteditable="true"
-        class="flex-row-reverse w-9/12 text-white outline-none cursor-text"
+        class="flex-row-reverse w-9/12 text-black outline-none cursor-text"
         :class="{ ['text-gray-400']: !edited }"
         v-text="txt"
         @blur="onEdit"
         @focus="checkEdited"
       ></div>
-      <div class="flex items-center">
+      <div class="relative flex items-center">
         <button class="text-gray-700 hover:text-white" @click.prevent="uploadImage">
           <CameraIcon class="w-6 h-6"></CameraIcon>
         </button>
+        <button class="text-gray-700 hover:text-white" @click.prevent="displayGif">
+          <div class="flex items-center w-6 h-6 text-xs border border-dark rounded">GIF</div>
+        </button>
+        <div class="absolute z-30 right-0 top-10 w-64 bg-white" v-if="showGifPicker">
+          <GifPicker @mediaEmit="gifSelected"></GifPicker>
+        </div>
       </div>
     </div>
     <div>
       <button
-        class="hover:text-black text-white hover:bg-white border border-white rounded-full"
+        class="text-black hover:text-white hover:bg-black border border-black rounded-full"
         @click.prevent="commentActionClicked"
       >
         <ArrowSmDownIcon class="w-6 h-6"></ArrowSmDownIcon>
@@ -32,9 +38,10 @@
 <script>
 import { ArrowSmDownIcon, CameraIcon } from "@heroicons/vue/solid";
 import { mapActions } from "vuex";
+import GifPicker from "@/components/shared/gif-picker/gif-picker.component.vue";
 export default {
   name: "Comment text field",
-  components: { ArrowSmDownIcon, CameraIcon },
+  components: { ArrowSmDownIcon, CameraIcon, GifPicker },
   props: ["editText", "editImage", "postId", "buttonAction" /*Can be updateComment or addComment*/, "commentId"],
   emits: ["commentActionDone"],
   data: () => ({
@@ -43,6 +50,7 @@ export default {
     url: "",
     file: "",
     form: new FormData(),
+    showGifPicker: false,
   }),
   created() {
     if (this.editText) {
@@ -61,7 +69,7 @@ export default {
       if (this.edited) {
         this.form.append("post", this.postId);
         this.form.append("text", this.txt);
-        if (this.file.name) {
+        if (this.file.length) {
           this.form.append("photo", this.file);
         }
         this[this.buttonAction]({ id: this.commentId, formData: this.form }).then(() => {
@@ -76,6 +84,11 @@ export default {
           this.$emit("commentActionDone");
         });
       }
+    },
+    gifSelected(event) {
+      this.showGifPicker = !this.showGifPicker;
+      this.url = event;
+      this.file = event;
     },
     onEdit(evt) {
       var src = evt.target.innerText;
@@ -100,6 +113,9 @@ export default {
 
       this.file = file;
       this.url = URL.createObjectURL(file);
+    },
+    displayGif() {
+      this.showGifPicker = !this.showGifPicker;
     },
   },
 };

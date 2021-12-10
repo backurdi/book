@@ -51,6 +51,7 @@ export default {
   },
   computed: {
     ...mapState("bookStore", ["books"]),
+    ...mapMutations("otherStore", ["isNavOpen"]),
   },
   methods: {
     ...mapMutations("bookStore", ["setFocusedBook"]),
@@ -68,13 +69,18 @@ export default {
       return str;
     },
     addBookClickHandler() {
+      this.toggleNavHandler();
       this.addBookOpen = true;
-      this.toggleNav();
     },
     async displayBookInfo(book) {
-      this.toggleNav();
+      this.toggleNavHandler();
       await this.setFocusedBook(book);
       this.bookDescriptionOpen = true;
+    },
+    toggleNavHandler() {
+      if (this.isNavOpen) {
+        this.toggleNav();
+      }
     },
   },
 };

@@ -47,17 +47,23 @@ export default {
   computed: {
     ...mapState("userStore", ["user", "usersForInvite"]),
     ...mapState("clubStore", { club: "activeClub" }),
+    ...mapMutations("otherStore", ["isNavOpen"]),
   },
   methods: {
     ...mapActions("userStore", ["getUsersForInvite", "inviteUsers"]),
     ...mapMutations("otherStore", ["toggleNav"]),
     async openInviteUsers() {
       await this.getUsersForInvite();
-      this.toggleNav();
+      this.toggleNavHandler();
       this.inviteUsersOpen = true;
     },
     inviteUsers() {
       this.inviteUsers({ invites: this.usersToInvite });
+    },
+    toggleNavHandler() {
+      if (this.isNavOpen) {
+        this.toggleNav();
+      }
     },
   },
 };

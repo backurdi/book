@@ -20,10 +20,13 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   name: "Club list",
   props: ["clubs"],
+  computed: {
+    ...mapState("otherStore", ["isNavOpen"]),
+  },
   methods: {
     ...mapActions("clubStore", ["selectClub"]),
     ...mapMutations("otherStore", ["toggleNav"]),
@@ -32,7 +35,12 @@ export default {
     },
     handleClick(club) {
       this.selectClub(club._id);
-      this.toggleNav();
+      this.toggleNavHandler();
+    },
+    toggleNavHandler() {
+      if (this.isNavOpen) {
+        this.toggleNav();
+      }
     },
   },
 };

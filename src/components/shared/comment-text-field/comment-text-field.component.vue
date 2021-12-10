@@ -111,7 +111,7 @@ export default {
     readUrl(e) {
       const file = e.target.files[0];
 
-      this.file = file;
+      this.file = URL.createObjectURL(file);
       this.url = URL.createObjectURL(file);
     },
     displayGif() {

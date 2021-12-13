@@ -52,13 +52,13 @@ const userStore = {
           return commit("logout", err);
         });
     },
-    logout() {
+    logout({ commit }) {
       return this.$api.users.logout().then(() => {
-        return this.commit("logout");
+        return commit("logout");
       });
     },
-    signup(_state, signupInfo) {
-      return this.$api.users.signup(signupInfo).then((user) => this.commit("login", user));
+    signup({ commit }, signupInfo) {
+      return this.$api.users.signup(signupInfo).then((user) => commit("login", user));
     },
     getMe({ commit }) {
       return this.$api.users
@@ -72,44 +72,44 @@ const userStore = {
           }
         });
     },
-    updateMe(_state, data) {
+    updateMe({ commit }, data) {
       return new Promise((resolve) => {
         this.$api.users
           .patch("updateMe", data)
           .then((updatedUser) => {
             resolve("");
-            return this.commit("setCurrentUser", updatedUser.data.user);
+            return commit("setCurrentUser", updatedUser.data.user);
           })
           .catch((_err) => {
             return _err;
           });
       });
     },
-    getStudents() {
+    getStudents({ commit }) {
       return this.$api.users
         .get("students")
         .then((students) => {
-          return this.commit("setStudents", students.data);
+          return commit("setStudents", students.data);
         })
         .catch((err) => {
           if (err) {
-            return this.commit("logout");
+            return commit("logout");
           }
         });
     },
-    getUsersForInvite(_state, isNew = false) {
+    getUsersForInvite({ commit }, isNew = false) {
       let clubId;
       if (!isNew) {
         clubId = this.state.clubStore.activeClub._id;
       }
       return this.$api.clubs.get(`${clubId}/usersForInvite`).then((userForInviteList) => {
-        return this.commit("setUsersForInvite", userForInviteList.data);
+        return commit("setUsersForInvite", userForInviteList.data);
       });
     },
-    answerInvite(_state, data) {
+    answerInvite({ commit }, data) {
       this.$api.clubs
         .answerInvite(data)
-        .then((res) => this.commit("clubStore/answerInvite", { accepted: data.accepted, club: res.data }));
+        .then((res) => commit("clubStore/answerInvite", { accepted: data.accepted, club: res.data }));
     },
     inviteUsers({ state }, invites) {
       this.$api.clubs.inviteUsers(invites, state.activeClub._id);

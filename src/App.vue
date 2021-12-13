@@ -21,7 +21,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  color: #fff;
 }
 button:disabled {
   background-color: rgb(160, 172, 187);

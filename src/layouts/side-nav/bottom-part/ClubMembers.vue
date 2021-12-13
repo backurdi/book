@@ -47,7 +47,7 @@ export default {
   computed: {
     ...mapState("userStore", ["user", "usersForInvite"]),
     ...mapState("clubStore", { club: "activeClub" }),
-    ...mapMutations("otherStore", ["isNavOpen"]),
+    ...mapState("otherStore", ["isNavOpen"]),
   },
   methods: {
     ...mapActions("userStore", ["getUsersForInvite", "inviteUsers"]),

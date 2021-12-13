@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapState("bookStore", ["books"]),
-    ...mapMutations("otherStore", ["isNavOpen"]),
+    ...mapState("otherStore", ["isNavOpen"]),
   },
   methods: {
     ...mapMutations("bookStore", ["setFocusedBook"]),

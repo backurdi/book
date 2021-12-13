@@ -95,8 +95,8 @@
               </div>
             </li>
             <li class="md:hidden">
-              <XIcon v-if="isNavOpen" class="w-8 h-8" @click="toggleNav"></XIcon>
-              <MenuIcon v-else class="w-8 h-8" @click="toggleNav"></MenuIcon>
+              <XIcon v-if="isNavOpen" class="w-8 h-8 text-white" @click="toggleNav"></XIcon>
+              <MenuIcon v-else class="w-8 h-8 text-white" @click="toggleNav"></MenuIcon>
             </li>
           </ul>
         </nav>

@@ -1,12 +1,16 @@
 import storePlugins from "../../plugins/storePlugin";
 
+export const getDefaultState = () => {
+  return {
+    clubs: [],
+    activeClub: {},
+  };
+};
+
 const clubStore = {
   namespaced: true,
   plugins: [storePlugins],
-  state: () => ({
-    clubs: [],
-    activeClub: {},
-  }),
+  state: getDefaultState(),
   mutations: {
     addPost(state, post) {
       const club = state.clubs.find((club) => club._id === post.club);
@@ -41,6 +45,9 @@ const clubStore = {
         "postStore/setPosts",
         club.posts.sort((a, b) => a < b)
       );
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {

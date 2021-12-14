@@ -20,7 +20,7 @@
   </div>
   <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen">
     <MultiSelectDropdown
-      :dropdownData="usersToInviteArr"
+      :dropdownData="usersForInvite"
       @inviteFriendsChanged="usersToInvite = $event"
     ></MultiSelectDropdown>
     <button @click="inviteUsers">Invite</button>

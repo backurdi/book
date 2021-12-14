@@ -1,17 +1,20 @@
 import storePlugins from "../../plugins/storePlugin";
 import router from "../../router";
-import { getDefaultState } from "../helpers";
 
-const userStore = {
-  namespaced: true,
-  plugins: [storePlugins],
-  state: () => ({
+export const getDefaultState = () => {
+  return {
     user: {},
     invites: [],
     usersForInvite: [],
     students: [],
     token: "",
-  }),
+  };
+};
+
+const userStore = {
+  namespaced: true,
+  plugins: [storePlugins],
+  state: getDefaultState(),
   mutations: {
     login(state, userData) {
       localStorage.setItem("jwt", userData.token);
@@ -22,6 +25,10 @@ const userStore = {
     logout(state) {
       localStorage.removeItem("jwt");
       Object.assign(state, getDefaultState());
+      this.commit("bookStore/resetState");
+      this.commit("otherStore/resetState");
+      this.commit("postStore/resetState");
+      this.commit("clubStore/resetState");
       router.push({ path: "login" });
     },
     setCurrentUser(state, user) {
@@ -41,6 +48,7 @@ const userStore = {
     setStudents(state, students) {
       state.students = students;
     },
+    resetStates() {},
   },
   actions: {
     login({ commit }, loginInfo) {

@@ -118,7 +118,6 @@ export default {
       });
     },
     bookInfoClickHandler(book) {
-      debugger;
       this.setFocusedBook(this.bookForPost(book));
       this.bookDescriptionOpen = true;
     },

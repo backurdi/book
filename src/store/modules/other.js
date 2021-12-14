@@ -1,11 +1,15 @@
 import storePlugins from "../../plugins/storePlugin";
 
+export const getDefaultState = () => {
+  return {
+    isNavOpen: false,
+  };
+};
+
 const otherStore = {
   namespaced: true,
   plugins: [storePlugins],
-  state: () => ({
-    isNavOpen: false,
-  }),
+  state: getDefaultState(),
   mutations: {
     toggleNav(state) {
       state.isNavOpen = !state.isNavOpen;
@@ -15,6 +19,9 @@ const otherStore = {
       } else {
         body.classList.remove("nav-is-showing");
       }
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {

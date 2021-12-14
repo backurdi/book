@@ -1,11 +1,15 @@
 import storePlugins from "../../plugins/storePlugin";
 
+export const getDefaultState = () => {
+  return {
+    posts: [],
+  };
+};
+
 const postStore = {
   namespaced: true,
   plugins: [storePlugins],
-  state: () => ({
-    posts: [],
-  }),
+  state: getDefaultState(),
   mutations: {
     setPosts(state, posts) {
       state.posts = posts;
@@ -26,10 +30,13 @@ const postStore = {
       post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
     },
     deleteComment(state, data) {
-      const post = this.state.clubStore.activeClub.posts.find((post) => (post._id = data.postId));
+      const post = this.state.clubStore.activeClub.posts.find((post) => post._id === data.postId);
       const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
 
       post.comments.splice(post.comments.indexOf(commentToDelete), 1);
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {

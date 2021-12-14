@@ -1,14 +1,18 @@
 import storePlugins from "../../plugins/storePlugin";
 import { sortBooks } from "../helpers";
 
-const bookStore = {
-  namespaced: true,
-  plugins: [storePlugins],
-  state: () => ({
+export const getDefaultState = () => {
+  return {
     focusedBook: {},
     books: [],
     showRecentBooks: false,
-  }),
+  };
+};
+
+const bookStore = {
+  namespaced: true,
+  plugins: [storePlugins],
+  state: getDefaultState(),
   mutations: {
     addBook(state, book) {
       state.books.unshift(book);
@@ -28,6 +32,9 @@ const bookStore = {
       } else {
         state.focusedBook = {};
       }
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {

@@ -69,7 +69,7 @@ export default {
       if (this.edited) {
         this.form.append("post", this.postId);
         this.form.append("text", this.txt);
-        if (this.file.length) {
+        if (this.file) {
           this.form.append("photo", this.file);
         }
         this[this.buttonAction]({ id: this.commentId, formData: this.form }).then(() => {
@@ -111,7 +111,7 @@ export default {
     readUrl(e) {
       const file = e.target.files[0];
 
-      this.file = URL.createObjectURL(file);
+      this.file = file;
       this.url = URL.createObjectURL(file);
     },
     displayGif() {

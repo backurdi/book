@@ -16,14 +16,21 @@
       </router-link>
       <p class="text-sm">{{ club.name }}</p>
     </div>
+    <div class="px-5 py-2">
+      <router-link to="/club" class="flex justify-center py-1 bg-blue-300 rounded-md">
+        <p class="flex items-center text-white"><PlusIcon class="mr-2 w-4 h-4"></PlusIcon> Create club</p>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+import { PlusIcon } from "@heroicons/vue/solid";
 export default {
   name: "Club list",
   props: ["clubs"],
+  components: { PlusIcon },
   computed: {
     ...mapState("otherStore", ["isNavOpen"]),
   },

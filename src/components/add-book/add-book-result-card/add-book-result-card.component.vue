@@ -1,10 +1,8 @@
 <template>
   <div
     class="
-      w-8/10
       flex
       p-4
-      max-w-sm
       leading-normal
       bg-white
       border border-gray-400

@@ -66,11 +66,6 @@ export default {
 </script>
 
 <style lang="scss">
-.slider-container {
-  width: 500px;
-  height: 400px;
-}
-
 @media screen and (max-width: 500px) {
   .slider-container {
     width: 100%;

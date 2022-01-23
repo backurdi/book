@@ -100,24 +100,7 @@
       <a href="#" class="font-roboto mb-6 text-right text-black hover:underline text-base leading-normal"
         >Forgot Password ?</a
       >
-      <button
-        class="
-          px-17
-          mb-4
-          mt-4
-          py-4
-          text-center text-white
-          font-sans
-          text-xl
-          leading-tight
-          bg-blue-400
-          rounded
-          md:px-12 md:py-4 md:text-base
-        "
-        @click.prevent="submit"
-      >
-        Login
-      </button>
+      <Button @buttonClick="submit()" buttonText="Login" :loading="isLoading"></Button>
       <router-link
         to="/signup"
         class="font-roboto mb-6 text-center text-black hover:text-green-500 hover:underline text-base leading-normal"
@@ -130,6 +113,7 @@
 <script>
 import { UserCircleIcon, LockClosedIcon, EyeOffIcon, EyeIcon } from "@heroicons/vue/solid";
 import { mapActions } from "vuex";
+import Button from "@/components/shared/Button.vue";
 
 export default {
   name: "Login",
@@ -138,15 +122,18 @@ export default {
     LockClosedIcon,
     EyeOffIcon,
     EyeIcon,
+    Button,
   },
   data: () => ({
     email: "",
     password: "",
     hidePass: true,
+    isLoading: false,
   }),
   methods: {
     ...mapActions("userStore", ["login"]),
     submit() {
+      this.isLoading = true;
       this.login({
         email: this.email,
         password: this.password,

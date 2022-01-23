@@ -35,26 +35,10 @@
           placeholder="Search"
           @keydown="keydownHandler"
         />
-        <button
-          class="
-            focus:shadow-outline
-            px-4
-            py-2
-            text-white
-            font-bold
-            bg-blue-500
-            hover:bg-blue-700
-            rounded
-            focus:outline-none
-          "
-          type="button"
-          @click="searchBooksMethod"
-        >
-          Search
-        </button>
+
+        <Button buttonText="Search" @buttonClick="searchBooksMethod" :loading="isLoading"></Button>
       </div>
     </div>
-    <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     <div v-if="booksData.length && !isLoading">
       <AddBookResultCard
         v-for="(data, index) in booksData"
@@ -68,13 +52,13 @@
 
 <script>
 import AddBookResultCard from "./add-book-result-card/add-book-result-card.component.vue";
-import LoadingSpinner from "../shared/loading-spinner/loading-spinner.component.vue";
+import Button from "@/components/shared/Button.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     AddBookResultCard,
-    LoadingSpinner,
+    Button,
   },
   emits: [AddBookResultCard],
   data: () => ({

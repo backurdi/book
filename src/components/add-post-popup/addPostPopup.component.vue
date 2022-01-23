@@ -63,6 +63,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .create-post {
-  max-width: 750px;
+  max-width: 1000px;
 }
 </style>

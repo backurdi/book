@@ -24,6 +24,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^4.0.10",
     "vue-router-multiguard": "^1.0.3",
+    "vue-simple-spinner": "^1.2.10",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

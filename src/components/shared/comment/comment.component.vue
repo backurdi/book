@@ -45,7 +45,7 @@
 <script>
 import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue";
 import DeletePopupComponent from "../../delete-popup/deletePopup.component.vue";
-import PopupComponent from "../../shared/popup/popup.component.vue";
+import PopupComponent from "../popup.vue";
 import CommentTextFieldComponent from "../comment-text-field/comment-text-field.component.vue";
 import { mapActions, mapState } from "vuex";
 export default {

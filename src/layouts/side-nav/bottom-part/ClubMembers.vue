@@ -30,7 +30,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import MultiSelectDropdown from "@/components/shared/multiselect-dropdown/multiselectDropdown.component.vue";
-import Popup from "@/components/shared/popup/popup.component";
+import Popup from "@/components/shared/popup";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
 export default {
   name: "Club members",

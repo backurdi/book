@@ -20,6 +20,9 @@
           ></div>
         </div>
       </li>
+      <li>
+        <see-more></see-more>
+      </li>
     </ul>
   </div>
   <Popup @closePopUp="bookDescriptionOpen = false" :open="bookDescriptionOpen" :buttonText="'close'">
@@ -31,11 +34,12 @@
 </template>
 
 <script>
-import Popup from "@/components/shared/popup/popup.component";
+import Popup from "@/components/shared/popup";
 import AddBook from "@/components/add-book/addBook.component.vue";
 import BookInfo from "@/components/book-info/book-info.component.vue";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 import { mapMutations, mapState } from "vuex";
+import SeeMore from "@/components/shared/see-more.vue";
 export default {
   name: "Club books",
   data: () => ({
@@ -48,6 +52,7 @@ export default {
     PlusCircleIcon,
     BookOpenIcon,
     BookInfo,
+    SeeMore,
   },
   computed: {
     ...mapState("bookStore", ["books"]),

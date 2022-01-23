@@ -54,7 +54,7 @@
 </template>
 
 <script>
-// import Popup from "@/components/shared/popup/popup.component";
+// import Popup from "@/components/shared/popup";
 // import AddBook from "../add-book/addBook.component.vue";
 // import BookInfo from "../book-info/book-info.component.vue";
 // import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";

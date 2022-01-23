@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Popup from "@/components/shared/popup/popup.component";
+import Popup from "@/components/shared/popup";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
 import { mapActions, mapState } from "vuex";
 

@@ -69,7 +69,7 @@
 <script>
 import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue";
 import BookInfo from "@/components/book-info/book-info.component.vue";
-import Popup from "@/components/shared/popup/popup.component";
+import Popup from "@/components/shared/popup";
 import DeletePopup from "../../delete-popup/deletePopup.component.vue";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
 import { mapActions, mapMutations, mapState } from "vuex";

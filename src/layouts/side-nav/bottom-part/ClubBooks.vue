@@ -21,7 +21,7 @@
         </div>
       </li>
       <li>
-        <see-more></see-more>
+        <see-more seeMoreType="book"></see-more>
       </li>
     </ul>
   </div>
@@ -39,7 +39,7 @@ import AddBook from "@/components/add-book/addBook.component.vue";
 import BookInfo from "@/components/book-info/book-info.component.vue";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 import { mapMutations, mapState } from "vuex";
-import SeeMore from "@/components/shared/see-more.vue";
+import SeeMore from "@/components/shared/see-more/see-more.vue";
 export default {
   name: "Club books",
   data: () => ({

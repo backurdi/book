@@ -16,6 +16,9 @@
           <p class="text-xs">{{ member.name }}</p>
         </span>
       </li>
+      <li>
+        <see-more seeMoreType="member"></see-more>
+      </li>
     </ul>
   </div>
   <Popup @closePopUp="inviteUsersOpen = false" :open="inviteUsersOpen">
@@ -32,6 +35,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 import MultiSelectDropdown from "@/components/shared/multiselect-dropdown/multiselectDropdown.component.vue";
 import Popup from "@/components/shared/popup";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
+import SeeMore from "@/components/shared/see-more/see-more.vue";
 export default {
   name: "Club members",
   data: () => ({
@@ -43,6 +47,7 @@ export default {
     MultiSelectDropdown,
     PlusCircleIcon,
     Popup,
+    SeeMore,
   },
   computed: {
     ...mapState("userStore", ["user", "usersForInvite"]),

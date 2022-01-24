@@ -52,6 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
 $spinner-stroke-dasharrays: (
   sm: 31,
   md: 62,
@@ -116,25 +117,25 @@ $spinner-stroke-dasharrays: (
       stroke-dashoffset: $size;
     }
     12.5% {
-      stroke-dashoffset: $size/4;
+      stroke-dashoffset: math.div($size, 4);
     }
     25% {
       stroke-dashoffset: $size;
     }
     37.5% {
-      stroke-dashoffset: $size/4;
+      stroke-dashoffset: math.div($size, 4);
     }
     50% {
       stroke-dashoffset: $size;
     }
     62.5% {
-      stroke-dashoffset: $size/4;
+      stroke-dashoffset: math.div($size, 4);
     }
     75% {
       stroke-dashoffset: $size;
     }
     87.5% {
-      stroke-dashoffset: $size/4;
+      stroke-dashoffset: math.div($size, 4);
     }
     100% {
       stroke-dashoffset: $size;

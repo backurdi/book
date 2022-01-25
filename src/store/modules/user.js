@@ -48,6 +48,15 @@ const userStore = {
     setStudents(state, students) {
       state.students = students;
     },
+    answerInvite(state, response) {
+      debugger;
+      if (response.accepted) {
+        state.invites.splice(state.invites.indexOf(response.club._id), 1);
+        this.commit("clubStore/insertClub", response.club);
+      } else {
+        state.invites.splice(state.invites.indexOf(response.club), 1);
+      }
+    },
     resetStates() {},
   },
   actions: {
@@ -117,10 +126,10 @@ const userStore = {
     answerInvite({ commit }, data) {
       this.$api.clubs
         .answerInvite(data)
-        .then((res) => commit("clubStore/answerInvite", { accepted: data.accepted, club: res.data }));
+        .then((res) => commit("answerInvite", { accepted: data.accepted, club: res.data }));
     },
     inviteUsers({ state }, invites) {
-      this.$api.clubs.inviteUsers(invites, state.activeClub._id);
+      this.$api.clubs.inviteUsers(invites, this.state.clubStore.activeClub._id);
     },
   },
 };

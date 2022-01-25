@@ -26,7 +26,7 @@
       :dropdownData="usersForInvite"
       @inviteFriendsChanged="usersToInvite = $event"
     ></MultiSelectDropdown>
-    <button @click="inviteUsers">Invite</button>
+    <button @click="onInviteUsers">Invite</button>
   </Popup>
 </template>
 
@@ -64,7 +64,8 @@ export default {
       this.toggleNavHandler();
       this.inviteUsersOpen = true;
     },
-    inviteUsers() {
+    onInviteUsers() {
+      debugger;
       this.inviteUsers({ invites: this.usersToInvite });
     },
     toggleNavHandler() {

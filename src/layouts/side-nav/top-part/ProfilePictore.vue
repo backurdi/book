@@ -1,5 +1,5 @@
 <template>
-  <div class="hover-trigger flex items-center lg:block">
+  <div class="hover-trigger flex items-center">
     <div
       class="relative mr-4 w-10 h-10 bg-cover rounded-full"
       :style="{

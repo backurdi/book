@@ -30,7 +30,10 @@ const clubStore = {
       club.posts.splice(club.posts.indexOf(postToDelete), 1);
     },
     insertClub(state, club) {
-      state.clubs.push(...club);
+      state.clubs = [...state.clubs, club];
+    },
+    setClubs(state, clubs) {
+      state.clubs = clubs;
     },
     setActiveClub(state, club) {
       state.activeClub = club;
@@ -64,11 +67,11 @@ const clubStore = {
       }
       return commit("setActiveClub", clubInState);
     },
-    createClub(_state, body) {
+    createClub({ commit }, body) {
       return new Promise((resolve) => {
         this.$api.clubs.post(body).then((club) => {
           resolve();
-          return this.commit("insertClub", club.data);
+          return commit("insertClub", club.data);
         });
       });
     },

@@ -2,7 +2,7 @@
   <div class="mx-auto w-11/12">
     <div class="flex flex-col w-full h-auto md:flex-row" v-if="clubs.length">
       <SideNav></SideNav>
-      <div class="flex-col flex-grow mx-auto w-full md:w-7/12 lg:px-16">
+      <div class="flex-col flex-grow mx-auto w-8/12 md:w-7/12 lg:px-16">
         <AddPostPopUp></AddPostPopUp>
         <ClubFeed></ClubFeed>
       </div>
@@ -19,8 +19,6 @@
 </template>
 
 <script>
-// import ClubSideNav from "../components/club-side-nav/clubSideNav.component.vue";
-// import ClubSideSettings from "../components/club-side-settings/club-side-settings.component.vue";
 import SideNav from "../layouts/side-nav/side-nav.component.vue";
 import ClubFeed from "../components/club-feed/clubFeed.component.vue";
 import AddPostPopUp from "../components/add-post-popup/addPostPopup.component.vue";

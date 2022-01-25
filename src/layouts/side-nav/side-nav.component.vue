@@ -1,5 +1,5 @@
 <template>
-  <div class="w-4/12 h-0 md:h-screen">
+  <div class="nav-container w-4/12 h-0 md:h-screen">
     <div
       class="fixed transform duration-200 md:opacity-100 md:translate-x-0"
       :class="{ 'opacity-100 -translate-x-0 z-50': isNavOpen, 'opacity-0 -translate-x-full z-auto': !isNavOpen }"
@@ -55,5 +55,6 @@ export default {
 <style scoped>
 .site-nav-bottom {
   height: 50vh;
+  width: 231px;
 }
 </style>

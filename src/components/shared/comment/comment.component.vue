@@ -6,9 +6,7 @@
           <div
             class="mr-2 mx-auto w-12 h-12 bg-cover rounded-full"
             :style="{
-              'background-image': `url(${
-                comment.user.photo ? comment.user.photo : require('@/assets/images/default-avatar.png')
-              })`,
+              'background-image': `url(${comment.user.photo ? comment.user.photo : defaultAvatar})`,
             }"
           ></div>
         </div>
@@ -43,6 +41,7 @@
 </template>
 
 <script>
+import defaultAvatar from "@/assets/images/default-avatar.png";
 import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue";
 import DeletePopupComponent from "../../delete-popup/deletePopup.component.vue";
 import PopupComponent from "../popup.vue";
@@ -56,6 +55,7 @@ export default {
     openUpdate: false,
     openDelete: false,
     editComment: null,
+    defaultAvatar,
   }),
   computed: {
     ...mapState("userStore", ["user"]),

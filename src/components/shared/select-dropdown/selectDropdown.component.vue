@@ -1,4 +1,4 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
+<!-- This example imports Tailwind CSS v2.0+ -->
 <template>
   <Listbox as="div" v-model="selected">
     <ListboxLabel class="block text-gray-700 text-sm font-medium">

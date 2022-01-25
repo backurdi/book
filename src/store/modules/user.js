@@ -34,7 +34,7 @@ const userStore = {
     setCurrentUser(state, user) {
       state.user = { id: user._id, name: user.name, email: user.email, photo: user.photo, role: user.role };
       state.invites = user.invites;
-      this.commit("clubStore/insertClub", user.clubs);
+      this.commit("clubStore/setClubs", user.clubs);
       if (user.clubs.length) {
         const currentClubId = router.currentRoute._value.params.clubId
           ? router.currentRoute._value.params.clubId

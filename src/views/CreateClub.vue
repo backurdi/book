@@ -39,7 +39,7 @@
       <span
         class="flex items-center px-3 w-24 h-24 text-gray-600 leading-normal bg-white bg-cover border-0 rounded-full"
         :style="{
-          'background-image': `url(${url ? url : club?.photo})`,
+          'background-image': `url(${url ? url : activeClub?.photo})`,
         }"
       ></span>
       <input
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     ...mapState("userStore", ["usersForInvite"]),
-    ...mapState("clubStore", [{ club: "currentClub" }]),
+    ...mapState("clubStore", ["activeClub"]),
   },
   components: {
     LibraryIcon,

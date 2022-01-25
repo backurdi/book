@@ -5,37 +5,66 @@
     class="flex p-3 border rounded"
     :class="[index === 0 ? '' : 'mt-3']"
   >
-    <img class="border-grey-400 mr-4 w-8 border" :src="recentBook.image ?? require(`@/assets/images/no-book-cover.png`)" alt />
+    <img class="border-grey-400 mr-4 w-8 border" :src="recentBook.image ?? noBookCover" alt />
     <div class="w-4/6">
-      <p>{{ recentBook.title.length > 18 ?  `${recentBook.title.substring(0, 18)}...` : recentBook.title}}</p>
+      <p>{{ recentBook.title.length > 18 ? `${recentBook.title.substring(0, 18)}...` : recentBook.title }}</p>
       <k-progress
-        :percent="
-          Math.round((recentBook.pagesRead / recentBook.pagesTotal) * 100)
-        "
+        :percent="Math.round((recentBook.pagesRead / recentBook.pagesTotal) * 100)"
         :line-height="10"
         :color="colorBasedOnProgress(recentBook.read)"
       ></k-progress>
     </div>
     <button
-      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded hidden lg:block"
+      class="
+        hidden
+        flex-initial
+        self-center
+        px-3
+        py-2
+        h-4/6
+        text-white
+        font-bold
+        bg-blue-500
+        hover:bg-blue-700
+        rounded
+        lg:block
+      "
       @click="changeFocusedBook(recentBook._id)"
-    >View</button>
+    >
+      View
+    </button>
     <button
-      class="flex-initial self-center px-3 py-2 h-4/6 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded lg:hidden"
+      class="
+        flex-initial
+        self-center
+        px-3
+        py-2
+        h-4/6
+        text-white
+        font-bold
+        bg-blue-500
+        hover:bg-blue-700
+        rounded
+        lg:hidden
+      "
       @click="changeFocusedBookMobile(recentBook._id)"
-    >View</button>
+    >
+      View
+    </button>
   </div>
 </template>
 
 <script>
+import noBookCover from "@/assets/images/no-book-cover.png";
 import KProgress from "k-progress-v3";
 
 export default {
   name: "RecentBookTable",
   components: { KProgress },
   props: ["tableData"],
-  emits: ['changeFocusedBook'],
+  emits: ["changeFocusedBook"],
   data: () => ({
+    noBookCover,
     recentBooks: [],
   }),
   methods: {

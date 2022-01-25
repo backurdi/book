@@ -3,7 +3,7 @@
     <div
       class="relative w-10 h-10 bg-cover rounded-full"
       :style="{
-        'background-image': `url(${user.photo ? user.photo : require('@/assets/images/default-avatar.png')})`,
+        'background-image': `url(${user.photo ? user.photo : defaultAvatar})`,
       }"
     >
       <div class="border-grey-100 hover-target absolute z-10 left-12 top-0 w-150 bg-white border rounded">
@@ -21,9 +21,11 @@
 </template>
 
 <script>
+import defaultAvatar from "@/assets/images/default-avatar.png";
 import { mapState } from "vuex";
 export default {
   name: "Profile picture",
+  data: () => ({ defaultAvatar }),
   computed: {
     ...mapState("userStore", ["user"]),
   },

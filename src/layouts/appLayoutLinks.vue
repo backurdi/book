@@ -49,7 +49,7 @@
               <div
                 class="hover-trigger relative mx-auto w-full h-full bg-cover rounded-full"
                 :style="{
-                  'background-image': `url(${user.photo ? user.photo : require('@/assets/images/default-avatar.png')})`,
+                  'background-image': `url(${user.photo ? user.photo : defaultAvatar})`,
                 }"
               >
                 <div class="h-12"></div>
@@ -73,7 +73,7 @@
                 v-if="user"
                 class="relative mx-auto w-full h-full bg-cover rounded-full"
                 :style="{
-                  'background-image': `url(${user.photo ? user.photo : require('@/assets/images/default-avatar.png')})`,
+                  'background-image': `url(${user.photo ? user.photo : defaultAvatar})`,
                 }"
                 @click="showDropdown = !showDropdown"
                 v-click-outside="clickOutsideUserSettingHandler"
@@ -110,6 +110,7 @@ import { LightBulbIcon, HomeIcon, UserAddIcon, MenuIcon, XIcon } from "@heroicon
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
 import { mapActions, mapState, mapMutations } from "vuex";
+import defaultAvatar from "@/assets/images/default-avatar.png";
 
 export default {
   name: "AppLayoutLinks",
@@ -125,6 +126,7 @@ export default {
   data: () => ({
     showDropdown: false,
     showInviteDropwdown: false,
+    defaultAvatar,
   }),
   methods: {
     ...mapMutations("otherStore", ["toggleNav"]),

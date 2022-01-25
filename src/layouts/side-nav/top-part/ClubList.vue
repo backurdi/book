@@ -10,7 +10,7 @@
         :to="'/' + club._id"
         class="mr-2 w-6 h-6 bg-cover rounded-full"
         :style="{
-          'background-image': `url(${club.photo ? club.photo : require('@/assets/images/default-img.png')})`,
+          'background-image': `url(${club.photo ? club.photo : clubImage})`,
         }"
       >
       </router-link>
@@ -25,12 +25,16 @@
 </template>
 
 <script>
+import clubImage from "@/assets/images/default-img.png";
 import { mapActions, mapMutations, mapState } from "vuex";
 import { PlusIcon } from "@heroicons/vue/solid";
 export default {
   name: "Club list",
   props: ["clubs"],
   components: { PlusIcon },
+  data: () => ({
+    clubImage,
+  }),
   computed: {
     ...mapState("otherStore", ["isNavOpen"]),
   },

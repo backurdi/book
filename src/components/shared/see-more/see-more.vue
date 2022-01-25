@@ -13,7 +13,7 @@
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
-import Popup from "../popup";
+import Popup from "@/components/shared/popup";
 import SeeMoreBooks from "./popups/see-more-books.vue";
 import SeeMoreMembers from "./popups/see-more-members.vue";
 export default {

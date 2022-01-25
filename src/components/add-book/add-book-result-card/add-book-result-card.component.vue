@@ -10,11 +10,7 @@
       lg:flex lg:border-t lg:border-gray-400 lg:rounded-b-none lg:rounded-r
     "
   >
-    <img
-      class="mr-7 h-150 rounded"
-      :src="data.volumeInfo.imageLinks?.thumbnail ?? require(`@/assets/images/no-book-cover.png`)"
-      alt="book cover"
-    />
+    <img class="mr-7 h-150 rounded" :src="data.volumeInfo.imageLinks?.thumbnail ?? noBookCover" alt="book cover" />
     <div class="w-full">
       <div class="mb-8">
         <div class="mb-2 text-gray-900 text-xl font-bold">{{ data.volumeInfo.title }}</div>
@@ -45,11 +41,13 @@
 </template>
 
 <script>
+import noBookCover from "@/assets/images/no-book-cover.png";
 export default {
   name: "add book result card",
   props: ["data"],
   data: () => ({
     showMore: false,
+    noBookCover,
   }),
   methods: {
     addBook(bookData) {

@@ -1,4 +1,4 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
+<!-- This example imports Tailwind CSS v2.0+ -->
 <template>
   <div
     class="

@@ -5,9 +5,7 @@
         <div
           class="hover-trigger relative mr-3 mx-auto w-12 h-12 bg-cover rounded-full"
           :style="{
-            'background-image': `url(${
-              post.user.photo ? post.user.photo : require('@/assets/images/default-avatar.png')
-            })`,
+            'background-image': `url(${post.user.photo ? post.user.photo : defaultAvatar})`,
           }"
         ></div>
         <p>{{ post.user.name }}</p>
@@ -67,6 +65,7 @@
 </template>
 
 <script>
+import defaultAvatar from "@/assets/images/default-avatar.png";
 import DotsDropdownComponent from "../dots-dropdown/dots-dropdown.component.vue";
 import BookInfo from "@/components/book-info/book-info.component.vue";
 import Popup from "@/components/shared/popup";
@@ -83,6 +82,7 @@ export default {
     openUpdate: false,
     openDelete: false,
     bookDescriptionOpen: false,
+    defaultAvatar,
   }),
   computed: {
     ...mapState("userStore", ["user"]),

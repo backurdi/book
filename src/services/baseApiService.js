@@ -1,5 +1,5 @@
 export class BaseApiService {
-  baseUrl = process.env.VUE_APP_BASE_URL;
+  baseUrl = import.meta.env.VITE_BASE_URL;
 
   resource;
 
@@ -9,9 +9,9 @@ export class BaseApiService {
   }
 
   getUrl(id = "") {
-    if(id.length){
+    if (id.length) {
       return `${this.baseUrl}/${this.resource}/${id}`;
-    }else{
+    } else {
       return `${this.baseUrl}/${this.resource}`;
     }
   }

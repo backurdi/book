@@ -5,7 +5,7 @@
       <div
         class="mr-2 w-10 h-10 bg-cover rounded-full"
         :style="{
-          'background-image': `url(${member.photo ? member.photo : require('@/assets/images/default-avatar.png')})`,
+          'background-image': `url(${member.photo ? member.photo : defaultAvatar})`,
         }"
       ></div>
       <p class="text-xs">{{ member.name }}</p>
@@ -14,9 +14,13 @@
 </template>
 
 <script>
+import defaultAvatar from "@/assets/images/default-avatar.png";
 export default {
   name: "See more members",
   props: ["members"],
+  data: () => ({
+    defaultAvatar,
+  }),
 };
 </script>
 

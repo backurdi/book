@@ -7,6 +7,7 @@
 <script>
 import { shallowRef } from "vue";
 import AppLayoutDefault from "./appLayoutDefault.vue";
+import appLayoutHome from "./appLayoutHome.vue";
 
 export default {
   name: "AppLayout",
@@ -18,8 +19,8 @@ export default {
       immediate: true,
       async handler(route) {
         try {
-          const component = route.meta.layout ? await import(/* @vite-ignore */ `./${route.meta.layout}.vue`) : "";
-          this.layout = component?.default || AppLayoutDefault;
+          const component = route.meta.layout === "appLayoutHome" ? appLayoutHome : "";
+          this.layout = component || AppLayoutDefault;
         } catch (e) {
           this.layout = AppLayoutDefault;
         }

@@ -14,7 +14,6 @@ export default class BooksService extends ModelApiService {
         `https://www.googleapis.com/books/v1/volumes?q=${id}&maxResults=20
         `
       );
-      console.log(response);
       const filteredData = response.data.items.filter((book) => book);
       return filteredData;
     } catch (err) {

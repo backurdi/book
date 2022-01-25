@@ -2,7 +2,7 @@
   <div class="mx-auto w-11/12">
     <div class="flex flex-col w-full h-auto md:flex-row" v-if="clubs.length">
       <SideNav></SideNav>
-      <div class="flex-col flex-grow mx-auto w-8/12 md:w-7/12 lg:px-16">
+      <div class="flex-col flex-grow mx-auto md:w-7/12 lg:px-16">
         <AddPostPopUp></AddPostPopUp>
         <ClubFeed></ClubFeed>
       </div>

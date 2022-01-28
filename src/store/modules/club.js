@@ -30,7 +30,6 @@ const clubStore = {
       club.posts.splice(club.posts.indexOf(postToDelete), 1);
     },
     insertClub(state, club) {
-      debugger;
       state.clubs = [...state.clubs, club];
     },
     setClubs(state, clubs) {

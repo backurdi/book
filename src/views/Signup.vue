@@ -206,14 +206,7 @@
           rounded
           md:px-12 md:py-4 md:text-base
         "
-        @click.prevent="
-          signup({
-            name,
-            email,
-            password,
-            passwordConfirm,
-          })
-        "
+        @click.prevent=""
       >
         signup
       </button>
@@ -246,9 +239,24 @@ export default {
     passwordConfirm: "",
     hidePass: true,
     hideConfirmPass: true,
+    error: "",
   }),
   methods: {
     ...mapActions("userStore", ["signup"]),
+    onSignUp() {
+      this.signup({
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        passwordConfirm: this.passwordConfirm,
+      })
+        .then(() => {
+          this.$router.push({ path: "/" });
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
   },
 };
 </script>

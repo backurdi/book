@@ -20,7 +20,6 @@ const userStore = {
       localStorage.setItem("jwt", userData.token);
       state.token = userData.token;
       state.user = userData.data;
-      router.push({ path: "/" });
     },
     logout(state) {
       localStorage.removeItem("jwt");
@@ -49,7 +48,6 @@ const userStore = {
       state.students = students;
     },
     answerInvite(state, response) {
-      debugger;
       if (response.accepted) {
         state.invites.splice(state.invites.indexOf(response.club._id), 1);
         this.commit("clubStore/insertClub", response.club);
@@ -61,13 +59,18 @@ const userStore = {
   },
   actions: {
     login({ commit }, loginInfo) {
-      return this.$api.users
-        .login(loginInfo)
-        .then((user) => commit("login", user))
-        .catch((err) => {
-          console.log(err);
-          return commit("logout", err);
-        });
+      return new Promise((resolve, reject) => {
+        this.$api.users
+          .login(loginInfo)
+          .then((user) => {
+            resolve("");
+            return commit("login", user);
+          })
+          .catch((err) => {
+            reject(err);
+            return commit("logout", err);
+          });
+      });
     },
     logout({ commit }) {
       return this.$api.users.logout().then(() => {
@@ -75,7 +78,18 @@ const userStore = {
       });
     },
     signup({ commit }, signupInfo) {
-      return this.$api.users.signup(signupInfo).then((user) => commit("login", user));
+      return new Promise((resolve, reject) => {
+        this.$api.users
+          .signup(signupInfo)
+          .then((user) => {
+            resolve("");
+            return commit("login", user);
+          })
+          .catch((err) => {
+            reject(err);
+            return commit("logout", err);
+          });
+      });
     },
     getMe({ commit }) {
       return this.$api.users

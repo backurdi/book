@@ -65,7 +65,6 @@ export default {
       this.inviteUsersOpen = true;
     },
     onInviteUsers() {
-      debugger;
       this.inviteUsers({ invites: this.usersToInvite });
     },
     toggleNavHandler() {

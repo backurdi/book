@@ -2,7 +2,23 @@
   <div class="flex flex-col items-center ml-auto mr-auto w-full md:w-3/5 lg:w-2/3">
     <h1 class="my-10 text-black text-2xl font-bold">Login</h1>
     <form action="" class="flex flex-col mt-2 w-8/12 lg:w-1/2">
-      <div class="h-15 relative flex flex-wrap items-center items-stretch mb-4 mb-6 pr-10 w-full bg-white rounded">
+      <div
+        class="
+          h-15
+          relative
+          flex flex-wrap
+          items-center
+          mb-6
+          pr-10
+          w-full
+          bg-white
+          border-2
+          rounded
+          transition-all
+          duration-150
+        "
+        :class="{ 'border-2 border-red-500': error.length }"
+      >
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
@@ -41,7 +57,22 @@
           placeholder="Email"
         />
       </div>
-      <div class="h-15 relative flex flex-wrap items-center items-stretch mb-4 w-full bg-white rounded">
+      <div
+        class="
+          h-15
+          relative
+          flex flex-wrap
+          items-stretch
+          mb-4
+          w-full
+          bg-white
+          border-2
+          rounded
+          transition-all
+          duration-150
+        "
+        :class="{ 'border-2 border-red-500': error.length }"
+      >
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
             class="
@@ -97,6 +128,9 @@
           </span>
         </div>
       </div>
+      <p class="text-red-500 opacity-0 transition-all duration-150" :class="{ 'opacity-100': error.length }">
+        {{ error.length ? error : "e" }}
+      </p>
       <a href="#" class="font-roboto mb-6 text-right text-black hover:underline text-base leading-normal"
         >Forgot Password ?</a
       >
@@ -129,6 +163,7 @@ export default {
     password: "",
     hidePass: true,
     isLoading: false,
+    error: "",
   }),
   methods: {
     ...mapActions("userStore", ["login"]),
@@ -137,7 +172,17 @@ export default {
       this.login({
         email: this.email,
         password: this.password,
-      });
+      })
+        .then(() => {
+          this.$router.push({ path: "/" });
+        })
+        .catch((err) => {
+          this.error = err;
+          this.isLoading = false;
+          setTimeout(() => {
+            this.error = "";
+          }, 1500);
+        });
     },
   },
 };

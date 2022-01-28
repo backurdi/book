@@ -8,14 +8,17 @@ export default class UserService extends ModelApiService {
   }
 
   async login(data = {}) {
-    try {
-      const response = await axios.post(`${this.getUrl()}/login`, data);
-
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return handleErrors(err);
-    }
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.getUrl()}/login`, data)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          handleErrors(err);
+          reject(err.response.data.message);
+        });
+    });
   }
 
   async logout() {
@@ -34,13 +37,16 @@ export default class UserService extends ModelApiService {
   }
 
   async signup(data = {}) {
-    try {
-      const response = await axios.post(`${this.getUrl()}/signup`, data);
-
-      return response.data;
-    } catch (err) {
-      handleErrors(err);
-      return err;
-    }
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.getUrl()}/signup`, data)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          handleErrors(err);
+          reject(err.response.data.message);
+        });
+    });
   }
 }

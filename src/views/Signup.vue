@@ -192,24 +192,7 @@
           </span>
         </div>
       </div>
-      <button
-        class="
-          px-17
-          mb-4
-          mt-4
-          py-4
-          text-center text-white
-          font-sans
-          text-xl
-          leading-tight
-          bg-blue-400
-          rounded
-          md:px-12 md:py-4 md:text-base
-        "
-        @click.prevent=""
-      >
-        signup
-      </button>
+      <Button @buttonClick="onSignUp()" buttonText="Login" :loading="isLoading"></Button>
       <router-link
         to="/login"
         class="font-roboto mb-6 text-center text-black hover:text-green-500 hover:underline text-base leading-normal"
@@ -222,6 +205,7 @@
 <script>
 import { UserCircleIcon, LockClosedIcon, EyeOffIcon, EyeIcon, MailIcon } from "@heroicons/vue/solid";
 import { mapActions } from "vuex";
+import Button from "@/components/shared/Button.vue";
 
 export default {
   name: "Signup",
@@ -231,6 +215,7 @@ export default {
     EyeOffIcon,
     EyeIcon,
     MailIcon,
+    Button,
   },
   data: () => ({
     name: "",
@@ -240,10 +225,12 @@ export default {
     hidePass: true,
     hideConfirmPass: true,
     error: "",
+    isLoading: false,
   }),
   methods: {
     ...mapActions("userStore", ["signup"]),
     onSignUp() {
+      this.isLoading = true;
       this.signup({
         name: this.name,
         email: this.email,
@@ -251,9 +238,11 @@ export default {
         passwordConfirm: this.passwordConfirm,
       })
         .then(() => {
+          this.isLoading = false;
           this.$router.push({ path: "/" });
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log(err.response);
         });
     },

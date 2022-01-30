@@ -150,7 +150,7 @@ import { mapActions } from "vuex";
 import Button from "@/components/shared/Button.vue";
 
 export default {
-  name: "Login",
+  name: "login-view",
   components: {
     UserCircleIcon,
     LockClosedIcon,

@@ -1,24 +1,32 @@
 <template>
-  <div class="flex justify-between p-2 bg-white">
-    <div class="w-1/6">
-      <img class="w-8 h-8 rounded-full" :src="invite.photo" :alt="invite.name + ' club profile picture'" />
+  <div class="p-2 w-60 bg-white border border-gray-200 rounded">
+    <p class="border-b border-gray-200">invites</p>
+    <div class="flex justify-between" v-for="(invite, index) in invites" :key="index">
+      <div class="w-1/6">
+        <img class="w-8 h-8 rounded-full" :src="invite.photo" :alt="invite.name + ' club profile picture'" />
+      </div>
+      <div class="w-4/6">
+        <h4>{{ invite.name }}</h4>
+      </div>
+      <div class="flex justify-between w-1/6">
+        <button><CheckIcon class="w-4 h-4" @click="answerInvite({ club: $event, accepted: true })"></CheckIcon></button>
+        <button><XIcon class="w-4 h-4" @click="answerInvite({ club: $event, accepted: false })"></XIcon></button>
+      </div>
     </div>
-    <div class="w-4/6">
-      <h4>{{ invite.name }}</h4>
-    </div>
-    <div class="flex justify-between w-1/6">
-      <button><CheckIcon class="w-4 h-4" @click="$emit('accept', invite._id)"></CheckIcon></button>
-      <button><XIcon class="w-4 h-4" @click="$emit('decline', invite._id)"></XIcon></button>
-    </div>
+    <div v-if="!invites.length" class="mt-2">You have no invites</div>
   </div>
 </template>
 
 <script>
 import { CheckIcon, XIcon } from "@heroicons/vue/solid";
+import { mapActions } from "vuex";
 export default {
   name: "invite-dropdown",
-  props: ["invite"],
+  props: ["invites"],
   components: { CheckIcon, XIcon },
+  methods: {
+    ...mapActions("userStore", ["answerInvite"]),
+  },
 };
 </script>
 

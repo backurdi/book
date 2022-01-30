@@ -3,6 +3,7 @@
     class="flex justify-center text-center text-white font-sans leading-tight bg-blue-400 rounded"
     :class="sizeStyleArr[size]"
     @click.prevent="click($event)"
+    :disabled="disabled"
   >
     <p v-if="!loading">{{ buttonText }}</p>
     <loading-spinner v-else size="md"></loading-spinner>
@@ -22,6 +23,10 @@ export default {
       type: String,
       default: "md",
       validator: (v) => ["sm", "md", "lg"].find((it) => it === v),
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => ({

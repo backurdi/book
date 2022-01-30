@@ -18,7 +18,11 @@
           <button class="gif-icon mr-5 text-black border-2 border-black rounded" @click="goToNextPage('gif')">
             <span>GIF</span>
           </button>
-          <button class="gif-icon text-black border-2 border-black rounded" @click="goToNextPage('book')">
+          <button
+            class="gif-icon text-black border-2 border-black rounded"
+            @click="goToNextPage('book')"
+            v-if="books.length"
+          >
             <span>Book</span>
           </button>
         </div>
@@ -47,6 +51,7 @@
       <ReadingFieldSelector
         @readRefSelected="setBookData($event)"
         :input="{ book, pagesFrom, pagesTo }"
+        :books="books"
         v-else
       ></ReadingFieldSelector>
     </template>
@@ -61,8 +66,9 @@ import MediaField from "@/components/shared/post-media-field/post-media-field.co
 import GifEditor from "@/components/shared/gif-picker/gif-picker.component.vue";
 import Slider from "@/components/shared/slider/slider.component.vue";
 import { PhotographIcon } from "@heroicons/vue/solid";
+import { mapState } from "vuex";
 export default {
-  name: "Add post",
+  name: "add-post",
   props: ["buttonText", "postData"],
   components: {
     TextField,
@@ -79,7 +85,7 @@ export default {
     photo: "",
     pagesFrom: 0,
     pagesTo: 0,
-    book: "",
+    book: null,
     form: new FormData(),
   }),
   created() {
@@ -91,6 +97,9 @@ export default {
       this.photo = photo;
       this.book = book;
     }
+  },
+  computed: {
+    ...mapState("bookStore", ["books"]),
   },
   methods: {
     createPost() {

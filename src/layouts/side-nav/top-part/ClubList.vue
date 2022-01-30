@@ -29,7 +29,7 @@ import clubImage from "@/assets/images/default-img.png";
 import { mapActions, mapMutations, mapState } from "vuex";
 import { PlusIcon } from "@heroicons/vue/solid";
 export default {
-  name: "Club list",
+  name: "club-list",
   props: ["clubs"],
   components: { PlusIcon },
   data: () => ({

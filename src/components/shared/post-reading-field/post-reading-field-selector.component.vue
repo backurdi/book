@@ -80,8 +80,8 @@ import SelectDropdown from "@/components/shared/select-dropdown/selectDropdown.c
 import { mapState } from "vuex";
 // import ToggleButton from '@/components/shared/toggle-button/toggleButton.component.vue';
 export default {
-  name: "Post reading picker",
-  props: ["input"],
+  name: "post-reading-picker",
+  props: ["input", "books"],
   components: { SelectDropdown },
   data: () => ({
     pagesFrom: 0,
@@ -101,9 +101,6 @@ export default {
     if (this.input.book) {
       this.book = this.books?.filter((book) => book._id === this.input.book)[0];
     }
-  },
-  computed: {
-    ...mapState("bookStore", ["books"]),
   },
   methods: {
     selectReadRef() {

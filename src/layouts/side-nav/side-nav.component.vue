@@ -1,7 +1,7 @@
 <template>
-  <div class="nav-container flex flex-col w-4/12 h-full">
+  <div class="nav-container flex flex-col w-0 h-full md:w-4/12">
     <div
-      class="fixed transform duration-200 md:opacity-100 md:translate-x-0"
+      class="fixed w-6/12 transform duration-200 md:w-3/12 md:opacity-100 md:translate-x-0"
       :class="{ 'opacity-100 -translate-x-0 z-50': isNavOpen, 'opacity-0 -translate-x-full z-auto': !isNavOpen }"
     >
       <!-- Top boks, profile and club selector -->
@@ -28,19 +28,22 @@
         </div>
       </div>
       <div>
-        <router-link to="/contact" class="color-readee flex hover:text-readee text-white md:text-black">
+        <div
+          class="color-readee flex mt-3 hover:text-readee text-white cursor-pointer md:text-black"
+          @click="goToIdea()"
+        >
           <LightBulbIcon class="w-6 h-6"></LightBulbIcon>
           <p class="text-lg">Ide central</p>
-        </router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import ClubList from "./top-part/ClubList.vue";
-import ProfilePicture from "./top-part/ProfilePictore.vue";
+import ProfilePicture from "./top-part/ProfilePicture.vue";
 import ClubBooks from "./bottom-part/ClubBooks.vue";
 import ClubMembers from "./bottom-part/ClubMembers.vue";
 import { LightBulbIcon } from "@heroicons/vue/solid";
@@ -53,9 +56,19 @@ export default {
     ClubMembers,
     LightBulbIcon,
   },
+  data: () => ({
+    showSideNavButton: true,
+  }),
   computed: {
     ...mapState("otherStore", ["isNavOpen"]),
     ...mapState("clubStore", ["clubs"]),
+  },
+  methods: {
+    ...mapMutations("otherStore", ["toggleNav"]),
+    goToIdea() {
+      this.toggleNav();
+      this.$router.push("/contact");
+    },
   },
 };
 </script>

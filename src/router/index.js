@@ -7,12 +7,12 @@ import Teacher from "../views/Teacher.vue";
 import StudentPage from "../views/StudentPage.vue";
 import ProfileSettings from "../views/ProfileSettings.vue";
 import CreateClub from "../views/CreateClub.vue";
-import multiguard from 'vue-router-multiguard';
-import VueJwtDecode from 'vue-jwt-decode';
+import multiguard from "vue-router-multiguard";
+import VueJwtDecode from "vue-jwt-decode";
 
 function guardMyroute(to, from, next) {
   let isAuthenticated = false;
-  const token = localStorage.getItem("jwt")
+  const token = localStorage.getItem("jwt");
   if (token) isAuthenticated = true;
   else isAuthenticated = false;
   if (isAuthenticated) {
@@ -22,16 +22,16 @@ function guardMyroute(to, from, next) {
   }
 }
 
-function roleGuard(to, from, next){
+function roleGuard(to, from, next) {
   let isTeacher = false;
-  if(VueJwtDecode.decode(localStorage.getItem("jwt")).role === 'Teacher'){
+  if (VueJwtDecode.decode(localStorage.getItem("jwt")).role === "Teacher") {
     isTeacher = true;
   }
-  if(isTeacher && to.name !== 'Teacher'){
+  if (isTeacher && to.name !== "Teacher") {
     next("/teacher");
-  }else if(!isTeacher && to.name === 'Teacher'){
-    next('/');
-  }else{
+  } else if (!isTeacher && to.name === "Teacher") {
+    next("/");
+  } else {
     next();
   }
 }
@@ -44,6 +44,7 @@ const routes = [
     beforeEnter: multiguard([guardMyroute, roleGuard]),
     meta: {
       layout: "appLayoutHome",
+      sideNav: true,
     },
   },
   {
@@ -53,52 +54,56 @@ const routes = [
     beforeEnter: guardMyroute,
     meta: {
       layout: "appLayoutHome",
+      sideNav: false,
     },
   },
   {
-    path: '/me',
-    name: 'Me',
+    path: "/me",
+    name: "Me",
     component: ProfileSettings,
     beforeEnter: guardMyroute,
-    meta:{
-      layout: 'appLayoutHome'
-    }
-  },
-  {
-    path: '/club',
-    name: 'Create Club',
-    component: CreateClub,
-    beforeEnter: guardMyroute,
-    meta:{
-      layout: 'appLayoutHome'
-    }
-  },
-  {
-    path: '/club/:clubId',
-    name: 'Club',
-    component: CreateClub,
-    beforeEnter: guardMyroute,
-    meta:{
-      layout: 'appLayoutHome'
-    }
-  },
-  {
-    path: '/teacher',
-    name: 'Teacher',
-    component: Teacher,
-    beforeEnter: multiguard([guardMyroute, roleGuard]),
-    meta:{
-      layout: 'appLayoutHome'
+    meta: {
+      layout: "appLayoutHome",
+      sideNav: false,
     },
   },
   {
-    path: '/teacher/:studentId',
-    name: 'Student Page',
+    path: "/club",
+    name: "Create Club",
+    component: CreateClub,
+    beforeEnter: guardMyroute,
+    meta: {
+      layout: "appLayoutHome",
+      sideNav: false,
+    },
+  },
+  {
+    path: "/club/:clubId",
+    name: "Club",
+    component: CreateClub,
+    beforeEnter: guardMyroute,
+    meta: {
+      layout: "appLayoutHome",
+      sideNav: false,
+    },
+  },
+  {
+    path: "/teacher",
+    name: "Teacher",
+    component: Teacher,
+    beforeEnter: multiguard([guardMyroute, roleGuard]),
+    meta: {
+      layout: "appLayoutHome",
+    },
+  },
+  {
+    path: "/teacher/:studentId",
+    name: "Student Page",
     component: StudentPage,
     beforeEnter: guardMyroute,
-    meta:{
-      layout: 'appLayoutHome'
-    }
+    meta: {
+      layout: "appLayoutHome",
+    },
   },
   {
     path: "/login",

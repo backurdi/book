@@ -1,5 +1,6 @@
 <template>
-  <form class="flex flex-col mt-2 mx-auto w-full md:w-3/4">
+  <form class="flex flex-col mt-2 mx-auto px-10 w-full md:w-3/4">
+    <h3 class="mb-5">Create a new club</h3>
     <div class="h-15 relative flex flex-wrap items-stretch mb-4 pr-10 w-full bg-white rounded">
       <div class="w-15 flex justify-center -mr-px p-4">
         <span
@@ -39,7 +40,7 @@
       <span
         class="flex items-center px-3 w-24 h-24 text-gray-600 leading-normal bg-white bg-cover border-0 rounded-full"
         :style="{
-          'background-image': `url(${url ? url : activeClub?.photo})`,
+          'background-image': `url(${url ? url : clubImage})`,
         }"
       ></span>
       <input
@@ -65,51 +66,36 @@
         placeholder="Email"
       />
     </div>
-    <button
-      class="
-        px-17
-        mb-4
-        mt-4
-        py-4
-        text-center text-white
-        font-sans
-        text-xl
-        leading-tight
-        bg-blue-400
-        rounded
-        md:px-12 md:py-4 md:text-base
-      "
-      :disabled="!name.length"
-      @click.prevent="create()"
-    >
-      Save
-    </button>
+    <Button buttonText="Save" @click.prevent="create()" :disabled="!(name.length && file)"></Button>
   </form>
 </template>
 
 <script>
+import clubImage from "@/assets/images/default-img.png";
 import { LibraryIcon } from "@heroicons/vue/solid";
 import MultiselectDropdown from "../components/shared/multiselect-dropdown/multiselectDropdown.component.vue";
 import { mapActions, mapState } from "vuex";
+import Button from "@/components/shared/Button.vue";
 export default {
-  name: "Create club",
+  name: "create-club",
   data: () => ({
     name: "",
     url: "",
-    file: "",
+    file: null,
     invites: [],
     form: new FormData(),
+    clubImage,
   }),
+  components: {
+    LibraryIcon,
+    MultiselectDropdown,
+    Button,
+  },
   mounted() {
     this.getUsersForInvite(true);
   },
   computed: {
     ...mapState("userStore", ["usersForInvite"]),
-    ...mapState("clubStore", ["activeClub"]),
-  },
-  components: {
-    LibraryIcon,
-    MultiselectDropdown,
   },
   methods: {
     ...mapActions("userStore", ["getUsersForInvite"]),

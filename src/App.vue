@@ -7,8 +7,18 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "App",
+  watch: {
+    $route() {
+      this.toggleHasSiteNav();
+      this.toggleNav({ routerChange: true });
+    },
+  },
+  methods: {
+    ...mapMutations("otherStore", ["toggleHasSiteNav", "toggleNav"]),
+  },
 };
 </script>
 

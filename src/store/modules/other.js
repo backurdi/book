@@ -1,8 +1,10 @@
+import router from "@/router";
 import storePlugins from "../../plugins/storePlugin";
 
 export const getDefaultState = () => {
   return {
     isNavOpen: false,
+    hasSiteNav: true,
   };
 };
 
@@ -11,13 +13,17 @@ const otherStore = {
   plugins: [storePlugins],
   state: getDefaultState(),
   mutations: {
-    toggleNav(state) {
-      state.isNavOpen = !state.isNavOpen;
+    toggleHasSiteNav(state) {
+      state.hasSiteNav = router.currentRoute._value.meta.sideNav;
+    },
+    toggleNav(state, routeChange) {
       const body = document.querySelector("body");
-      if (state.isNavOpen) {
-        body.classList.add("nav-is-showing");
-      } else {
+      if (state.isNavOpen || routeChange) {
+        state.isNavOpen = false;
         body.classList.remove("nav-is-showing");
+      } else {
+        state.isNavOpen = true;
+        body.classList.add("nav-is-showing");
       }
     },
     resetState(state) {

@@ -26,7 +26,7 @@
       :dropdownData="usersForInvite"
       @inviteFriendsChanged="usersToInvite = $event"
     ></MultiSelectDropdown>
-    <button @click="onInviteUsers">Invite</button>
+    <button @click="onInviteUsers" class="mt-10">Invite</button>
   </Popup>
 </template>
 
@@ -38,7 +38,7 @@ import Popup from "@/components/shared/popup";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
 import SeeMore from "@/components/shared/see-more/see-more.vue";
 export default {
-  name: "Club members",
+  name: "club-members",
   data: () => ({
     inviteUsersOpen: false,
     usersToInvite: [],

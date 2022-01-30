@@ -12,11 +12,11 @@
           <ul class="flex items-center">
             <!-- add button -->
             <li class="w-9 h-12">
-              <img class="mx-auto w-full h-full" src="@/assets/logo.png" alt="svelte logo" />
+              <img class="mx-auto w-full h-full" src="@/assets/logo.png" alt="Reaflect logo" />
             </li>
-            <li class="ml-4 md:hidden">
+            <li class="ml-4 cursor-pointer md:hidden" v-if="hasSiteNav">
               <XIcon v-if="isNavOpen" class="w-8 h-8 text-white" @click="toggleNav"></XIcon>
-              <MenuIcon v-else class="w-8 h-8 text-white" @click="toggleNav"></MenuIcon>
+              <MenuIcon v-else class="w-8 h-8 text-white" @click="toggleNav()"></MenuIcon>
             </li>
           </ul>
 
@@ -27,18 +27,11 @@
                 class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer"
                 @click="showInviteDropwdown = !showInviteDropwdown"
               >
-                <UserAddIcon class="w-6 h-6 text-white duration-150"></UserAddIcon>
-                <div class="absolute right-0 mt-4 w-40" v-if="showInviteDropwdown">
-                  <div v-if="invites.length">
-                    <InviteDropdown
-                      v-for="(invite, index) in invites"
-                      :invite="invite"
-                      :key="index"
-                      @accept="answerInvite({ club: $event, accepted: true })"
-                      @decline="answerInvite({ club: $event, accepted: false })"
-                    ></InviteDropdown>
+                <BellIcon class="w-6 h-6 text-white duration-150"></BellIcon>
+                <div class="absolute right-0 mt-4" v-if="showInviteDropwdown">
+                  <div>
+                    <InviteDropdown :invites="invites"></InviteDropdown>
                   </div>
-                  <div v-else class="bg-white">No invites</div>
                 </div>
               </div>
             </li>
@@ -49,30 +42,7 @@
                 </div>
               </router-link>
             </li>
-            <li class="hidden w-10 h-10 md:block">
-              <div
-                class="hover-trigger relative mx-auto w-full h-full bg-cover rounded-full"
-                :style="{
-                  'background-image': `url(${user.photo ? user.photo : defaultAvatar})`,
-                }"
-              >
-                <div class="h-12"></div>
-                <div class="border-grey-100 hover-target absolute z-10 right-0 w-150 bg-white border rounded">
-                  <ul>
-                    <li
-                      class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
-                      @click="goToProfile()"
-                    >
-                      <span class="font-bold">Profile</span>
-                    </li>
-                    <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="logOut()">
-                      <span class="font-bold">Log out</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li class="flex items-center justify-center w-10 h-10 text-dark md:hidden">
+            <li class="flex items-center justify-center w-10 h-10 text-dark">
               <div
                 class="p-3 text-white hover:bg-gray-600 rounded-full cursor-pointer"
                 @click="clickHandler"
@@ -80,7 +50,7 @@
               >
                 <ChevronDownIcon class="w-6 h-6"></ChevronDownIcon>
                 <div
-                  class="border-grey-100 absolute z-20 right-8 mt-4 w-150 bg-white border rounded"
+                  class="border-grey-200 absolute z-20 right-8 mt-4 w-150 bg-white border rounded"
                   v-if="showDropdown"
                 >
                   <ul class="text-black">
@@ -105,7 +75,7 @@
 </template>
 
 <script>
-import { HomeIcon, UserAddIcon, MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/vue/solid";
+import { HomeIcon, BellIcon, MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/vue/solid";
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
 import { mapActions, mapState, mapMutations } from "vuex";
@@ -113,14 +83,14 @@ import defaultAvatar from "@/assets/images/default-avatar.png";
 
 export default {
   name: "AppLayoutLinks",
-  components: { HomeIcon, UserAddIcon, InviteDropdown, MenuIcon, XIcon, ChevronDownIcon },
+  components: { HomeIcon, BellIcon, InviteDropdown, MenuIcon, XIcon, ChevronDownIcon },
   directives: {
     clickOutside: vClickOutside.directive,
   },
   computed: {
     ...mapState("userStore", ["user", "invites"]),
     ...mapState("clubStore", ["clubs"]),
-    ...mapState("otherStore", ["isNavOpen"]),
+    ...mapState("otherStore", ["isNavOpen", "hasSiteNav"]),
   },
   data: () => ({
     showDropdown: false,
@@ -137,7 +107,6 @@ export default {
       this.$router.push("me");
     },
     clickHandler() {
-      console.log("test");
       this.showDropdown = !this.showDropdown;
     },
     clickOutsideUserSettingHandler() {

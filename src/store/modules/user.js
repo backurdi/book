@@ -41,6 +41,10 @@ const userStore = {
         this.dispatch("clubStore/getActiveClub", currentClubId, { root: true });
       }
     },
+    setToken(state, token) {
+      localStorage.setItem("jwt", token);
+      state.token = token;
+    },
     setUsersForInvite(state, usersForInvite) {
       state.usersForInvite = usersForInvite;
     },
@@ -110,6 +114,20 @@ const userStore = {
           .then((updatedUser) => {
             resolve("");
             return commit("setCurrentUser", updatedUser.data.user);
+          })
+          .catch((_err) => {
+            return _err;
+          });
+      });
+    },
+    updatePass({ commit }, data) {
+      return new Promise((resolve) => {
+        this.$api.users
+          .patch("updatePassword", data)
+          .then((updatedUser) => {
+            resolve("");
+            debugger;
+            return commit("setToken", updatedUser.token);
           })
           .catch((_err) => {
             return _err;

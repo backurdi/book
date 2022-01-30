@@ -14,14 +14,21 @@
             <li class="w-9 h-12">
               <img class="mx-auto w-full h-full" src="@/assets/logo.png" alt="svelte logo" />
             </li>
+            <li class="ml-4 md:hidden">
+              <XIcon v-if="isNavOpen" class="w-8 h-8 text-white" @click="toggleNav"></XIcon>
+              <MenuIcon v-else class="w-8 h-8 text-white" @click="toggleNav"></MenuIcon>
+            </li>
           </ul>
 
           <!-- to bar right  -->
           <ul class="flex items-center">
             <li class="pr-6" v-if="user.role === 'Student'">
-              <div class="relative" @click="showInviteDropwdown = !showInviteDropwdown">
+              <div
+                class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer"
+                @click="showInviteDropwdown = !showInviteDropwdown"
+              >
                 <UserAddIcon class="w-6 h-6 text-white duration-150"></UserAddIcon>
-                <div class="absolute right-0 mt-2 w-80" v-if="showInviteDropwdown">
+                <div class="absolute right-0 mt-4 w-40" v-if="showInviteDropwdown">
                   <div v-if="invites.length">
                     <InviteDropdown
                       v-for="(invite, index) in invites"
@@ -36,16 +43,13 @@
               </div>
             </li>
             <li class="pr-6">
-              <router-link :to="'/' + clubs[0]?._id" class="hover:text-readee">
-                <HomeIcon class="w-6 h-6 text-white duration-150"></HomeIcon>
+              <router-link :to="'/' + clubs[0]?._id">
+                <div class="p-3 hover:bg-gray-600 rounded-full">
+                  <HomeIcon class="w-6 h-6 text-white duration-150"></HomeIcon>
+                </div>
               </router-link>
             </li>
-            <li class="pr-6">
-              <router-link to="/contact" class="hover:text-readee">
-                <LightBulbIcon class="w-6 h-6 text-white duration-150"></LightBulbIcon>
-              </router-link>
-            </li>
-            <li class="hidden w-10 h-10 lg:block">
+            <li class="hidden w-10 h-10 md:block">
               <div
                 class="hover-trigger relative mx-auto w-full h-full bg-cover rounded-full"
                 :style="{
@@ -68,19 +72,18 @@
                 </div>
               </div>
             </li>
-            <li class="w-10 h-10 text-dark lg:hidden">
+            <li class="flex items-center justify-center w-10 h-10 text-dark md:hidden">
               <div
-                v-if="user"
-                class="relative mx-auto w-full h-full bg-cover rounded-full"
-                :style="{
-                  'background-image': `url(${user.photo ? user.photo : defaultAvatar})`,
-                }"
-                @click="showDropdown = !showDropdown"
+                class="p-3 text-white hover:bg-gray-600 rounded-full cursor-pointer"
+                @click="clickHandler"
                 v-click-outside="clickOutsideUserSettingHandler"
               >
-                <div class="h-12"></div>
-                <div class="border-grey-100 absolute z-20 right-0 w-150 bg-white border rounded" v-if="showDropdown">
-                  <ul>
+                <ChevronDownIcon class="w-6 h-6"></ChevronDownIcon>
+                <div
+                  class="border-grey-100 absolute z-20 right-8 mt-4 w-150 bg-white border rounded"
+                  v-if="showDropdown"
+                >
+                  <ul class="text-black">
                     <li
                       class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer"
                       @click="goToProfile()"
@@ -94,10 +97,6 @@
                 </div>
               </div>
             </li>
-            <li class="md:hidden">
-              <XIcon v-if="isNavOpen" class="w-8 h-8 text-white" @click="toggleNav"></XIcon>
-              <MenuIcon v-else class="w-8 h-8 text-white" @click="toggleNav"></MenuIcon>
-            </li>
           </ul>
         </nav>
       </div>
@@ -106,7 +105,7 @@
 </template>
 
 <script>
-import { LightBulbIcon, HomeIcon, UserAddIcon, MenuIcon, XIcon } from "@heroicons/vue/solid";
+import { HomeIcon, UserAddIcon, MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/vue/solid";
 import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
 import { mapActions, mapState, mapMutations } from "vuex";
@@ -114,7 +113,7 @@ import defaultAvatar from "@/assets/images/default-avatar.png";
 
 export default {
   name: "AppLayoutLinks",
-  components: { LightBulbIcon, HomeIcon, UserAddIcon, InviteDropdown, MenuIcon, XIcon },
+  components: { HomeIcon, UserAddIcon, InviteDropdown, MenuIcon, XIcon, ChevronDownIcon },
   directives: {
     clickOutside: vClickOutside.directive,
   },
@@ -136,6 +135,10 @@ export default {
     },
     goToProfile() {
       this.$router.push("me");
+    },
+    clickHandler() {
+      console.log("test");
+      this.showDropdown = !this.showDropdown;
     },
     clickOutsideUserSettingHandler() {
       this.showDropdown = false;

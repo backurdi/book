@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-container w-4/12 h-0 md:h-screen">
+  <div class="nav-container flex flex-col w-4/12 h-full">
     <div
       class="fixed transform duration-200 md:opacity-100 md:translate-x-0"
       :class="{ 'opacity-100 -translate-x-0 z-50': isNavOpen, 'opacity-0 -translate-x-full z-auto': !isNavOpen }"
@@ -27,6 +27,12 @@
           <ClubMembers></ClubMembers>
         </div>
       </div>
+      <div>
+        <router-link to="/contact" class="color-readee flex hover:text-readee text-white md:text-black">
+          <LightBulbIcon class="w-6 h-6"></LightBulbIcon>
+          <p class="text-lg">Ide central</p>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -37,13 +43,15 @@ import ClubList from "./top-part/ClubList.vue";
 import ProfilePicture from "./top-part/ProfilePictore.vue";
 import ClubBooks from "./bottom-part/ClubBooks.vue";
 import ClubMembers from "./bottom-part/ClubMembers.vue";
+import { LightBulbIcon } from "@heroicons/vue/solid";
 export default {
-  name: "Side nav",
+  name: "side-nav",
   components: {
     ClubList,
     ProfilePicture,
     ClubBooks,
     ClubMembers,
+    LightBulbIcon,
   },
   computed: {
     ...mapState("otherStore", ["isNavOpen"]),
@@ -52,9 +60,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.site-nav-bottom {
-  height: 50vh;
-  width: 231px;
-}
-</style>
+<style scoped></style>

@@ -2,15 +2,15 @@
   <div class="comments text-dark">
     <div class="mb-5">
       <div class="flex">
-        <div class="w-1/12">
+        <div class="w-12 md:w-14">
           <div
-            class="mr-2 mx-auto w-12 h-12 bg-cover rounded-full"
+            class="mr-2 mx-auto w-10 h-10 bg-cover rounded-full sm:w-12 sm:h-12"
             :style="{
               'background-image': `url(${comment.user.photo ? comment.user.photo : defaultAvatar})`,
             }"
           ></div>
         </div>
-        <div class="px-3 w-10/12">
+        <div class="px-1 w-9/12 sm:w-10/12">
           <div v-if="editComment !== index">
             <p class="p-2 bg-gray-100 rounded">{{ comment.text }}</p>
             <img class="mt-2 w-96 rounded" v-if="comment.photo" :src="comment.photo" alt="" />

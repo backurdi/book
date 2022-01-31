@@ -115,7 +115,7 @@ export default {
       if (this.pagesTo && this.pagesTo !== 0) {
         this.form.append("pagesTo", this.pagesTo);
       }
-      if (this.book !== "") {
+      if (this.book) {
         this.form.append("book", this.book);
       }
 

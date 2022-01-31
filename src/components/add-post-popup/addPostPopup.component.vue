@@ -21,7 +21,7 @@ import CreatePost from "@/components/shared/create-post/create-post.component.vu
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "Add post popup",
+  name: "add-post-popup",
   components: {
     Popup,
     CreatePost,

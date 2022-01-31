@@ -1,11 +1,11 @@
 <template>
   <div class="nav-container flex flex-col w-0 h-full md:w-4/12">
     <div
-      class="fixed w-6/12 transform duration-200 md:w-3/12 md:opacity-100 md:translate-x-0"
+      class="side-nav-wrapper fixed w-6/12 transform duration-200 md:w-3/12 md:opacity-100 md:translate-x-0"
       :class="{ 'opacity-100 -translate-x-0 z-50': isNavOpen, 'opacity-0 -translate-x-full z-auto': !isNavOpen }"
     >
       <!-- Top boks, profile and club selector -->
-      <div class="site-nav-top mb-10 py-5 h-1/2 text-dark bg-white rounded-lg shadow-md">
+      <div class="side-nav-top mb-10 py-5 h-1/2 text-dark bg-white rounded-lg shadow-md">
         <!-- Top part -->
         <div class="mb-5 px-5">
           <!-- Profile picture -->
@@ -73,4 +73,19 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.side-nav-wrapper {
+  max-width: 250px;
+}
+.nav-container {
+  max-width: 300px;
+}
+@media only screen and (max-width: 700px) {
+  .side-nav-wrapper {
+    max-width: 350px;
+  }
+  .nav-container {
+    max-width: 350px;
+  }
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 w-60 bg-white border border-gray-200 rounded">
-    <p class="border-b border-gray-200">invites</p>
-    <div class="flex justify-between" v-for="(invite, index) in invites" :key="index">
+    <p class="mb-2 border-b border-gray-200">invites</p>
+    <div class="flex justify-between mb-2" v-for="(invite, index) in invites" :key="index">
       <div class="w-1/6">
         <img class="w-8 h-8 rounded-full" :src="invite.photo" :alt="invite.name + ' club profile picture'" />
       </div>

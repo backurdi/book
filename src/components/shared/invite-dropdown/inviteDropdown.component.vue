@@ -9,8 +9,10 @@
         <h4>{{ invite.name }}</h4>
       </div>
       <div class="flex justify-between w-1/6">
-        <button><CheckIcon class="w-4 h-4" @click="answerInvite({ club: $event, accepted: true })"></CheckIcon></button>
-        <button><XIcon class="w-4 h-4" @click="answerInvite({ club: $event, accepted: false })"></XIcon></button>
+        <button>
+          <CheckIcon class="w-4 h-4" @click="answerInvite({ club: invite._id, accepted: true })"></CheckIcon>
+        </button>
+        <button><XIcon class="w-4 h-4" @click="answerInvite({ club: invite._id, accepted: false })"></XIcon></button>
       </div>
     </div>
     <div v-if="!invites.length" class="mt-2">You have no invites</div>

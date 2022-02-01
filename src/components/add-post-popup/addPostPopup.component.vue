@@ -11,7 +11,13 @@
     </div>
   </div>
   <Popup @closePopUp="open = false" :open="open" :buttonText="'Add post'">
-    <CreatePost ref="createPost" buttonText="Create post" @close="open = false" @emitBody="addPostMethod"></CreatePost>
+    <CreatePost
+      :createLoading="createLoading"
+      ref="createPost"
+      buttonText="Create post"
+      @close="open = false"
+      @emitBody="addPostMethod"
+    ></CreatePost>
   </Popup>
 </template>
 
@@ -30,6 +36,7 @@ export default {
     open: false,
     errorMessage: "",
     displayError: false,
+    createLoading: false,
   }),
   computed: {
     ...mapState("clubStore", ["activeClub"]),
@@ -42,10 +49,12 @@ export default {
     },
     addPostMethod(event) {
       event.append("club", this.activeClub._id);
+      this.createLoading = true;
       this.addPost(event)
         .then(() => {
           this.$refs.createPost.clearFields();
           this.$refs.createPost.clearForm();
+          this.createLoading = false;
           this.open = false;
         })
         .catch((err) => {

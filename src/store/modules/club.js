@@ -60,7 +60,6 @@ const clubStore = {
       });
     },
     selectClub({ state, commit }, clubId) {
-      debugger;
       const clubInState = state.clubs.find((club) => club._id === clubId);
 
       if (!clubInState.books?.length) {

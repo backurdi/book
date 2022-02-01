@@ -2,7 +2,12 @@
   <slider ref="slider">
     <template v-slot:main-page>
       <h3 class="mb-5 text-black text-3xl font-bold">Create post</h3>
-      <TextField @emitText="text = $event" :postText="text"></TextField>
+      <TextField
+        @emitText="text = $event"
+        :postText="text"
+        :class="{ 'border border-red-600': missingTextError }"
+      ></TextField>
+      <p class="text-red-600" v-if="missingTextError">*You have to write some text</p>
       <div>
         <div class="flex my-4 w-full">
           <MediaField ref="mediaField" @mediaEmit="photo = $event" :media="photo"></MediaField>
@@ -28,22 +33,7 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <button
-          class="
-            px-4
-            py-2
-            w-fit-content
-            text-black
-            hover:text-white hover:bg-green-700
-            bg-primary
-            border-2 border-black
-            rounded
-            md:px-6 md:py-3
-          "
-          @click="createPost"
-        >
-          {{ buttonText }}
-        </button>
+        <Button :buttonText="buttonText" @click="createPost" :loading="createLoading"></Button>
       </div>
     </template>
     <template v-slot:next-page>
@@ -67,9 +57,10 @@ import GifEditor from "@/components/shared/gif-picker/gif-picker.component.vue";
 import Slider from "@/components/shared/slider/slider.component.vue";
 import { PhotographIcon } from "@heroicons/vue/solid";
 import { mapState } from "vuex";
+import Button from "@/components/shared/Button";
 export default {
   name: "add-post",
-  props: ["buttonText", "postData"],
+  props: ["buttonText", "postData", "createLoading"],
   components: {
     TextField,
     GifEditor,
@@ -78,6 +69,7 @@ export default {
     ReadingFieldSelector,
     MediaField,
     PhotographIcon,
+    Button,
   },
   data: () => ({
     nextPage: "gif",
@@ -87,6 +79,7 @@ export default {
     pagesTo: 0,
     book: null,
     form: new FormData(),
+    missingTextError: false,
   }),
   created() {
     if (this.postData) {
@@ -103,6 +96,13 @@ export default {
   },
   methods: {
     createPost() {
+      if (!this.text) {
+        this.missingTextError = true;
+        return setTimeout(() => {
+          this.missingTextError = false;
+          return;
+        }, 800);
+      }
       if (this.text) {
         this.form.append("text", this.text);
       }

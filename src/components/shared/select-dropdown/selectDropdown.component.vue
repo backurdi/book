@@ -25,7 +25,8 @@
         "
       >
         <span class="flex items-center">
-          <img :src="selected.image" alt="" class="flex-shrink-0 w-6 h-6 rounded-full" />
+          <img :src="selected.image ? selected.image : noBookCover" alt="" class="flex-shrink-0 w-6 h-6 rounded-full" />
+
           <span class="block ml-3 truncate">{{ selected.title }}</span>
         </span>
         <span class="absolute inset-y-0 right-0 flex items-center ml-3 pr-2 pointer-events-none">
@@ -71,7 +72,7 @@
               ]"
             >
               <div class="flex items-center">
-                <img :src="book.image" alt="" class="flex-shrink-0 w-6 h-6 rounded-full" />
+                <img :src="book.image ? book.image : noBookCover" alt="" class="flex-shrink-0 w-6 h-6 rounded-full" />
                 <span :class="[selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate']">
                   {{ book.title }}
                 </span>
@@ -97,6 +98,7 @@
 <script>
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from "@headlessui/vue";
 import { CheckIcon, SelectorIcon } from "@heroicons/vue/solid";
+import noBookCover from "@/assets/images/no-book-cover.png";
 
 export default {
   components: {
@@ -111,6 +113,7 @@ export default {
   props: ["dropdownLabel", "selectedBook", "books"],
   data: () => ({
     selected: {},
+    noBookCover,
   }),
   mounted() {
     if (this.selectedBook) {

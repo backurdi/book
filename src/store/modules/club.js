@@ -60,19 +60,17 @@ const clubStore = {
       });
     },
     selectClub({ state, commit }, clubId) {
+      debugger;
       const clubInState = state.clubs.find((club) => club._id === clubId);
 
-      if (!clubInState.books) {
+      if (!clubInState.books?.length) {
         return this.$api.clubs.get(clubId).then((club) => commit("setActiveClub", club.data));
       }
       return commit("setActiveClub", clubInState);
     },
-    createClub({ commit }, body) {
-      return new Promise((resolve) => {
-        this.$api.clubs.post(body).then((club) => {
-          resolve();
-          return commit("insertClub", club.data);
-        });
+    async createClub({ commit }, body) {
+      return this.$api.clubs.post(body).then((club) => {
+        commit("insertClub", club.data);
       });
     },
   },

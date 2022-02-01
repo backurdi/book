@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "See more books",
+  name: "see-more-books",
   props: ["books"],
   data: () => ({
     showMore: false,

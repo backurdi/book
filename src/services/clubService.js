@@ -25,7 +25,7 @@ export default class ClubService extends ModelApiService {
 
   async inviteUsers(data = {}, clubId) {
     try {
-      const response = await axios.post(`${this.getUrl()}/${clubId}/inviteUsers`, data, {
+      const response = axios.post(`${this.getUrl()}/${clubId}/inviteUsers`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

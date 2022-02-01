@@ -20,13 +20,21 @@
 import SideNav from "../layouts/side-nav/side-nav.component.vue";
 import ClubFeed from "../components/club-feed/clubFeed.component.vue";
 import AddPostPopUp from "../components/add-post-popup/addPostPopup.component.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "Home",
+  name: "home-view",
   components: { SideNav, ClubFeed, AddPostPopUp },
   computed: {
     ...mapState("clubStore", ["clubs"]),
+  },
+  watch: {
+    $route(to) {
+      this.selectClub(to.params.clubId);
+    },
+  },
+  methods: {
+    ...mapActions("clubStore", ["selectClub"]),
   },
 };
 </script>

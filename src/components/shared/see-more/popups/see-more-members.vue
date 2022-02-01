@@ -16,7 +16,7 @@
 <script>
 import defaultAvatar from "@/assets/images/default-avatar.png";
 export default {
-  name: "See more members",
+  name: "see-more-members",
   props: ["members"],
   data: () => ({
     defaultAvatar,

@@ -66,7 +66,12 @@
         placeholder="Email"
       />
     </div>
-    <Button buttonText="Save" @click.prevent="create()" :disabled="!(name.length && file)"></Button>
+    <Button
+      buttonText="Save"
+      @click.prevent="create()"
+      :disabled="!(name.length && file)"
+      :loading="createLoading"
+    ></Button>
   </form>
 </template>
 
@@ -85,6 +90,7 @@ export default {
     invites: [],
     form: new FormData(),
     clubImage,
+    createLoading: false,
   }),
   components: {
     LibraryIcon,
@@ -109,6 +115,7 @@ export default {
       this.invites = data;
     },
     create() {
+      this.createLoading = true;
       const { name, file, invites } = this;
       const body = [{ key: "name", value: name }];
       if (file) {
@@ -120,8 +127,10 @@ export default {
       body.forEach((element) => {
         this.form.append(element.key, element.value);
       });
-
-      this.createClub(this.form).then(() => this.$router.push("/"));
+      this.createClub(this.form).then(() => {
+        this.createLoading = false;
+        this.$router.push("/");
+      });
     },
   },
 };

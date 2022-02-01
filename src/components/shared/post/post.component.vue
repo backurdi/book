@@ -26,7 +26,7 @@
       >
         <img
           class="mr-5 w-8 border border-gray-200 rounded"
-          :src="bookForPost(post.book).image"
+          :src="bookForPost(post.book).image ? bookForPost(post.book).image : noBookCover"
           :alt="'cover of ' + bookForPost(post.book).title"
         />
         <div>
@@ -72,9 +72,10 @@ import Popup from "@/components/shared/popup";
 import DeletePopup from "../../delete-popup/deletePopup.component.vue";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
 import { mapActions, mapMutations, mapState } from "vuex";
+import noBookCover from "@/assets/images/no-book-cover.png";
 
 export default {
-  name: "Post",
+  name: "post-item",
   components: { DotsDropdownComponent, BookInfo, Popup, DeletePopup, CreatePost },
   props: ["post", "books"],
   data: () => ({
@@ -83,6 +84,7 @@ export default {
     openDelete: false,
     bookDescriptionOpen: false,
     defaultAvatar,
+    noBookCover,
   }),
   computed: {
     ...mapState("userStore", ["user"]),

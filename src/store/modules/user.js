@@ -52,11 +52,12 @@ const userStore = {
       state.students = students;
     },
     answerInvite(state, response) {
+      const selectedInvite = state.invites.find((invite) => invite._id === response.club);
       if (response.accepted) {
-        state.invites.splice(state.invites.indexOf(response.club._id), 1);
+        state.invites.splice(state.invites.indexOf(selectedInvite), 1);
         this.commit("clubStore/insertClub", response.club);
       } else {
-        state.invites.splice(state.invites.indexOf(response.club), 1);
+        state.invites.splice(state.invites.indexOf(selectedInvite), 1);
       }
     },
     resetStates() {},
@@ -126,7 +127,6 @@ const userStore = {
           .patch("updatePassword", data)
           .then((updatedUser) => {
             resolve("");
-            debugger;
             return commit("setToken", updatedUser.token);
           })
           .catch((_err) => {
@@ -160,8 +160,8 @@ const userStore = {
         .answerInvite(data)
         .then((res) => commit("answerInvite", { accepted: data.accepted, club: res.data }));
     },
-    inviteUsers({ state }, invites) {
-      this.$api.clubs.inviteUsers(invites, this.state.clubStore.activeClub._id);
+    async inviteUsers({ state }, invites) {
+      return this.$api.clubs.inviteUsers(invites, this.state.clubStore.activeClub._id);
     },
   },
 };

@@ -28,13 +28,20 @@
           </p>
           <p class="text-gray-600">{{ data.volumeInfo.publishedDate }}</p>
         </div>
-
-        <button
-          class="px-2 py-2 text-blue-500 hover:text-white font-bold hover:bg-blue-700 border border-blue-500 rounded"
+        <div v-if="!data.volumeInfo.pageCount">
+          <p>Define page count to add</p>
+          <input
+            class="active:outline-1 w-24 h-10 border border-gray-300 rounded"
+            type="number"
+            v-model="customPageCount"
+            placeholder="Page count"
+          />
+        </div>
+        <Button
+          buttonText="Add"
           @click="addBook(data.volumeInfo)"
-        >
-          Add
-        </button>
+          :disabled="!data.volumeInfo.pageCount && customPageCount === 0"
+        ></Button>
       </div>
     </div>
   </div>
@@ -42,15 +49,21 @@
 
 <script>
 import noBookCover from "@/assets/images/no-book-cover.png";
+import Button from "@/components/shared/Button";
 export default {
-  name: "add book result card",
+  name: "add-book-result-card",
   props: ["data"],
+  components: { Button },
   data: () => ({
     showMore: false,
     noBookCover,
+    customPageCount: 0,
   }),
   methods: {
     addBook(bookData) {
+      if (!bookData.pageCount) {
+        bookData.pageCount = this.customPageCount;
+      }
       this.$emit("addBook", bookData);
     },
     setSubStr(str) {

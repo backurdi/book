@@ -8,7 +8,7 @@
       <li class="w-full" v-for="(book, index) in books.slice(0, 3)" :key="index" @click="displayBookInfo(book)">
         <div class="px-5 py-2 cursor-pointer" :class="{ 'bg-blue-400': index === 0 }">
           <div class="flex">
-            <img :src="book.image" class="mr-2 w-8" alt="" />
+            <img :src="book.image ? book.image : noBookCover" class="mr-2 w-8" alt="" />
             <div class="flex flex-col">
               <p class="text-xs">{{ setSubStr(book.title) }}</p>
               <BookOpenIcon class="self-end w-4 h-4" v-if="index === 0"></BookOpenIcon>
@@ -20,7 +20,7 @@
           ></div>
         </div>
       </li>
-      <li>
+      <li v-if="books.length > 3">
         <see-more seeMoreType="book"></see-more>
       </li>
     </ul>
@@ -40,11 +40,13 @@ import BookInfo from "@/components/book-info/book-info.component.vue";
 import { PlusCircleIcon, BookOpenIcon } from "@heroicons/vue/solid";
 import { mapMutations, mapState } from "vuex";
 import SeeMore from "@/components/shared/see-more/see-more.vue";
+import noBookCover from "@/assets/images/no-book-cover.png";
 export default {
-  name: "Club books",
+  name: "club-books",
   data: () => ({
     addBookOpen: false,
     bookDescriptionOpen: false,
+    noBookCover,
   }),
   components: {
     Popup,

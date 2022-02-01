@@ -10,26 +10,32 @@
   <popup @closePopUp="seeMoreMembersPopUpVisible = false" :open="seeMoreMembersPopUpVisible" :buttonText="'close'">
     <see-more-members @close="seeMoreMembersPopUpVisible = false" :members="members"></see-more-members>
   </popup>
+  <popup @closePopUp="seeMoreClubsPopUpVisible = false" :open="seeMoreClubsPopUpVisible" :buttonText="'close'">
+    <see-more-clubs @close="seeMoreClubsPopUpVisible = false" :clubs="clubs"></see-more-clubs>
+  </popup>
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
 import Popup from "@/components/shared/popup";
 import SeeMoreBooks from "./popups/see-more-books.vue";
 import SeeMoreMembers from "./popups/see-more-members.vue";
+import SeeMoreClubs from "./popups/see-more-clubs.vue";
 export default {
-  name: "See more",
+  name: "see-more",
   props: ["seeMoreType"],
   components: {
     Popup,
     SeeMoreBooks,
     SeeMoreMembers,
+    SeeMoreClubs,
   },
   data: () => ({
     seeMoreBooksPopUpVisible: false,
     seeMoreMembersPopUpVisible: false,
+    seeMoreClubsPopUpVisible: false,
   }),
   computed: {
-    ...mapState("clubStore", ["activeClub"]),
+    ...mapState("clubStore", ["activeClub", "clubs"]),
     ...mapState("otherStore", ["isNavOpen"]),
     members() {
       return this.activeClub.members;
@@ -50,6 +56,9 @@ export default {
           break;
         case "book":
           this.seeMoreBooksPopUpVisible = true;
+          break;
+        case "club":
+          this.seeMoreClubsPopUpVisible = true;
           break;
         default:
           break;

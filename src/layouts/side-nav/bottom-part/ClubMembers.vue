@@ -5,7 +5,7 @@
       <button><PlusCircleIcon class="w-6 h-6" @click="openInviteUsers()"></PlusCircleIcon></button>
     </div>
     <ul>
-      <li class="w-full" v-for="(member, index) in club.members" :key="index">
+      <li class="w-full" v-for="(member, index) in club.members?.slice(0, 3)" :key="index">
         <span class="flex items-center px-5 py-2">
           <div
             class="mr-2 w-10 h-10 bg-cover rounded-full"
@@ -16,7 +16,7 @@
           <p class="text-xs">{{ member.name }}</p>
         </span>
       </li>
-      <li>
+      <li v-if="club.members?.length > 3">
         <see-more seeMoreType="member"></see-more>
       </li>
     </ul>
@@ -26,7 +26,7 @@
       :dropdownData="usersForInvite"
       @inviteFriendsChanged="usersToInvite = $event"
     ></MultiSelectDropdown>
-    <button @click="onInviteUsers" class="mt-10">Invite</button>
+    <Button @click="onInviteUsers" buttonText="Invite" :loading="inviteUserLoading"></Button>
   </Popup>
 </template>
 
@@ -37,6 +37,7 @@ import MultiSelectDropdown from "@/components/shared/multiselect-dropdown/multis
 import Popup from "@/components/shared/popup";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
 import SeeMore from "@/components/shared/see-more/see-more.vue";
+import Button from "@/components/shared/Button";
 export default {
   name: "club-members",
   data: () => ({
@@ -44,12 +45,17 @@ export default {
     usersToInvite: [],
     showDropdown: false,
     defaultAvatar,
+    inviteUserLoading: false,
   }),
   components: {
     MultiSelectDropdown,
     PlusCircleIcon,
     Popup,
     SeeMore,
+    Button,
+  },
+  mounted() {
+    console.log(this.club);
   },
   computed: {
     ...mapState("userStore", ["user", "usersForInvite"]),
@@ -64,8 +70,11 @@ export default {
       this.toggleNavHandler();
       this.inviteUsersOpen = true;
     },
-    onInviteUsers() {
-      this.inviteUsers({ invites: this.usersToInvite });
+    async onInviteUsers() {
+      this.inviteUserLoading = true;
+      await this.inviteUsers({ invites: this.usersToInvite });
+      this.inviteUserLoading = false;
+      this.inviteUsersOpen = false;
     },
     toggleNavHandler() {
       if (this.isNavOpen) {

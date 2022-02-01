@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex justify-center text-center text-white font-sans leading-tight bg-blue-400 rounded"
+    class="button-component flex justify-center text-center text-white font-sans leading-tight bg-blue-400 rounded"
     :class="sizeStyleArr[size]"
     @click.prevent="click($event)"
     :disabled="disabled"
@@ -13,6 +13,7 @@
 <script>
 import loadingSpinner from "./loading-spinner/loading-spinner.vue";
 export default {
+  name: "button-item",
   components: {
     loadingSpinner,
   },
@@ -44,4 +45,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.button-component:disabled {
+  background-color: rgb(236, 236, 236);
+  cursor: default;
+}
+</style>

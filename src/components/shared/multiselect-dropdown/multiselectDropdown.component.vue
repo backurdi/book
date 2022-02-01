@@ -99,13 +99,31 @@ export default {
   }),
   methods: {
     onShowDropdown(filterList) {
-      this.friendsList = [...this.dropdownData];
-      if (filterList && this.friendsSearchInput.length) {
-        setTimeout(() => {
-          this.friendsList = this.friendsList.filter((friend) => friend.name.trim().includes(this.friendsSearchInput));
-        }, 500);
+      let friends = [...this.dropdownData];
+      if (this.selectedFriends.length) {
+        friends = friends.filter((friend) =>
+          this.selectedFriends.find((selectedFriend) => selectedFriend._id === friend._id)
+        );
       }
-      this.showDropdown = !!this.friendsList.length;
+      if (filterList && this.friendsSearchInput.length && friends.length) {
+        if (this.timer) {
+          clearTimeout(this.timer);
+          this.timer = null;
+        }
+        this.timer = setTimeout(() => {
+          friends = friends.filter((friend) =>
+            friend.name.trim().toLowerCase().includes(this.friendsSearchInput.toLowerCase())
+          );
+          this.friendsList = friends;
+          this.showDropdown = !!friends.length;
+        }, 300);
+      } else {
+        this.friendsList = friends;
+        this.showDropdown = true;
+      }
+      if (!this.friendsSearchInput.length && filterList) {
+        this.showDropdown = false;
+      }
     },
     selectFriend(friend) {
       const selectedFriend = this.selectedFriends.find((selectedFriend) => selectedFriend === friend);
@@ -115,6 +133,10 @@ export default {
         this.removeSelectedFriend(friend);
       }
       this.friendsSearchInput = "";
+      this.friendsList.filter((friendItem) => {
+        friendItem === friend;
+      });
+      this.showDropdown = false;
 
       this.$emit("inviteFriendsChanged", this.selectedFriends);
     },

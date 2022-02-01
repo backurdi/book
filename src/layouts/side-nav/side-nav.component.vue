@@ -18,7 +18,7 @@
         </div>
       </div>
       <!-- Bottom boks, books and memeber in selected club -->
-      <div class="site-nav-bottom shadow-mdrounded py-5 text-dark bg-white rounded-lg overflow-scroll">
+      <div class="site-nav-bottom shadow-mdrounded py-5 h-2/5 text-dark bg-white rounded-lg overflow-scroll">
         <div class="mb-10">
           <!-- Books in the current club -->
           <ClubBooks></ClubBooks>
@@ -74,6 +74,9 @@ export default {
 </script>
 
 <style scoped>
+.site-nav-bottom {
+  max-height: 400px;
+}
 .side-nav-wrapper {
   max-width: 250px;
 }
@@ -86,6 +89,9 @@ export default {
   }
   .nav-container {
     max-width: 350px;
+  }
+  .site-nav-bottom {
+    max-height: 250px;
   }
 }
 </style>

@@ -30,7 +30,9 @@ export default {
   },
   watch: {
     $route(to) {
-      this.selectClub(to.params.clubId);
+      if (to.params.clubId) {
+        this.selectClub(to.params.clubId);
+      }
     },
   },
   methods: {

@@ -54,9 +54,6 @@ export default {
     SeeMore,
     Button,
   },
-  mounted() {
-    console.log(this.club);
-  },
   computed: {
     ...mapState("userStore", ["user", "usersForInvite"]),
     ...mapState("clubStore", { club: "activeClub" }),

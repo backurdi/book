@@ -41,13 +41,14 @@
           class="
             border-grey-light
             font-roboto
+            md:text-md
             relative
-            flex-1 flex-auto flex-grow flex-shrink
+            flex-1 flex-grow flex-shrink
             self-center
             px-3
             w-px
             h-10
-            text-xl
+            text-sm
             leading-normal
             bg-white
             border-0
@@ -94,13 +95,14 @@
           :type="hidePass ? 'password' : 'text'"
           class="
             font-roboto
+            md:text-md
             relative
-            flex-1 flex-auto flex-grow flex-shrink
+            flex-1 flex-grow flex-shrink
             self-center
             px-3
             w-px
             h-10
-            text-xl
+            text-sm
             leading-normal
             bg-white
             border-0
@@ -170,7 +172,7 @@ export default {
     submit() {
       this.isLoading = true;
       this.login({
-        email: this.email,
+        email: this.email.trim(),
         password: this.password,
       })
         .then(() => {

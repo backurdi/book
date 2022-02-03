@@ -7,6 +7,7 @@ import Teacher from "../views/Teacher.vue";
 import StudentPage from "../views/StudentPage.vue";
 import ProfileSettings from "../views/ProfileSettings.vue";
 import CreateClub from "../views/CreateClub.vue";
+import EditClub from "../views/EditClub.vue";
 import multiguard from "vue-router-multiguard";
 import VueJwtDecode from "vue-jwt-decode";
 
@@ -80,7 +81,7 @@ const routes = [
   {
     path: "/club/:clubId",
     name: "Club",
-    component: CreateClub,
+    component: EditClub,
     beforeEnter: guardMyroute,
     meta: {
       layout: "appLayoutHome",

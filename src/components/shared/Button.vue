@@ -39,7 +39,9 @@ export default {
   }),
   methods: {
     click() {
-      this.$emit("buttonClick");
+      if (!this.loading) {
+        this.$emit("buttonClick");
+      }
     },
   },
 };

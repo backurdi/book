@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="post mb-10 bg-white rounded-lg shadow-md" v-for="(post, index) in posts" :key="index">
-      <Post :post="post" :books="books"></Post>
+      <div class="flex">
+        <Post :post="post" :books="books"></Post>
+      </div>
       <div class="p-4">
         <CommentTextFieldComponent :postId="post._id" buttonAction="addComment"></CommentTextFieldComponent>
         <Comment
@@ -22,7 +24,7 @@ import Post from "../shared/post/post.component.vue";
 import CommentTextFieldComponent from "../shared/comment-text-field/comment-text-field.component.vue";
 import { mapState } from "vuex";
 export default {
-  name: "Club Feed",
+  name: "club-Feed",
   components: { Comment, Post, CommentTextFieldComponent },
   computed: {
     ...mapState("postStore", ["posts"]),

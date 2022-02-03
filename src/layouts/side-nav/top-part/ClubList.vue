@@ -1,18 +1,18 @@
 <template>
   <div>
     <div
-      class="club-list flex items-center px-5 py-2 hover:bg-blue-400 cursor-pointer"
+      class="club-list flex items-center px-5 py-2 w-full hover:bg-blue-400 cursor-pointer"
       v-for="(club, index) in clubs.slice(0, 3)"
       :key="index"
       @click="handleClick(club)"
     >
       <div
-        class="mr-2 w-6 h-6 bg-cover rounded-full"
+        class="flex-none mr-2 w-6 h-6 bg-cover rounded-full"
         :style="{
           'background-image': `url(${club.photo ? club.photo : clubImage})`,
         }"
       ></div>
-      <p class="text-sm">{{ club.name }}</p>
+      <p class="club-list__text grow text-sm">{{ club.name }}</p>
     </div>
     <div v-if="clubs.length > 3">
       <see-more seeMoreType="club"></see-more>
@@ -58,4 +58,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss"></style>

@@ -5,10 +5,13 @@
   >
     <p class="font-bold" :class="{ visible: displayError, invisible: !displayError }">{{ errorMessage }}</p>
   </div>
-  <div class="create-post flex justify-between mb-5">
+  <div class="create-post flex items-center justify-between mb-5">
     <div class="px-10 py-4 w-full text-dark bg-white rounded-full shadow-md" @click="addPostPopup()">
       <h3>Make a post</h3>
     </div>
+    <router-link :to="'/club/' + activeClub._id">
+      <DotsVerticalIcon class="w-10 h-10"></DotsVerticalIcon>
+    </router-link>
   </div>
   <Popup @closePopUp="open = false" :open="open" :buttonText="'Add post'">
     <CreatePost
@@ -24,6 +27,7 @@
 <script>
 import Popup from "@/components/shared/popup";
 import CreatePost from "@/components/shared/create-post/create-post.component.vue";
+import { DotsVerticalIcon } from "@heroicons/vue/solid";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -31,6 +35,7 @@ export default {
   components: {
     Popup,
     CreatePost,
+    DotsVerticalIcon,
   },
   data: () => ({
     open: false,

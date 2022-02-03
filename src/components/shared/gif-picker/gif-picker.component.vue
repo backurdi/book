@@ -7,23 +7,7 @@
         v-model="searchTerm"
         placeholder="Search gif"
       />
-      <button
-        class="
-          px-4
-          py-2
-          w-fit-content
-          text-black
-          hover:text-white
-          bg-green-400
-          hover:bg-green-700
-          border-2 border-black
-          rounded
-          md:px-6 md:py-3
-        "
-        @click="getGifs(0)"
-      >
-        Search
-      </button>
+      <Button @click="getGifs(0)" buttonText="Search" :loading="gifSearchLoading"></Button>
     </div>
     <div class="gif-container overflow-scroll" ref="scrollContainer">
       <img v-for="gif in gifs" :src="gif" :key="gif.id" @click="selectGif" ref="scrollComponent" />
@@ -33,12 +17,17 @@
 
 <script>
 import { mapActions } from "vuex";
+import Button from "@/components/shared/Button";
 export default {
-  name: "gif search",
+  name: "gif-search",
   data: () => ({
     searchTerm: "",
     gifs: [],
+    gifSearchLoading: false,
   }),
+  components: {
+    Button,
+  },
   mounted() {
     this.$refs.scrollContainer.addEventListener("scroll", this.handleScroll);
   },
@@ -51,8 +40,10 @@ export default {
       if (!offset) {
         this.gifs = [];
       }
+      this.gifSearchLoading = true;
       this.fetchGifs({ searchTerm: this.searchTerm, offset }).then((json) => {
         this.buildGifs(json);
+        this.gifSearchLoading = false;
       });
     },
     handleScroll() {

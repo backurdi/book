@@ -13,27 +13,33 @@
           <MediaField ref="mediaField" @mediaEmit="photo = $event" :media="photo"></MediaField>
           <ReadingField v-if="book" ref="readingField" :bookData="{ book, pagesFrom, pagesTo }"></ReadingField>
         </div>
-        <div class="button-container flex">
-          <button
-            class="mr-5 w-fit-content text-black border-2 border-black rounded"
-            @click="$refs.mediaField.uploadImage()"
-          >
-            <PhotographIcon class="w-8 h-8 text-green-400 md:w-12 md:h-12"></PhotographIcon>
-          </button>
-          <button class="gif-icon mr-5 text-black border-2 border-black rounded" @click="goToNextPage('gif')">
-            <span>GIF</span>
-          </button>
-          <button
-            class="gif-icon text-black border-2 border-black rounded"
-            @click="goToNextPage('book')"
-            v-if="books.length"
-          >
-            <span>Book</span>
-          </button>
+        <div class="button-container grid gap-4 grid-cols-3 md:flex md:grid-cols-none">
+          <div class="flex justify-center">
+            <button
+              class="flex items-center justify-center w-12 text-black border-2 border-black rounded"
+              @click="$refs.mediaField.uploadImage()"
+            >
+              <PhotographIcon class="w-8 h-8 text-green-400 md:w-12 md:h-12"></PhotographIcon>
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button class="gif-icon text-black border-2 border-black rounded" @click="goToNextPage('gif')">
+              <span>GIF</span>
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button
+              class="gif-icon text-black border-2 border-black rounded"
+              @click="goToNextPage('book')"
+              v-if="books.length"
+            >
+              <span>Book</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="flex justify-end">
-        <Button :buttonText="buttonText" @click="createPost" :loading="createLoading"></Button>
+      <div class="flex justify-start mt-5 md:justify-end md:mt-0">
+        <Button class="w-full md:w-48" :buttonText="buttonText" @click="createPost" :loading="createLoading"></Button>
       </div>
     </template>
     <template v-slot:next-page>

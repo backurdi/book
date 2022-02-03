@@ -11,8 +11,8 @@ export class ModelApiService extends ReadOnlyApiService {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            withCredentials: true,
           },
-          withCredentials: true,
         })
         .then((response) => {
           resolve(response.data);
@@ -33,8 +33,8 @@ export class ModelApiService extends ReadOnlyApiService {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            withCredentials: true,
           },
-          withCredentials: true,
         })
         .then((response) => {
           resolve(response.data);
@@ -54,8 +54,8 @@ export class ModelApiService extends ReadOnlyApiService {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            withCredentials: true,
           },
-          withCredentials: true,
         })
         .then(() => {
           resolve();

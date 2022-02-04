@@ -14,11 +14,14 @@
         <button class="text-gray-700 hover:text-white" @click.prevent="uploadImage">
           <CameraIcon class="w-6 h-6"></CameraIcon>
         </button>
-        <button class="text-gray-700 hover:text-white" @click.prevent="displayGif">
+        <button class="hidden text-gray-700 hover:text-white md:block" @click.prevent="displayGif('dropdown')">
+          <div class="flex items-center w-6 h-6 text-xs border border-dark rounded">GIF</div>
+        </button>
+        <button class="block text-gray-700 hover:text-white md:hidden" @click.prevent="displayGif('popup')">
           <div class="flex items-center w-6 h-6 text-xs border border-dark rounded">GIF</div>
         </button>
         <div class="absolute z-30 right-0 top-10 w-64 bg-white" v-if="showGifPicker">
-          <GifPicker @mediaEmit="gifSelected"></GifPicker>
+          <GifPicker @mediaEmit="gifSelected($event, 'dropdown')"></GifPicker>
         </div>
       </div>
     </div>
@@ -33,15 +36,20 @@
   </div>
   <img v-if="url.length" :src="url" class="text-field-image w-12" alt="" />
   <input ref="fileInput" type="file" style="visibility: hidden" @change="readUrl" />
+  <Popup @closePopUp="showGifPickerPopup = false" :open="showGifPickerPopup">
+    <GifPicker @mediaEmit="gifSelected($event, 'popup')"></GifPicker>
+  </Popup>
 </template>
 
 <script>
 import { ArrowSmDownIcon, CameraIcon } from "@heroicons/vue/solid";
 import { mapActions } from "vuex";
 import GifPicker from "@/components/shared/gif-picker/gif-picker.component.vue";
+import Popup from "@/components/shared/popup";
+
 export default {
-  name: "Comment text field",
-  components: { ArrowSmDownIcon, CameraIcon, GifPicker },
+  name: "comment-text-field",
+  components: { ArrowSmDownIcon, CameraIcon, GifPicker, Popup },
   props: ["editText", "editImage", "postId", "buttonAction" /*Can be updateComment or addComment*/, "commentId"],
   emits: ["commentActionDone"],
   data: () => ({
@@ -51,6 +59,7 @@ export default {
     file: "",
     form: new FormData(),
     showGifPicker: false,
+    showGifPickerPopup: false,
   }),
   created() {
     if (this.editText) {
@@ -85,8 +94,12 @@ export default {
         });
       }
     },
-    gifSelected(event) {
-      this.showGifPicker = !this.showGifPicker;
+    gifSelected(event, gifPickerType) {
+      if (gifPickerType === "dropdown") {
+        this.showGifPicker = !this.showGifPicker;
+      } else {
+        this.showGifPickerPopup = !this.showGifPickerPopup;
+      }
       this.url = event;
       this.file = event;
     },
@@ -114,8 +127,12 @@ export default {
       this.file = file;
       this.url = URL.createObjectURL(file);
     },
-    displayGif() {
-      this.showGifPicker = !this.showGifPicker;
+    displayGif(gifPickerType) {
+      if (gifPickerType === "dropdown") {
+        this.showGifPicker = !this.showGifPicker;
+      } else {
+        this.showGifPickerPopup = !this.showGifPickerPopup;
+      }
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="post mb-10 bg-white rounded-lg shadow-md" v-for="(post, index) in posts" :key="index">
-      <div class="flex">
+      <div>
         <Post :post="post" :books="books"></Post>
       </div>
       <div class="p-4">

@@ -12,7 +12,10 @@
         </div>
         <div class="px-1 w-9/12 sm:w-10/12">
           <div v-if="editComment !== index">
-            <p class="p-2 bg-gray-100 rounded">{{ comment.text }}</p>
+            <div class="p-2 bg-gray-100 rounded">
+              <p class="mb-2 text-gray-500 text-xs">{{ comment.user.name }}</p>
+              <p class="">{{ comment.text }}</p>
+            </div>
             <img class="mt-2 w-96 rounded" v-if="comment.photo" :src="comment.photo" alt="" />
           </div>
           <CommentTextFieldComponent
@@ -48,7 +51,7 @@ import PopupComponent from "../popup.vue";
 import CommentTextFieldComponent from "../comment-text-field/comment-text-field.component.vue";
 import { mapActions, mapState } from "vuex";
 export default {
-  name: "Comment",
+  name: "comment-item",
   props: ["comment", "postId", "index"],
   components: { CommentTextFieldComponent, DotsDropdownComponent, DeletePopupComponent, PopupComponent },
   data: () => ({

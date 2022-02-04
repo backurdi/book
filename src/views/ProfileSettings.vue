@@ -7,8 +7,8 @@
       {{ updateSucces ? "Update success" : "" }}
     </p>
   </div>
-  <div class="mx-auto w-8/12">
-    <form class="flex flex-col mt-2 lg:w-1/2">
+  <div class="flex flex-col items-center mx-auto w-11/12 md:w-8/12">
+    <form class="flex flex-col mt-2 w-full lg:w-4/6">
       <div class="h-15 relative flex flex-wrap items-stretch mb-3 pr-10 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span
@@ -119,7 +119,7 @@
       <Button buttonText="Update info" @click.prevent="onUpdateData()" :loading="isDataLoading"></Button>
     </form>
 
-    <form action class="flex flex-col mt-10">
+    <form action class="flex flex-col mt-10 w-full lg:w-4/6">
       <div class="h-15 relative flex flex-wrap items-stretch mb-3 w-full bg-white rounded">
         <div class="w-15 flex justify-center -mr-px p-4">
           <span

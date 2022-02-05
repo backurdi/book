@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "App",
   watch: {
@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     ...mapMutations("otherStore", ["toggleHasSiteNav", "toggleNav"]),
+    ...mapActions("clubStore", ["getActiveClub"]),
   },
 };
 </script>

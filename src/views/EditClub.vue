@@ -1,4 +1,12 @@
 <template>
+  <div class="flex justify-center h-0 transition-all duration-150" :class="{ 'h-full': updateSucces }">
+    <p
+      class="p-0 w-8/12 h-0 text-center text-white bg-green-400 transition-all duration-150"
+      :class="{ 'py-2 h-full': updateSucces }"
+    >
+      {{ updateSucces ? "Update success" : "" }}
+    </p>
+  </div>
   <form class="flex flex-col mt-2 mx-auto px-10 w-full md:w-3/4">
     <h3 class="mb-5">Edit club</h3>
     <div class="h-15 relative flex flex-wrap items-stretch mb-4 pr-10 w-full bg-white rounded">
@@ -62,7 +70,7 @@
         placeholder="Email"
       />
     </div>
-    <Button buttonText="Save" @click.prevent="create()" :loading="editLoading"></Button>
+    <Button buttonText="Save" @click.prevent="onUpdateClub()" :loading="editLoading"></Button>
   </form>
 </template>
 
@@ -80,32 +88,33 @@ export default {
     form: new FormData(),
     clubImage,
     editLoading: false,
+    updateSucces: false,
   }),
   components: {
     LibraryIcon,
     Button,
   },
+  computed: {
+    ...mapState("clubStore", ["activeClub"]),
+  },
+  watch: {
+    activeClub() {
+      this.name = this.activeClub.name;
+      this.url = this.activeClub.photo;
+    },
+  },
   mounted() {
-    this.getUsersForInvite(true);
     this.name = this.activeClub.name;
     this.url = this.activeClub.photo;
   },
-  computed: {
-    ...mapState("userStore", ["usersForInvite"]),
-    ...mapState("clubStore", ["activeClub"]),
-  },
   methods: {
-    ...mapActions("userStore", ["getUsersForInvite"]),
     ...mapActions("clubStore", ["updateClub"]),
     readUrl(e) {
       const file = e.target.files[0];
       this.file = file;
       this.url = URL.createObjectURL(file);
     },
-    setSelectedInvites(data) {
-      this.invites = data;
-    },
-    create() {
+    onUpdateClub() {
       this.editLoading = true;
       const { name, file } = this;
       const body = [{ key: "name", value: name }];
@@ -115,9 +124,13 @@ export default {
       body.forEach((element) => {
         this.form.append(element.key, element.value);
       });
-      this.updateClub(this.form).then(() => {
+      this.updateClub({ id: this.activeClub._id, body: this.form }).then(() => {
         this.editLoading = false;
-        this.$router.push("/");
+        this.updateSucces = true;
+        setTimeout(() => {
+          this.form = new FormData();
+          this.updateSucces = false;
+        }, 1500);
       });
     },
   },

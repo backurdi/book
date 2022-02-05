@@ -72,8 +72,8 @@ const clubStore = {
         commit("insertClub", club.data);
       });
     },
-    async updateClub({ commit }, body) {
-      return this.$api.clubs.patch(body).then((club) => {
+    async updateClub({ commit }, { id, body }) {
+      return this.$api.clubs.patch(id, body).then((club) => {
         commit("setActiveClub", club.data);
       });
     },

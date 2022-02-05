@@ -104,7 +104,7 @@ export default {
       this.logout();
     },
     goToProfile() {
-      this.$router.push("me");
+      this.$router.push({ path: "/me" });
     },
     clickHandler() {
       this.showDropdown = !this.showDropdown;

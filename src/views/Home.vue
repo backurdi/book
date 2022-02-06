@@ -1,13 +1,10 @@
 <template>
-  <div class="flex mx-auto w-11/12" v-if="clubs.length">
+  <div class="home-wrapper flex mx-auto w-11/12" v-if="clubs.length">
     <SideNav></SideNav>
-    <div class="flex-col flex-grow mx-auto w-full md:w-7/12 lg:px-16">
+    <div class="home-contentflex-col flex-grow mx-auto w-full md:w-7/12 lg:px-16">
       <AddPostPopUp></AddPostPopUp>
       <ClubFeed></ClubFeed>
     </div>
-    <!-- <div class="w-2/12">
-        <ClubSideSettings></ClubSideSettings>
-      </div> -->
   </div>
   <div v-else>
     <router-link class="px-6 py-4 text-white bg-readee border-2 border-white rounded" to="/club"
@@ -41,4 +38,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.home-wrapper {
+  max-width: 1200px;
+}
+
+.home-content {
+  max-width: 900px;
+}
+</style>

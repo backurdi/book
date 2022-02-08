@@ -40,7 +40,7 @@
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 export default {
-  name: "Text field popup",
+  name: "popup-item",
   props: ["open", "textFromParent", "buttonText"],
   components: {
     Dialog,

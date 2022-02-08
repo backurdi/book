@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-container overflow-x-hidden">
+  <div class="slider-container w-full overflow-x-hidden">
     <div class="relative" :class="{ 'h-12': slide > 1 }">
       <button v-if="slide > 1" class="absolute z-50 left-0 top-0 text-black" @click="previousSlide">
         <ArrowNarrowLeftIcon

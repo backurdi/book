@@ -17,14 +17,14 @@ export default {
   },
   created() {
     if (localStorage.getItem("jwt")) {
-      this.getUser();
+      this.getMe().then(() => {
+        this.subscribeForNotifications();
+      });
     }
   },
   methods: {
     ...mapActions("userStore", ["getMe"]),
-    getUser() {
-      return this.getMe();
-    },
+    ...mapActions("otherStore", ["subscribeForNotifications"]),
   },
 };
 </script>

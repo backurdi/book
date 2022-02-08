@@ -5,6 +5,7 @@ import ContactService from "../services/contactService";
 import ClubService from "../services/clubService";
 import PostsService from "../services/postsService";
 import GifService from "../services/gifService";
+import NotificationService from "../services/notificationService";
 
 const $api = {
   books: new BooksService(),
@@ -13,6 +14,7 @@ const $api = {
   clubs: new ClubService(),
   posts: new PostsService(),
   contact: new ContactService(),
+  notification: new NotificationService(),
   gif: new GifService(),
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="post relative flex-col pb-4 text-dark border-b-2 border-gray-400">
+  <div :id="post._id" class="post relative flex-col pb-4 text-dark border-b-2 border-gray-400">
     <div class="flex justify-between pt-4 px-4">
       <div class="flex items-center">
         <div
@@ -86,6 +86,12 @@ export default {
     defaultAvatar,
     noBookCover,
   }),
+  mounted() {
+    const scrollToItem = document.getElementById(this.$router.currentRoute._value.params.postId);
+    if (scrollToItem) {
+      window.scrollTo({ top: scrollToItem?.offsetTop - 70, behavior: "smooth" });
+    }
+  },
   computed: {
     ...mapState("userStore", ["user"]),
   },

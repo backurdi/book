@@ -49,6 +49,16 @@ const routes = [
     },
   },
   {
+    path: "/:clubId?/:postId?",
+    name: "Home",
+    component: Home,
+    beforeEnter: multiguard([guardMyroute, roleGuard]),
+    meta: {
+      layout: "appLayoutHome",
+      sideNav: true,
+    },
+  },
+  {
     path: "/contact",
     name: "Contact",
     component: Contact,

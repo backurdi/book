@@ -18,7 +18,7 @@ const postStore = {
       const post = state.posts.find((post) => post._id === comment.post);
 
       if (post.comments) {
-        post.comments.unshift(comment);
+        post.comments.push(comment);
       } else {
         post.comments = [comment];
       }

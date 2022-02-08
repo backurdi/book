@@ -5,7 +5,7 @@
     <TrashIcon class="mx-auto w-16 h-16 text-red-500"></TrashIcon>
     <h3 class="py-4 text-xl font-bold">Are you sure?</h3>
     <!--footer-->
-    <div class="flex mt-2 p-3 text-center space-x-4">
+    <div class="flex justify-center mt-2 p-3 text-center space-x-4">
       <button
         class="
           mb-2

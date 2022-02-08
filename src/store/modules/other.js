@@ -1,5 +1,6 @@
 import router from "@/router";
 import storePlugins from "../../plugins/storePlugin";
+import { urlBase64ToUint8Array } from "../helpers";
 
 export const getDefaultState = () => {
   return {
@@ -43,6 +44,25 @@ const otherStore = {
         this.$api.gif.get(data).then((res) => {
           resolve(res);
         });
+      });
+    },
+    async subscribeForNotifications() {
+      navigator.serviceWorker.getRegistrations().then(async () => {
+        // if (!registrations.length) {
+        // Register Service Worker
+        const register = await navigator.serviceWorker.register("/worker.js", {
+          scope: "/",
+        });
+
+        // Register Push
+        const subscription = await register.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(import.meta.env.VITE_PUBLIC_VAPI_KEY),
+        });
+
+        // Send Push Notification
+        await this.$api.notification.post(JSON.stringify(subscription));
+        // }
       });
     },
   },

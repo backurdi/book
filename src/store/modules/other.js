@@ -52,7 +52,7 @@ const otherStore = {
         // if (!registrations.length) {
         // Register Service Worker
         navigator.serviceWorker
-          .register("/worker.js", {
+          .register("/service-worker.js", {
             scope: "/",
           })
           .then(async function (registration) {

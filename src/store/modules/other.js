@@ -47,41 +47,18 @@ const otherStore = {
       });
     },
     async subscribeForNotifications() {
-      let subscription;
       navigator.serviceWorker.getRegistrations().then(async () => {
         // if (!registrations.length) {
         // Register Service Worker
-        navigator.serviceWorker
-          .register("/service-worker.js", {
-            scope: "/",
-          })
-          .then(async function (registration) {
-            var serviceWorker;
-            if (registration.installing) {
-              serviceWorker = registration.installing;
-              console.log("installing");
-            } else if (registration.waiting) {
-              serviceWorker = registration.waiting;
-              console.log("waiting");
-            } else if (registration.active) {
-              serviceWorker = registration.active;
+        const register = await navigator.serviceWorker.register("/service-worker.js", {
+          scope: "/",
+        });
 
-              // Register Push
-              subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(import.meta.env.VITE_PUBLIC_VAPI_KEY),
-              });
-              console.log("active");
-            }
-            if (serviceWorker) {
-              // logState(serviceWorker.state);
-              serviceWorker.addEventListener("statechange", function (e) {
-                console.log(e);
-                // logState(e.target.state);
-              });
-            }
-          })
-          .catch((err) => console.log(err));
+        // Register Push
+        const subscription = await register.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(import.meta.env.VITE_PUBLIC_VAPI_KEY),
+        });
 
         // Send Push Notification
         await this.$api.notification.post(JSON.stringify(subscription));

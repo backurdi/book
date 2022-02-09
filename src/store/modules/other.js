@@ -52,8 +52,8 @@ const otherStore = {
         // if (!registrations.length) {
         // Register Service Worker
         navigator.serviceWorker
-          .register("./service-worker.js", {
-            scope: "/",
+          .register("./public/service-worker.js", {
+            scope: "./public/",
           })
           .then(async function (registration) {
             var serviceWorker;

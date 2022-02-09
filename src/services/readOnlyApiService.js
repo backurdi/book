@@ -36,7 +36,7 @@ export class ReadOnlyApiService extends BaseApiService {
         })
         .catch((err) => {
           handleErrors(err);
-          reject(err.response.data);
+          reject(err.response?.data);
         });
     });
   }

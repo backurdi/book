@@ -139,7 +139,7 @@ export default {
       });
     },
     isUnreadNotifications() {
-      return !!this.notifications.find((notification) => !notification.read);
+      return !!this.notifications.find((notification) => !notification?.read);
     },
     clickOutsideUserSettingHandler() {
       this.showDropdown = false;

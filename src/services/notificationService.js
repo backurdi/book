@@ -10,7 +10,7 @@ export default class NotificationService extends ModelApiService {
   }
 
   async initiateSocket() {
-    const socket = new io("http://localhost:3001", {
+    const socket = new io(import.meta.env.VITE_SOCKET_URL, {
       reconnect: true,
     });
 

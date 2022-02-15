@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-wrapper w-80 bg-white border border-gray-200 rounded">
+  <div class="notification-wrapper w-full bg-white border border-gray-200 rounded">
     <div class="club-invite-wrapper py-2">
       <p class="mb-2 pl-2 w-fit-content text-dark text-xs font-bold border-b-2 border-readee">invites</p>
       <div class="flex justify-between mb-2 p-2" v-for="(invite, index) in invites" :key="index">

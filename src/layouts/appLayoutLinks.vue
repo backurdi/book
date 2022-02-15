@@ -23,7 +23,7 @@
           <!-- to bar right  -->
           <ul class="flex items-center">
             <li class="pr-6" v-if="user.role === 'Student'">
-              <div class="relative">
+              <div class="md:relative">
                 <div class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer" @click="notificationClicked()">
                   <div
                     class="absolute right-3 top-3 w-2 h-2 bg-red-600 rounded-full"
@@ -31,7 +31,7 @@
                   ></div>
                   <BellIcon class="w-6 h-6 text-white duration-150"></BellIcon>
                 </div>
-                <div class="absolute right-0 mt-4" v-if="showNotificationDropwdown">
+                <div class="absolute right-0 mt-4 w-full md:w-80" v-if="showNotificationDropwdown">
                   <div>
                     <notification-dropdown
                       :invites="invites"

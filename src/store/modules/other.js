@@ -6,6 +6,9 @@ export const getDefaultState = () => {
   return {
     isNavOpen: false,
     hasSiteNav: true,
+    socket: null,
+    notifications: [],
+    notificationCount: 0,
   };
 };
 
@@ -27,17 +30,32 @@ const otherStore = {
         body.classList.add("nav-is-showing");
       }
     },
+    setSocket(state, socket) {
+      state.socket = socket;
+    },
+    setNotifications(state, { notifications, count }) {
+      if (Array.isArray(notifications)) {
+        state.notifications.push(...notifications);
+        state.notificationCount = count;
+      } else {
+        state.notifications.push(notifications);
+      }
+    },
+    setNotificationsRead(state, notification) {
+      state.notifications.forEach((stateNotification) => {
+        if (notification === stateNotification._id) {
+          stateNotification.read = true;
+        }
+      });
+    },
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
   },
   actions: {
-    sendEmail(_state, emailData) {
-      return new Promise((resolve) => {
-        this.$api.contact.post(emailData).then(() => {
-          resolve("");
-        });
-      });
+    async sendEmail(_state, emailData) {
+      const email = await this.$api.contact.post(emailData);
+      return email;
     },
     fetchGifs(_state, data) {
       return new Promise((resolve) => {
@@ -45,6 +63,14 @@ const otherStore = {
           resolve(res);
         });
       });
+    },
+    async initiateSocket({ commit }) {
+      const socket = await this.$api.notification.initiateSocket();
+      return commit("setSocket", socket);
+    },
+    async getNotifications({ commit }, page) {
+      const notifications = await this.$api.notification.get(`?page=${page}&limit=5`);
+      commit("setNotifications", notifications.data);
     },
     async subscribeForNotifications() {
       navigator.serviceWorker.getRegistrations().then(async () => {
@@ -64,6 +90,10 @@ const otherStore = {
         await this.$api.notification.post(JSON.stringify(subscription));
         // }
       });
+    },
+    async setNotificationRead({ commit }, notification) {
+      await this.$api.notification.patch(notification);
+      return commit("setNotificationsRead", notification);
     },
   },
 };

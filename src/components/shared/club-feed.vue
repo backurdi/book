@@ -29,17 +29,13 @@
 </template>
 
 <script>
-import Comment from "../shared/comment/comment.component.vue";
-import Post from "../shared/post/post.component.vue";
-import CommentTextFieldComponent from "../shared/comment-text-field/comment-text-field.component.vue";
-import { mapState } from "vuex";
+import Comment from "./comment/comment.component.vue";
+import Post from "./post/post.component.vue";
+import CommentTextFieldComponent from "./comment-text-field/comment-text-field.component.vue";
 export default {
   name: "club-Feed",
   components: { Comment, Post, CommentTextFieldComponent },
-  computed: {
-    ...mapState("postStore", ["posts"]),
-    ...mapState("bookStore", ["books"]),
-  },
+  props: ["posts", "books"],
   data: () => ({
     showMoreValue: 3,
   }),

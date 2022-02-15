@@ -1,12 +1,11 @@
 <template>
   <div class="home-wrapper flex mx-auto w-11/12" v-if="clubs.length">
     <SideNav></SideNav>
-    <div class="home-contentflex-col flex-grow mx-auto w-full md:w-7/12 lg:px-16">
-      <AddPostPopUp></AddPostPopUp>
-      <ClubFeed></ClubFeed>
-    </div>
+    <router-view />
   </div>
-  <div v-else>
+  <div v-else class="flex flex-col items-center mt-16">
+    <h1 class="text-md w-4/6 text-center md:text-4xl">You are not part of any club yet, check if you got an invite</h1>
+    <h1 class="text-md my-5 md:text-xl">Or</h1>
     <router-link class="px-6 py-4 text-white bg-readee border-2 border-white rounded" to="/club"
       >Create club</router-link
     >
@@ -15,13 +14,11 @@
 
 <script>
 import SideNav from "../layouts/side-nav/side-nav.component.vue";
-import ClubFeed from "../components/club-feed/clubFeed.component.vue";
-import AddPostPopUp from "../components/add-post-popup/addPostPopup.component.vue";
 import { mapActions, mapState } from "vuex";
 
 export default {
   name: "home-view",
-  components: { SideNav, ClubFeed, AddPostPopUp },
+  components: { SideNav },
   computed: {
     ...mapState("clubStore", ["clubs"]),
   },

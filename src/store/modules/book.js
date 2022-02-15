@@ -51,19 +51,11 @@ const bookStore = {
         return commit("setBook", updatedBook.data.data);
       });
     },
-    addBook({ commit }, body) {
+    async addBook({ commit }, body) {
       body = { ...body, club: this.state.clubStore.activeClub._id };
-      return new Promise((resolve, reject) => {
-        this.$api.books
-          .post(body)
-          .then((addedBook) => {
-            resolve("");
-            return commit("addBook", addedBook.data);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+      const addedBook = await this.$api.books.post(body);
+      commit("addBook", addedBook);
+      return addedBook;
     },
     deleteBook({ commit, state }) {
       return this.$api.books.delete(state.focusedBook._id).then(() => {

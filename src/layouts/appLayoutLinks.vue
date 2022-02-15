@@ -23,14 +23,23 @@
           <!-- to bar right  -->
           <ul class="flex items-center">
             <li class="pr-6" v-if="user.role === 'Student'">
-              <div
-                class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer"
-                @click="showInviteDropwdown = !showInviteDropwdown"
-              >
-                <BellIcon class="w-6 h-6 text-white duration-150"></BellIcon>
-                <div class="absolute right-0 mt-4" v-if="showInviteDropwdown">
+              <div class="relative">
+                <div class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer" @click="notificationClicked()">
+                  <div
+                    class="absolute right-3 top-3 w-2 h-2 bg-red-600 rounded-full"
+                    v-if="isUnreadNotifications()"
+                  ></div>
+                  <BellIcon class="w-6 h-6 text-white duration-150"></BellIcon>
+                </div>
+                <div class="absolute right-0 mt-4" v-if="showNotificationDropwdown">
                   <div>
-                    <InviteDropdown :invites="invites"></InviteDropdown>
+                    <notification-dropdown
+                      :invites="invites"
+                      :notifications="notifications"
+                      :notificationCount="notificationCount"
+                      @showMoreNotifications="getNotifications(++notificationPage)"
+                      @hideNotifications="showNotificationDropwdown = false"
+                    ></notification-dropdown>
                   </div>
                 </div>
               </div>
@@ -76,30 +85,42 @@
 
 <script>
 import { HomeIcon, BellIcon, MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/vue/solid";
-import InviteDropdown from "../components/shared/invite-dropdown/inviteDropdown.component.vue";
 import vClickOutside from "click-outside-vue3";
 import { mapActions, mapState, mapMutations } from "vuex";
 import defaultAvatar from "@/assets/images/default-avatar.png";
+import NotificationDropdown from "../components/shared/notification-dropdown.vue";
 
 export default {
   name: "AppLayoutLinks",
-  components: { HomeIcon, BellIcon, InviteDropdown, MenuIcon, XIcon, ChevronDownIcon },
+  components: { HomeIcon, BellIcon, NotificationDropdown, MenuIcon, XIcon, ChevronDownIcon },
   directives: {
     clickOutside: vClickOutside.directive,
   },
   computed: {
     ...mapState("userStore", ["user", "invites"]),
     ...mapState("clubStore", ["clubs"]),
-    ...mapState("otherStore", ["isNavOpen", "hasSiteNav"]),
+    ...mapState("otherStore", ["isNavOpen", "hasSiteNav", "notifications", "socket", "notificationCount"]),
+  },
+  watch: {
+    user(user) {
+      this.socket?.on(`notification ${user.id}`, (notification) => {
+        this.setNotifications(notification);
+      });
+    },
+  },
+  mounted() {
+    this.getNotifications(this.notificationPage);
   },
   data: () => ({
     showDropdown: false,
-    showInviteDropwdown: false,
+    showNotificationDropwdown: false,
     defaultAvatar,
+    notificationPage: 1,
   }),
   methods: {
-    ...mapMutations("otherStore", ["toggleNav"]),
+    ...mapMutations("otherStore", ["toggleNav", "setNotifications"]),
     ...mapActions("userStore", ["logout", "answerInvite"]),
+    ...mapActions("otherStore", ["setNotificationRead", "getNotifications"]),
     logOut() {
       this.logout();
     },
@@ -108,6 +129,17 @@ export default {
     },
     clickHandler() {
       this.showDropdown = !this.showDropdown;
+    },
+    notificationClicked() {
+      this.showNotificationDropwdown = !this.showNotificationDropwdown;
+      this.notifications.forEach((notification) => {
+        if (!notification.read) {
+          this.setNotificationRead(notification._id);
+        }
+      });
+    },
+    isUnreadNotifications() {
+      return !!this.notifications.find((notification) => !notification.read);
     },
     clickOutsideUserSettingHandler() {
       this.showDropdown = false;

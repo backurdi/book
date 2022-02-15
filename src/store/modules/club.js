@@ -14,8 +14,13 @@ const clubStore = {
   mutations: {
     addPost(state, post) {
       const club = state.clubs.find((club) => club._id === post.club);
-
-      club.posts.unshift(post);
+      if (club.posts) {
+        club.posts.unshift(post);
+      } else {
+        club.posts = [post];
+        this.commit("postStore/setPosts", club.posts);
+      }
+      console.log(club);
     },
     updatePost(state, updatedPost) {
       const club = state.clubs.find((club) => club._id === updatedPost.club);
@@ -42,12 +47,10 @@ const clubStore = {
       if (!clubArrInstance?.books) {
         state.clubs[state.clubs.indexOf(clubArrInstance)] = club;
       }
-
-      this.commit("bookStore/setBooks", club.books);
-      this.commit(
-        "postStore/setPosts",
-        club.posts.sort((a, b) => a < b)
-      );
+      if (club.books) {
+        this.commit("bookStore/setBooks", club.books);
+      }
+      this.commit("postStore/setPosts", club.posts ? club.posts.sort((a, b) => a < b) : []);
     },
     resetState(state) {
       Object.assign(state, getDefaultState());
@@ -67,10 +70,15 @@ const clubStore = {
       }
       return commit("setActiveClub", clubInState);
     },
-    async createClub({ commit }, body) {
-      return this.$api.clubs.post(body).then((club) => {
-        commit("insertClub", club.data);
-      });
+    async createClub({ commit, state }, body) {
+      const club = await this.$api.clubs.post(body);
+      if (!state.clubs.length) {
+        commit("insertClub", club);
+        commit("setActiveClub", club);
+      } else {
+        commit("insertClub", club);
+      }
+      return club;
     },
     async updateClub({ commit }, { id, body }) {
       return this.$api.clubs.patch(id, body).then((club) => {

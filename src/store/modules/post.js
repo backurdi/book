@@ -40,8 +40,10 @@ const postStore = {
     },
   },
   actions: {
-    addPost(_state, data) {
-      return this.$api.posts.post(data).then((post) => this.commit("clubStore/addPost", post.data));
+    async addPost(_state, data) {
+      const post = await this.$api.posts.post(data);
+      this.commit("clubStore/addPost", post);
+      return post;
     },
     updatePost(_state, data) {
       return new Promise((resolve, reject) => {
@@ -69,18 +71,10 @@ const postStore = {
           });
       });
     },
-    addComment({ commit }, data) {
-      return new Promise((resolve, reject) => {
-        this.$api.comments
-          .post(data.formData)
-          .then((comment) => {
-            resolve("");
-            return commit("addComment", comment.data);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+    async addComment({ commit }, data) {
+      const comment = await this.$api.comments.post(data.formData);
+      commit("addComment", comment);
+      return comment;
     },
     updateComment({ commit }, data) {
       return new Promise((resolve, reject) => {

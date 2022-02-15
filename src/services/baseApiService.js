@@ -9,8 +9,10 @@ export class BaseApiService {
   }
 
   getUrl(id = "") {
-    if (id.length) {
+    if (id.length && id[0] !== "?") {
       return `${this.baseUrl}/${this.resource}/${id}`;
+    } else if (id.length && id[0] === "?") {
+      return `${this.baseUrl}/${this.resource}${id}`;
     } else {
       return `${this.baseUrl}/${this.resource}`;
     }

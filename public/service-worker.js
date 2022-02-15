@@ -28,11 +28,11 @@ self.addEventListener("notificationclick", function (event) {
       .then((matchingClients) => {
         if (matchingClients[0]) {
           return matchingClients[0]
-            .navigate(`/${notificationData.club}/${notificationData.post}`)
+            .navigate(`/${notificationData.club}/post/${notificationData.post}`)
             .then((client) => client.focus());
         }
 
-        return clients.openWindow(`/${notificationData.club}/${notificationData.post}`);
+        return clients.openWindow(`/${notificationData.club}/post/${notificationData.post}`);
       })
   );
 });

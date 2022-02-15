@@ -52,25 +52,24 @@ export default {
     addPostPopup() {
       this.open = !this.open;
     },
-    addPostMethod(event) {
+    async addPostMethod(event) {
       event.append("club", this.activeClub._id);
       this.createLoading = true;
-      this.addPost(event)
-        .then(() => {
-          this.$refs.createPost.clearFields();
-          this.$refs.createPost.clearForm();
-          this.createLoading = false;
-          this.open = false;
-        })
-        .catch((err) => {
-          this.errorMessage = err.message;
-          this.displayError = true;
+      try {
+        await this.addPost(event);
+        this.$refs.createPost.clearFields();
+        this.$refs.createPost.clearForm();
+        this.createLoading = false;
+        this.open = false;
+      } catch (err) {
+        this.errorMessage = err.message;
+        this.displayError = true;
 
-          setTimeout(() => {
-            this.errorMessage = "";
-            this.displayError = false;
-          }, 5000);
-        });
+        setTimeout(() => {
+          this.errorMessage = "";
+          this.displayError = false;
+        }, 5000);
+      }
     },
   },
 };

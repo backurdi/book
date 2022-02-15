@@ -56,6 +56,7 @@ const userStore = {
       if (response.accepted) {
         state.invites.splice(state.invites.indexOf(selectedInvite), 1);
         this.commit("clubStore/insertClub", response.club);
+        this.commit("clubStore/setActiveClub", response.club);
       } else {
         state.invites.splice(state.invites.indexOf(selectedInvite), 1);
       }

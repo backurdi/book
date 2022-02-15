@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "../views/Home.vue";
 import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
@@ -8,6 +7,9 @@ import StudentPage from "../views/StudentPage.vue";
 import ProfileSettings from "../views/ProfileSettings.vue";
 import CreateClub from "../views/CreateClub.vue";
 import EditClub from "../views/EditClub.vue";
+import Post from "../views/Post.vue";
+import Feed from "../views/Feed.vue";
+import Home from "../views/Home.vue";
 import multiguard from "vue-router-multiguard";
 import VueJwtDecode from "vue-jwt-decode";
 
@@ -42,21 +44,28 @@ const routes = [
     path: "/:clubId?",
     name: "Home",
     component: Home,
-    beforeEnter: multiguard([guardMyroute, roleGuard]),
-    meta: {
-      layout: "appLayoutHome",
-      sideNav: true,
-    },
-  },
-  {
-    path: "/:clubId?/:postId?",
-    name: "Home",
-    component: Home,
-    beforeEnter: multiguard([guardMyroute, roleGuard]),
-    meta: {
-      layout: "appLayoutHome",
-      sideNav: true,
-    },
+    children: [
+      {
+        path: "",
+        name: "Feed",
+        component: Feed,
+        beforeEnter: multiguard([guardMyroute, roleGuard]),
+        meta: {
+          layout: "appLayoutHome",
+          sideNav: true,
+        },
+      },
+      {
+        path: "post/:postId",
+        name: "Post",
+        component: Post,
+        beforeEnter: multiguard([guardMyroute, roleGuard]),
+        meta: {
+          layout: "appLayoutHome",
+          sideNav: true,
+        },
+      },
+    ],
   },
   {
     path: "/contact",

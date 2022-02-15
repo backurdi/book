@@ -1,3 +1,4 @@
+const colors = require("tailwindcss/colors");
 module.exports = {
   purge: ["./public/index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
@@ -21,6 +22,8 @@ module.exports = {
         dark: {
           DEFAULT: "#142F43",
         },
+        "light-blue": colors.lightBlue,
+        cyan: colors.cyan,
       },
       maxHeight: {
         "70-screen": "70vh",

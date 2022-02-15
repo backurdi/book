@@ -4,24 +4,15 @@ import { handleErrors } from "./servicesHelper";
 
 export class ModelApiService extends ReadOnlyApiService {
   async post(data = {}) {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(this.getUrl(), data, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            withCredentials: true,
-          },
-        })
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((err) => {
-          handleErrors(err);
-          reject(err.response.data);
-        });
+    const response = await axios.post(this.getUrl(), data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        withCredentials: true,
+      },
     });
+    return response.data.data;
   }
 
   async patch(id, data = {}) {

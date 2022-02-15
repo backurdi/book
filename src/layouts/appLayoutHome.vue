@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import AppLayoutLinks from "./appLayoutLinks.vue";
 
 export default {
@@ -15,16 +15,20 @@ export default {
   components: {
     AppLayoutLinks,
   },
-  created() {
+  async mounted() {
     if (localStorage.getItem("jwt")) {
       this.getMe().then(() => {
         this.subscribeForNotifications();
       });
     }
+    await this.initiateSocket();
+  },
+  computed: {
+    ...mapState("userStore", ["user"]),
   },
   methods: {
     ...mapActions("userStore", ["getMe"]),
-    ...mapActions("otherStore", ["subscribeForNotifications"]),
+    ...mapActions("otherStore", ["subscribeForNotifications", "initiateSocket"]),
   },
 };
 </script>

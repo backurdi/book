@@ -13,16 +13,15 @@ export const getDefaultState = () => ({
 });
 
 export const sortBooks = (state, books) => {
-  if (books.length) {
+  if (books?.length) {
     books = books.sort((a, b) => {
       return a.createdAt > b.createdAt ? -1 : 1;
     });
+    // Bug where wrong book is displayed in recent books debug splice
+    const focusedBook = books?.find((book) => book.isCurrent);
+    state.books = [...books];
+    state.focusedBook = focusedBook ? focusedBook : books[0];
   }
-
-  // Bug where wrong book is displayed in recent books debug splice
-  const focusedBook = books.find((book) => book.isCurrent);
-  state.books = [...books];
-  state.focusedBook = focusedBook ? focusedBook : books[0];
 };
 
 export const urlBase64ToUint8Array = (base64String) => {

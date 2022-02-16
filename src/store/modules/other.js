@@ -36,9 +36,9 @@ const otherStore = {
     setNotifications(state, { notifications, count }) {
       if (Array.isArray(notifications)) {
         state.notifications.push(...notifications);
-        state.notificationCount = count;
+        state.notificationCount = count ? count : state.notificationCount++;
       } else {
-        state.notifications.push(notifications);
+        state.notifications.unshift(notifications);
       }
     },
     setNotificationsRead(state, notification) {

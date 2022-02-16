@@ -132,11 +132,13 @@ export default {
     },
     notificationClicked() {
       this.showNotificationDropwdown = !this.showNotificationDropwdown;
-      this.notifications.forEach((notification) => {
-        if (!notification.read) {
-          this.setNotificationRead(notification._id);
-        }
-      });
+      if (!this.showNotificationDropwdown) {
+        this.notifications.forEach((notification) => {
+          if (!notification.read) {
+            this.setNotificationRead(notification._id);
+          }
+        });
+      }
     },
     isUnreadNotifications() {
       return !!this.notifications.find((notification) => !notification?.read);

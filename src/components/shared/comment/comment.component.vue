@@ -13,9 +13,10 @@
         <div class="px-1 w-9/12 sm:w-10/12">
           <div v-if="editComment !== index">
             <div class="p-2 bg-gray-100 rounded">
-              <p class="mb-2 text-gray-500 text-xs">{{ comment.user.name }}</p>
-              <p class="">{{ comment.text }}</p>
+              <p class="mb-1 text-sm font-semibold">{{ comment.user.name }}</p>
+              <p class="text-sm">{{ comment.text }}</p>
             </div>
+            <p class="mb-2 text-gray-500 text-xs">{{ postDateFormat(comment.createdAt) }}</p>
             <img class="mt-2 w-96 rounded" v-if="comment.photo" :src="comment.photo" alt="" />
           </div>
           <CommentTextFieldComponent
@@ -50,6 +51,7 @@ import DeletePopupComponent from "../../delete-popup/deletePopup.component.vue";
 import PopupComponent from "../popup.vue";
 import CommentTextFieldComponent from "../comment-text-field/comment-text-field.component.vue";
 import { mapActions, mapState } from "vuex";
+import { postDateFormat } from "@/utils/helpers/date-format.js";
 export default {
   name: "comment-item",
   props: ["comment", "postId", "index"],
@@ -65,6 +67,7 @@ export default {
   },
   methods: {
     ...mapActions("postStore", ["updatePost", "deleteComment"]),
+    postDateFormat,
     closeDelete() {
       this.openDelete = false;
     },

@@ -9,11 +9,11 @@
       v-if="showDropdown"
     >
       <ul>
-        <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="emitAction('update')">
-          <span class="font-bold">Update post</span>
+        <li class="p-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="emitAction('update')">
+          <span class="text-xs font-bold">Update {{ dropdownContext }}</span>
         </li>
-        <li class="px-4 py-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="emitAction('delete')">
-          <span class="font-bold">Delete post</span>
+        <li class="p-2 w-full hover:text-white hover:bg-blue-400 cursor-pointer" @click="emitAction('delete')">
+          <span class="text-xs font-bold">Delete {{ dropdownContext }}</span>
         </li>
       </ul>
     </div>
@@ -24,7 +24,7 @@
 import { DotsVerticalIcon, XIcon } from "@heroicons/vue/solid";
 import vClickOutside from "click-outside-vue3";
 export default {
-  name: "Dots dropdown",
+  name: "dots-dropdown",
   props: ["commentIndex", "dropdownContext"],
   data: () => ({
     showDropdown: false,

@@ -65,7 +65,7 @@ const clubStore = {
     selectClub({ state, commit }, clubId) {
       const clubInState = state.clubs.find((club) => club._id === clubId);
 
-      if (!clubInState.books?.length) {
+      if (!clubInState?.books?.length) {
         return this.$api.clubs.get(clubId).then((club) => commit("setActiveClub", club.data));
       }
       return commit("setActiveClub", clubInState);

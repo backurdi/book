@@ -20,6 +20,9 @@ export const postDateFormat = (date) => {
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
   if (!diffDays) {
+    if (!diffHour) {
+      return "Now";
+    }
     return diffHour + " h.";
   } else if (diffDays === 1) {
     return `Yesterday ${date1.getHours()}:${date1.getMinutes()}`;

@@ -34,7 +34,9 @@
             :src="notification.createdBy?.photo ? notification.createdBy?.photo : defaultAvatar"
           />
         </div>
-        <p class="text-sm">{{ notification.createdBy?.name }} has commented on a post that you are following</p>
+        <p class="text-sm">
+          {{ notification.createdBy?.name }} {{ notification.type === "post" ? postText : commentText }}
+        </p>
       </div>
       <button v-if="notificationCount > notifications.length" @click="showMoreNotifications()">Show more</button>
     </div>
@@ -51,6 +53,8 @@ export default {
   components: { CheckIcon, XIcon },
   data: () => ({
     defaultAvatar,
+    postText: "has made a new post in a club you are part of",
+    commentText: "has commented on a post that you are following",
   }),
   methods: {
     ...mapActions("userStore", ["answerInvite"]),
@@ -58,7 +62,11 @@ export default {
       this.$emit("showMoreNotifications");
     },
     goToNotification(notification) {
-      this.$router.push(`/${notification.post?.club}/post/${notification.post?._id}`);
+      if (notification.type === "post") {
+        this.$router.push(`/${notification?.club}`);
+      } else {
+        this.$router.push(`/${notification.post?.club}/post/${notification.post?._id}`);
+      }
       this.$emit("hideNotifications");
     },
   },

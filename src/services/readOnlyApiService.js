@@ -21,23 +21,14 @@ export class ReadOnlyApiService extends BaseApiService {
   }
 
   async get(id) {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(this.getUrl(id), {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-          withCredentials: true,
-        })
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((err) => {
-          handleErrors(err);
-          reject(err.response?.data);
-        });
+    const response = await axios.get(this.getUrl(id), {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      withCredentials: true,
     });
+    return response.data;
   }
 }

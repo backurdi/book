@@ -38,7 +38,7 @@
                       :notifications="notifications"
                       :notificationCount="notificationCount"
                       @showMoreNotifications="getNotifications(++notificationPage)"
-                      @hideNotifications="showNotificationDropwdown = false"
+                      @hideNotifications="notificationClicked()"
                     ></notification-dropdown>
                   </div>
                 </div>

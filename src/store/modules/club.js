@@ -22,6 +22,11 @@ const clubStore = {
       }
       console.log(club);
     },
+    setPost(state, posts) {
+      const club = state.clubs.find((club) => club._id === posts[0].club);
+      club.posts = posts;
+      this.commit("postStore/setPosts", club.posts);
+    },
     updatePost(state, updatedPost) {
       const club = state.clubs.find((club) => club._id === updatedPost.club);
       const postToUpdate = club.posts.find((post) => post._id === updatedPost._id);

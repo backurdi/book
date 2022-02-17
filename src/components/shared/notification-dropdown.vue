@@ -58,16 +58,18 @@ export default {
   }),
   methods: {
     ...mapActions("userStore", ["answerInvite"]),
+    ...mapActions("postStore", ["getAllPostForClub"]),
     showMoreNotifications() {
       this.$emit("showMoreNotifications");
     },
     goToNotification(notification) {
+      this.getAllPostForClub(notification.club);
+      this.$emit("hideNotifications");
       if (notification.type === "post") {
         this.$router.push(`/${notification?.club}`);
       } else {
-        this.$router.push(`/${notification.post?.club}/post/${notification.post?._id}`);
+        this.$router.push(`/${notification?.club}/post/${notification?.post}`);
       }
-      this.$emit("hideNotifications");
     },
   },
 };

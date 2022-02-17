@@ -40,10 +40,14 @@ const postStore = {
     },
   },
   actions: {
+    async getAllPostForClub(_state, clubId) {
+      const posts = await this.$api.posts.get(`${clubId}`);
+      this.commit("clubStore/setPost", posts.data);
+    },
     async addPost(_state, data) {
-      const post = await this.$api.posts.post(data);
-      this.commit("clubStore/addPost", post);
-      return post;
+      const posts = await this.$api.posts.post(data);
+      this.commit("clubStore/addPost", posts);
+      return posts;
     },
     updatePost(_state, data) {
       return new Promise((resolve, reject) => {

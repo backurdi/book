@@ -44,6 +44,10 @@ const postStore = {
       const posts = await this.$api.posts.get(`${clubId}`);
       this.commit("clubStore/setPost", posts.data);
     },
+    async getPost(_state, data) {
+      const post = await this.$api.posts.get(`${data.clubId}/${data.postId}`);
+      this.commit("clubStore/setPost", [post.data]);
+    },
     async addPost(_state, data) {
       const posts = await this.$api.posts.post(data);
       this.commit("clubStore/addPost", posts);

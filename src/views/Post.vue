@@ -15,7 +15,10 @@ export default {
   },
   methods: {
     filterPosts() {
-      return this.posts.filter((post) => post._id === this.$router.currentRoute._value.params.postId);
+      if (Array.isArray(this.posts)) {
+        return this.posts.filter((post) => post._id === this.$router.currentRoute._value.params.postId);
+      }
+      return this.posts;
     },
   },
 };

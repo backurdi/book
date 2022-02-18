@@ -69,7 +69,7 @@ const postStore = {
     deletePost(_state, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
-          .delete(data.postId)
+          .delete(`${data.clubId}/${data.postId}`)
           .then(() => {
             resolve("");
             return this.commit("clubStore/deletePost", data);

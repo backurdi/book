@@ -25,10 +25,16 @@ export const postDateFormat = (date) => {
     }
     return diffHour + " h.";
   } else if (diffDays === 1) {
-    return `Yesterday ${date1.getHours()}:${date1.getMinutes()}`;
+    return `Yesterday ${addZeroToSingleDigit(date1.getHours())}:${addZeroToSingleDigit(date1.getMinutes())}`;
   } else if (diffDays < 10) {
-    return `${date1.getDay()}. ${monthNames[date1.getMonth()]} kl.${date1.getHours()}:${date1.getMinutes()}`;
+    return `${date1.getDay()}. ${monthNames[date1.getMonth()]} kl.${addZeroToSingleDigit(
+      date1.getHours()
+    )}:${addZeroToSingleDigit(date1.getMinutes())}`;
   } else {
     return diffDays + " d.";
   }
 };
+
+function addZeroToSingleDigit(time) {
+  return time < 10 ? "0" + time : time;
+}

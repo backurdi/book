@@ -12,19 +12,9 @@ const clubStore = {
   plugins: [storePlugins],
   state: getDefaultState(),
   mutations: {
-    addPost(state, post) {
-      const club = state.clubs.find((club) => club._id === post.club);
-      if (club.posts) {
-        club.posts.unshift(post);
-      } else {
-        club.posts = [post];
-        this.commit("postStore/setPosts", club.posts);
-      }
-    },
     setPost(state, posts) {
       const club = state.clubs.find((club) => club._id === posts[0]?.club || club._id === posts.club);
       club.posts = posts;
-      this.commit("postStore/setPosts", club.posts);
     },
     updatePost(state, updatedPost) {
       const club = state.clubs.find((club) => club._id === updatedPost.club);
@@ -54,24 +44,29 @@ const clubStore = {
       if (club.books) {
         this.commit("bookStore/setBooks", club.books);
       }
-      this.commit("postStore/setPosts", club.posts ? club.posts.sort((a, b) => a < b) : []);
     },
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
   },
   actions: {
-    getActiveClub({ commit }, clubId) {
-      return this.$api.clubs.get(clubId).then((club) => {
-        commit("setActiveClub", club.data);
-      });
+    async getActiveClub({ commit }, clubId) {
+      const club = await this.$api.clubs.get(clubId);
+      commit("setActiveClub", club.data);
+      this.dispatch("postStore/getPostsForClub", clubId);
+      return club;
     },
-    selectClub({ state, commit }, clubId) {
+    async selectClub({ state, commit }, clubId) {
       const clubInState = state.clubs.find((club) => club._id === clubId);
 
       if (!clubInState?.books?.length) {
-        return this.$api.clubs.get(clubId).then((club) => commit("setActiveClub", club.data));
+        const club = await this.$api.clubs.get(clubId);
+        commit("setActiveClub", club.data);
+        this.commit("postStore/resetPostPage");
+        this.dispatch("postStore/getPostsForClub", clubId);
+        return;
       }
+
       return commit("setActiveClub", clubInState);
     },
     async createClub({ commit, state }, body) {

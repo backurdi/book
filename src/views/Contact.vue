@@ -4,7 +4,7 @@
       Come in contact with us, send us a question, idea or anythin you want ❤️
     </h3>
     <div
-      class="mb-10 px-12 text-white bg-readee rounded duration-150"
+      class="bg-reaflect mb-10 px-12 text-white rounded duration-150"
       :class="{ 'h-0': !emailSent, 'h-full py-2': emailSent }"
     >
       <p class="font-bold" :class="{ visible: emailSent, invisible: !emailSent }">Thanks a lot for your message</p>
@@ -139,12 +139,12 @@
               bg-teal-400
               hover:bg-teal-400
               focus:shadow-outline
+              hover:bg-reaflect
               px-4
               py-2
               text-black
               hover:text-white
               font-bold
-              hover:bg-readee
               bg-white
               rounded
               focus:outline-none

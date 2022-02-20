@@ -6,7 +6,7 @@
   <div v-else class="flex flex-col items-center mt-16">
     <h1 class="text-md w-4/6 text-center md:text-4xl">You are not part of any club yet, check if you got an invite</h1>
     <h1 class="text-md my-5 md:text-xl">Or</h1>
-    <router-link class="px-6 py-4 text-white bg-readee border-2 border-white rounded" to="/club"
+    <router-link class="bg-reaflect px-6 py-4 text-white border-2 border-white rounded" to="/club"
       >Create club</router-link
     >
   </div>

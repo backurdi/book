@@ -7,7 +7,7 @@ module.exports = {
       height: { 150: "150px", "70-screen": "70vh" },
       width: { 150: "150px", "fit-content": "fit-content" },
       colors: {
-        readee: {
+        reaflect: {
           light: "#D6EBEB",
           DEFAULT: "#48D0B0",
           dark: "#258972",

@@ -39,7 +39,6 @@ export default {
   data: () => ({
     showMoreValue: 3,
   }),
-
   methods: {
     showMore(commentsLength) {
       if (commentsLength - (this.showMoreValue + 3) < 0) {

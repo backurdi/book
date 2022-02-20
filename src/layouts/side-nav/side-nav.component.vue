@@ -29,7 +29,7 @@
       </div>
       <div>
         <div
-          class="color-readee flex mt-3 hover:text-readee text-white cursor-pointer md:text-black"
+          class="color-reaflect hover:text-reaflect flex mt-3 text-white cursor-pointer md:text-black"
           @click="goToIdea()"
         >
           <LightBulbIcon class="w-6 h-6"></LightBulbIcon>

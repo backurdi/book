@@ -2,7 +2,13 @@
   <span class="spinner">
     <svg class="spinner__svg" :width="width" :height="width" :viewBox="viewBox">
       <g :transform="transform">
-        <circle class="spinner__circle" :class="uniqClass" :stroke-width="strokeWidth" :x="pos" :y="pos" :r="radius" />
+        <circle
+          :class="`${uniqClass} spinner__circle spinner__${color}`"
+          :stroke-width="strokeWidth"
+          :x="pos"
+          :y="pos"
+          :r="radius"
+        />
       </g>
     </svg>
   </span>
@@ -15,6 +21,11 @@ export default {
       type: String,
       default: "md",
       validator: (v) => ["sm", "md", "lg"].find((it) => it === v),
+    },
+    color: {
+      type: String,
+      default: "white",
+      validator: (v) => ["white", "black", "reaflect"].find((it) => it === v),
     },
   },
   data() {
@@ -63,7 +74,6 @@ $spinner-stroke-dasharrays: (
     animation: 1.4s circle-rotate linear infinite;
   }
   &__circle {
-    stroke: #fff;
     stroke-linecap: round;
     fill: none;
     @each $class, $size in $spinner-stroke-dasharrays {
@@ -72,6 +82,15 @@ $spinner-stroke-dasharrays: (
         animation: 5s circle-#{$class}-dash ease-in-out infinite, 5s circle-spin ease-in-out infinite;
       }
     }
+  }
+  .spinner__white {
+    stroke: #fff;
+  }
+  .spinner__black {
+    stroke: #000;
+  }
+  .spinner__reaflect {
+    stroke: #48d0b0;
   }
 }
 

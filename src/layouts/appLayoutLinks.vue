@@ -31,7 +31,7 @@
                   ></div>
                   <BellIcon class="w-6 h-6 text-white duration-150"></BellIcon>
                 </div>
-                <div class="absolute right-0 mt-4 w-full md:w-80" v-if="showNotificationDropwdown">
+                <div class="absolute right-0 mt-4 w-full sm:w-6/12 md:w-80" v-if="showNotificationDropwdown">
                   <div>
                     <notification-dropdown
                       :invites="invites"
@@ -105,6 +105,9 @@ export default {
     user(user) {
       this.socket?.on(`notification ${user.id}`, (notification) => {
         this.setNotifications(notification);
+        if (notification.type === "post") {
+          this.incrementPostCount();
+        }
       });
     },
   },
@@ -119,6 +122,7 @@ export default {
   }),
   methods: {
     ...mapMutations("otherStore", ["toggleNav", "setNotifications"]),
+    ...mapMutations("postStore", ["incrementPostCount"]),
     ...mapActions("userStore", ["logout", "answerInvite"]),
     ...mapActions("otherStore", ["setNotificationRead", "getNotifications"]),
     logOut() {

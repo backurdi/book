@@ -3,6 +3,9 @@ import storePlugins from "../../plugins/storePlugin";
 export const getDefaultState = () => {
   return {
     posts: [],
+    postPage: 1,
+    postPageLimit: 5,
+    postsCount: 0,
   };
 };
 
@@ -14,9 +17,14 @@ const postStore = {
     setPosts(state, posts) {
       state.posts = posts;
     },
+    addPosts(state, posts) {
+      state.posts.push(...posts);
+    },
+    addPost(state, post) {
+      state.posts.unshift(post);
+    },
     addComment(state, comment) {
       const post = state.posts.find((post) => post._id === comment.post);
-
       if (post.comments) {
         post.comments.push(comment);
       } else {
@@ -35,23 +43,43 @@ const postStore = {
 
       post.comments.splice(post.comments.indexOf(commentToDelete), 1);
     },
+    incrementPostPage(state) {
+      state.postPage++;
+    },
+    resetPostPage(state) {
+      state.postPage = 1;
+    },
+    incrementPostCount(state) {
+      state.postsCount++;
+    },
+    setPostCount(state, count) {
+      state.postsCount = count;
+    },
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
   },
   actions: {
-    async getAllPostForClub(_state, clubId) {
-      const posts = await this.$api.posts.get(`${clubId}`);
-      this.commit("clubStore/setPost", posts.data);
+    async getPostsForClub({ state, commit }, clubId) {
+      if (!state.posts.length || state.posts.filter((post) => post.club === clubId).length < state.postsCount) {
+        const posts = await this.$api.posts.get(`${clubId}?page=${state.postPage}&limit=${state.postPageLimit}`);
+        commit("setPostCount", posts.count);
+        if (state.postPage > 1) {
+          commit("addPosts", posts.data);
+        } else {
+          commit("setPosts", posts.data);
+        }
+        commit("incrementPostPage");
+      }
     },
     async getPost(_state, data) {
       const post = await this.$api.posts.get(`${data.clubId}/${data.postId}`);
       this.commit("clubStore/setPost", [post.data]);
     },
-    async addPost(_state, data) {
-      const posts = await this.$api.posts.post(data);
-      this.commit("clubStore/addPost", posts);
-      return posts;
+    async addPost({ commit }, data) {
+      const post = await this.$api.posts.post(data);
+      commit("addPost", post);
+      return post;
     },
     updatePost(_state, data) {
       return new Promise((resolve, reject) => {

@@ -4,7 +4,7 @@
     :class="{ 'h-70-screen': notifications.length > 7 }"
   >
     <div class="club-invite-wrapper py-2">
-      <p class="border-reaflect mb-2 pl-2 w-fit-content text-dark text-xs font-bold border-b-2">invites</p>
+      <p class="mb-2 pl-2 w-fit-content text-dark text-xs font-bold border-b-2 border-reaflect">invites</p>
       <div class="flex justify-between mb-2 p-2" v-for="(invite, index) in invites" :key="index">
         <div class="w-1/6">
           <img class="w-8 h-8 rounded-full" :src="invite.photo" :alt="invite.name + ' club profile picture'" />
@@ -22,12 +22,17 @@
       <div v-if="!invites.length" class="mt-2 pl-2 text-sm">You have no invites</div>
     </div>
     <div class="activity-notification-wrapper">
-      <p class="border-reaflect mb-2 pl-2 w-fit-content text-dark text-xs font-bold border-b-2">Notifications</p>
+      <p class="mb-2 pl-2 w-fit-content text-dark text-xs font-bold border-b-2 border-reaflect">Notifications</p>
       <div
         v-for="notification in notifications"
         :key="notification._id"
         @click="goToNotification(notification)"
         class="group flex items-center mb-2 px-2 py-1 hover:bg-blue-100 rounded-lg cursor-pointer"
+        :class="{
+          'border-2': notification.isAssignment,
+          'border-red-500': !notification.isAssignmentDone,
+          'border-green-500': notification.isAssignmentDone,
+        }"
       >
         <div class="notification-image mr-2 w-1/6">
           <img
@@ -41,7 +46,11 @@
           </p>
           <p class="text-gray-500 text-xs">{{ postDateFormat(notification.createdAt) }}</p>
         </div>
-        <div class="w-8">
+        <div class="w-8" v-if="notification.isAssignment">
+          <ExclamationIcon class="w-6 h-6 text-red-500" v-if="!notification.isAssignmentDone"></ExclamationIcon>
+          <BadgeCheckIcon class="w-6 h-6 text-green-500" v-else></BadgeCheckIcon>
+        </div>
+        <div class="w-8" v-else>
           <div class="circle mr-2 bg-blue-500 rounded-full" v-if="!notification.read"></div>
           <div v-else></div>
         </div>
@@ -54,20 +63,21 @@
 </template>
 
 <script>
-import { CheckIcon, XIcon } from "@heroicons/vue/solid";
-import { mapActions } from "vuex";
+import { CheckIcon, XIcon, ExclamationIcon, BadgeCheckIcon } from "@heroicons/vue/solid";
+import { mapActions, mapMutations } from "vuex";
 import defaultAvatar from "@/assets/images/default-avatar.png";
 import { postDateFormat } from "@/utils/helpers/date-format.js";
 export default {
   name: "invite-dropdown",
   props: ["invites", "notifications", "notificationCount"],
-  components: { CheckIcon, XIcon },
+  components: { CheckIcon, XIcon, ExclamationIcon, BadgeCheckIcon },
   data: () => ({
     defaultAvatar,
     postText: "has made a new post in a club you are part of",
     commentText: "has commented on a post that you are following",
   }),
   methods: {
+    ...mapMutations("postStore", ["incrementPostCount", "resetPostPage"]),
     ...mapActions("userStore", ["answerInvite"]),
     ...mapActions("postStore", ["getPostsForClub"]),
     postDateFormat,
@@ -75,6 +85,8 @@ export default {
       this.$emit("showMoreNotifications");
     },
     goToNotification(notification) {
+      this.incrementPostCount();
+      this.resetPostPage();
       this.getPostsForClub(notification.club);
       this.$emit("hideNotifications");
       if (notification.type === "post") {

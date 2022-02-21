@@ -22,12 +22,6 @@ const clubStore = {
 
       club.posts[club.posts.indexOf(postToUpdate)] = updatedPost;
     },
-    deletePost(state, data) {
-      const club = state.clubs.find((club) => club._id === data.clubId);
-      const postToDelete = club.posts.find((post) => post._id === data.postId);
-
-      club.posts.splice(club.posts.indexOf(postToDelete), 1);
-    },
     insertClub(state, club) {
       state.clubs = [...state.clubs, club];
     },

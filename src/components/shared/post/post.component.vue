@@ -5,16 +5,16 @@
         <div
           class="hover-trigger relative mr-3 mx-auto w-12 h-12 bg-cover rounded-full"
           :style="{
-            'background-image': `url(${post.user.photo ? post.user.photo : defaultAvatar})`,
+            'background-image': `url(${post.owner.photo ? post.owner.photo : defaultAvatar})`,
           }"
         ></div>
         <div>
-          <p class="text-lg font-semibold">{{ post.user.name }}</p>
+          <p class="text-lg font-semibold">{{ post.owner.name }}</p>
           <p class="text-gray-500 text-xs font-light">{{ postDateFormat(post.createdAt) }}</p>
         </div>
       </div>
       <DotsDropdownComponent
-        v-if="user.id === post.user._id"
+        v-if="user.id === post.owner"
         dropdownContext="post"
         @update="openPopup('Update')"
         @delete="openPopup('Delete')"

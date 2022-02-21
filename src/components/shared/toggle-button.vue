@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mb-12 w-full">
+  <div class="flex w-full">
     <label for="toogleA" class="flex items-center cursor-pointer">
       <!-- toggle -->
       <div class="relative">
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "Toggle Button",
+  name: "toggle-Button",
   props: ["toggleLabel", "toggleStateFromParent"],
   data: () => ({
     toggleState: false,
@@ -41,10 +41,10 @@ export default {
 <style scoped>
 input:checked ~ .dot {
   transform: translateX(100%);
-  background-color: #48bb78;
+  background-color: #d6ebeb;
 }
 
 input:checked ~ .toggle-bg {
-  background-color: rgb(238, 238, 238);
+  background-color: #48d0b0;
 }
 </style>

@@ -30,9 +30,10 @@ function roleGuard(to, from, next) {
   if (VueJwtDecode.decode(localStorage.getItem("jwt")).role === "Teacher") {
     isTeacher = true;
   }
-  if (isTeacher && to.name !== "Teacher") {
-    next("/teacher");
-  } else if (!isTeacher && to.name === "Teacher") {
+  // if (isTeacher && to.name !== "Teacher") {
+  //   next("/teacher");
+  // } else
+  if (!isTeacher && to.name === "Teacher") {
     next("/");
   } else {
     next();

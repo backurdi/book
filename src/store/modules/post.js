@@ -23,6 +23,11 @@ const postStore = {
     addPost(state, post) {
       state.posts.unshift(post);
     },
+    deletePost(state, data) {
+      const postToDelete = state.posts.find((post) => post._id === data.postId);
+
+      state.posts.splice(state.posts.indexOf(postToDelete), 1);
+    },
     addComment(state, comment) {
       const post = state.posts.find((post) => post._id === comment.post);
       if (post.comments) {
@@ -31,14 +36,14 @@ const postStore = {
         post.comments = [comment];
       }
     },
-    updateComment(_state, updatedComment) {
-      const post = this.state.clubStore.activeClub.posts.find((post) => post._id === updatedComment.post);
+    updateComment(state, updatedComment) {
+      const post = state.posts.find((post) => post._id === updatedComment.post);
       const commentToUpdate = post.comments.find((comment) => comment._id === updatedComment._id);
 
       post.comments[post.comments.indexOf(commentToUpdate)] = updatedComment;
     },
     deleteComment(state, data) {
-      const post = this.state.clubStore.activeClub.posts.find((post) => post._id === data.postId);
+      const post = state.posts.find((post) => post._id === data.postId);
       const commentToDelete = post.comments.find((comment) => comment._id === data.commentId);
 
       post.comments.splice(post.comments.indexOf(commentToDelete), 1);
@@ -94,13 +99,13 @@ const postStore = {
           });
       });
     },
-    deletePost(_state, data) {
+    deletePost({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$api.posts
           .delete(`${data.clubId}/${data.postId}`)
           .then(() => {
             resolve("");
-            return this.commit("clubStore/deletePost", data);
+            return commit("deletePost", data);
           })
           .catch((err) => {
             reject(err);

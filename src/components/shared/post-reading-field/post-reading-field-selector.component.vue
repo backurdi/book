@@ -77,7 +77,6 @@
 
 <script>
 import SelectDropdown from "@/components/shared/select-dropdown/selectDropdown.component.vue";
-// import ToggleButton from '@/components/shared/toggle-button/toggleButton.component.vue';
 export default {
   name: "post-reading-picker",
   props: ["input", "books"],

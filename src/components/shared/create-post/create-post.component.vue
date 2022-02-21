@@ -36,6 +36,10 @@
               <span>Book</span>
             </button>
           </div>
+          <div v-if="user.role === 'Teacher'">
+            <p class="mb-2 text-gray-400 text-xs">Assignment post</p>
+            <toggle-button @toggleStateChanged="isAssignmentPost = $event"></toggle-button>
+          </div>
         </div>
       </div>
       <div class="flex justify-start mt-5 md:justify-end md:mt-0">
@@ -64,6 +68,7 @@ import Slider from "@/components/shared/slider/slider.component.vue";
 import { PhotographIcon } from "@heroicons/vue/solid";
 import { mapState } from "vuex";
 import Button from "@/components/shared/Button";
+import ToggleButton from "@/components/shared/toggle-button.vue";
 export default {
   name: "add-post",
   props: ["buttonText", "postData", "createLoading"],
@@ -76,6 +81,7 @@ export default {
     MediaField,
     PhotographIcon,
     Button,
+    ToggleButton,
   },
   data: () => ({
     nextPage: "gif",
@@ -86,6 +92,7 @@ export default {
     book: null,
     form: new FormData(),
     missingTextError: false,
+    isAssignmentPost: false,
   }),
   created() {
     if (this.postData) {
@@ -98,6 +105,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("userStore", ["user"]),
     ...mapState("bookStore", ["books"]),
   },
   methods: {
@@ -124,6 +132,7 @@ export default {
       if (this.book) {
         this.form.append("book", this.book);
       }
+      this.form.append("isAssignment", this.isAssignmentPost);
 
       this.$emit("emitBody", this.form);
     },

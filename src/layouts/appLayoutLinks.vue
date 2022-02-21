@@ -22,7 +22,7 @@
 
           <!-- to bar right  -->
           <ul class="flex items-center">
-            <li class="pr-6" v-if="user.role === 'Student'">
+            <li class="pr-6">
               <div class="md:relative">
                 <div class="relative p-3 hover:bg-gray-600 rounded-full cursor-pointer" @click="notificationClicked()">
                   <div

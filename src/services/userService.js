@@ -10,7 +10,14 @@ export default class UserService extends ModelApiService {
   async login(data = {}) {
     return new Promise((resolve, reject) => {
       axios
-        .post(`${this.getUrl()}/login`, data)
+        .post(`${this.getUrl()}/login`, data, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            withCredentials: true,
+          },
+        })
         .then((response) => {
           resolve(response.data);
         })

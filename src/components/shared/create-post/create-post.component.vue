@@ -115,8 +115,10 @@ export default {
         return setTimeout(() => {
           this.missingTextError = false;
           return;
-        }, 800);
+        }, 1500);
       }
+      this.text = this.text.replace(/(?:\r\n|\r|\n)/g, "<br>");
+      debugger;
       if (this.text) {
         this.form.append("text", this.text);
       }

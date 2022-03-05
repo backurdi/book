@@ -14,14 +14,14 @@
         </div>
       </div>
       <DotsDropdownComponent
-        v-if="user.id === post.owner"
+        v-if="user.id === post.owner._id"
         dropdownContext="post"
         @update="openPopup('Update')"
         @delete="openPopup('Delete')"
       ></DotsDropdownComponent>
     </div>
     <div class="p-4">
-      <div class="mb-5" v-html="domDecoder(post.text)"></div>
+      <div class="mb-5" v-html="post.text"></div>
       <div
         class="flex justify-end cursor-pointer"
         v-if="bookForPost(post.book)"
@@ -103,11 +103,6 @@ export default {
     ...mapActions("postStore", ["updatePost", "deletePost"]),
     ...mapMutations("bookStore", ["setFocusedBook"]),
     postDateFormat,
-    domDecoder(str) {
-      let parser = new DOMParser();
-      let dom = parser.parseFromString("<!doctype html><body>" + str, "text/html");
-      return dom.body.textContent;
-    },
     bookForPost(bookId) {
       return this.books.find((book) => book._id === bookId);
     },
